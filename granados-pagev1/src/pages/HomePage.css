@@ -1,0 +1,8 @@
+/* src/pages/HomePage.css */
+
+/* Este archivo contendrá los estilos específicos para la página de inicio (HomePage) */
+
+/* Por ejemplo: */
+.home-page-container {
+    padding-top:0rem; /* Espacio para que el contenido no pegue con el Navbar */
+}

@@ -1,0 +1,42 @@
+/* src/pages/precios/PricingPag.css */
+
+.pricing-page-section {
+    padding: 4rem 2rem;
+    max-width:100%;
+    margin: 0 auto;
+}
+
+.pricing-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.pricing-header h1 {
+    font-size: 2.5rem;
+    color: #1a202c;
+}
+
+.pricing-header p {
+    font-size: 1.1rem;
+    color: #4a5568;
+    max-width: 800px;
+    margin: 0.5rem auto 0;
+}
+
+/* ---------------------------------- */
+/* Cuadrícula de Tarjetas Responsive */
+/* ---------------------------------- */
+.pricing-grid {
+    display: grid;
+    /* Adapta el número de columnas automáticamente. Minimo 300px, máximo 1 fracción. */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    align-items: flex-start; /* Alinea las tarjetas por arriba */
+}
+
+/* Adaptación para pantallas muy pequeñas */
+@media (max-width: 650px) {
+    .pricing-grid {
+        grid-template-columns: 1fr; /* Una sola columna en móviles */
+    }
+}

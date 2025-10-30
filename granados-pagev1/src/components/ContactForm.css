@@ -1,0 +1,194 @@
+/* src/components/ContactForm.css */
+
+/* Variables de Branding */
+:root {
+    --color-dark-bg: #282c34; /* Gris muy oscuro, tomado de tu topbar */
+    --color-light-text: #f0f0f0; 
+    --color-primary-accent: #bc7c74; /* Terracota */
+    --color-secondary-accent: #66bb6a; /* Verde (para éxito/WhatsApp) */
+    --color-error: #ef5350; /* Rojo */
+    --color-input-bg: #3c414d;
+    --color-input-border: #5a606b;
+}
+
+.contact-section {
+    padding: 80px 5%;
+    background-color: var(--color-dark-bg); /* 🛑 Fondo Gris Oscuro */
+    color: var(--color-light-text);
+}
+
+.contact-layout-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* ------------------ Encabezado ------------------ */
+.contact-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: var(--color-light-text);
+    text-align: center;
+}
+
+.contact-subtitle {
+    font-size: 1rem;
+    color: #b0b0b0;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* ------------------ Formulario ------------------ */
+.contact-form {
+    background-color: #343943; /* Un tono ligeramente más claro que el fondo */
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.form-field {
+    margin-bottom: 20px;
+}
+
+.form-group-triple {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+/* Campos de Formulario */
+.form-field label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--color-light-text);
+    font-size: 0.9rem;
+}
+
+.input-with-icon {
+    display: flex;
+    align-items: center;
+    background-color: var(--color-input-bg);
+    border-radius: 4px;
+    padding-left: 10px;
+    border: 1px solid var(--color-input-border);
+    transition: border-color 0.3s;
+}
+
+.input-with-icon:focus-within {
+    border-color: var(--color-primary-accent);
+}
+
+.input-icon {
+    color: #888;
+    margin-right: 10px;
+    font-size: 1rem;
+}
+
+.contact-form input[type="text"],
+.contact-form input[type="email"],
+.contact-form input[type="tel"],
+.contact-form select,
+.contact-form textarea {
+    width: 100%;
+    padding: 12px 10px;
+    border: none;
+    background: transparent;
+    color: var(--color-light-text);
+    font-size: 1rem;
+    box-sizing: border-box;
+    /* Eliminar el estilo por defecto del input */
+    outline: none;
+}
+
+.contact-form textarea {
+    min-height: 120px;
+    background-color: var(--color-input-bg);
+    border-radius: 4px;
+    padding: 12px;
+    border: 1px solid var(--color-input-border);
+}
+
+.contact-form select {
+    background-color: var(--color-input-bg);
+    border-radius: 4px;
+    border: 1px solid var(--color-input-border);
+    padding: 12px;
+    /* Estilos para que el select se vea bien en fondo oscuro */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="%23f0f0f0" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px top 50%;
+    background-size: 12px;
+    padding-right: 30px;
+}
+.contact-form option {
+    background: #333; /* Fondo de las opciones para contraste */
+    color: var(--color-light-text);
+}
+
+
+/* ------------------ Botón de Envío ------------------ */
+.submit-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 15px;
+    background-color: var(--color-primary-accent); /* Color Terracota (Acción Principal) */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.3s, opacity 0.3s;
+    margin-top: 15px;
+}
+
+.submit-button:hover:not(:disabled) {
+    background-color: #a56b64; /* Terracota oscuro en hover */
+}
+
+.submit-button:disabled {
+    background-color: #5a606b;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.submit-button svg {
+    margin-right: 10px;
+}
+
+/* ------------------ Alertas ------------------ */
+.form-alert {
+    padding: 15px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.form-alert.success {
+    background-color: var(--color-secondary-accent); /* Verde */
+    color: var(--color-dark-bg);
+}
+
+.form-alert.error {
+    background-color: var(--color-error); /* Rojo */
+    color: white;
+}
+
+/* ------------------ Responsive ------------------ */
+@media (max-width: 768px) {
+    .contact-title {
+        font-size: 2rem;
+    }
+
+    .form-group-triple {
+        flex-direction: column;
+        gap: 0;
+    }
+}

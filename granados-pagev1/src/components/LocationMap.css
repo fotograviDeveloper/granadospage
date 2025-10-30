@@ -1,0 +1,61 @@
+/* src/components/LocationMap.css */
+
+/* Variables (usamos las mismas del ContactForm) */
+:root {
+    --color-dark-bg: #282c34; 
+    --color-light-text: #f0f0f0; 
+    --color-primary-accent: #bc7c74; 
+}
+
+.location-map-section {
+    padding: 80px 5%;
+    background-color: var(--color-dark-bg); /* Fondo Gris Oscuro */
+    color: var(--color-light-text);
+}
+
+.location-map-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* ------------------ Encabezado ------------------ */
+.location-map-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.location-map-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: var(--color-primary-accent); /* Usamos el acento para resaltar el título */
+}
+
+.location-map-subtitle {
+    font-size: 1rem;
+    color: #b0b0b0;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* ------------------ Mapa Incrustado ------------------ */
+
+.map-embed-wrapper {
+    /* Mantiene una relación de aspecto 16:9 para la responsividad (aprox. 500px de alto) */
+    position: relative;
+    padding-bottom: 56.25%; /* 9 / 16 = 0.5625 (16:9) */
+    height: 0;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    background-color: #555; /* Fondo de carga */
+}
+
+.map-embed-wrapper iframe {
+    /* Hace que el iframe ocupe todo el espacio del wrapper */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}

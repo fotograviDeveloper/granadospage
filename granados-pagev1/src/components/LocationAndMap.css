@@ -1,0 +1,269 @@
+/* src/components/LocationAndMap.css */
+
+:root {
+    --color-primary-text: #23373a; /* Dark Teal (Para Tarjetas y Fondo de Header) */
+    --color-background: #fbfbfb;   /* Fondo General y Texto Claro */
+    --color-accent: #bc7c74;       /* Terracota */
+}
+
+/* ---------------------------------- */
+/* 0. Contenedor Principal (Fijo y Distribuido) */
+/* ---------------------------------- */
+.location-section {
+    padding: 4rem 5%;
+    
+    height: 1500px;
+    z-index: 1;
+    color: var(--color-primary-text); 
+    
+    /* ✅ CLAVE CRÍTICA: Altura fija de 1000px y sin scroll */
+
+   
+    overflow: hidden; 
+    
+    /* ✅ CRÍTICO: El padding se incluye DENTRO de la altura fija */
+    box-sizing: border-box; 
+    
+    /* ✅ CRÍTICO: Flexbox para distribuir el espacio verticalmente */
+    display: flex;
+    flex-direction: column;
+    
+    /* Solución de apilamiento: Eleva la sección */
+    position: relative; 
+    z-index: 10; 
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    color: var(--color-primary-text); 
+    flex-shrink: 0; /* No permite que el título se encoja */
+}
+
+/* ---------------------------------- */
+/* 1. Tarjetas de Datos Clave (3 en Horizontal y Color) */
+/* ---------------------------------- */
+.location-facts-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 30px; 
+    margin-bottom: 4rem;
+    padding: 0;
+    flex-shrink: 0; /* No permite que el contenedor se encoja */
+}
+
+.fact-card {
+    padding: 1.5rem;
+    /* ✅ CORRECCIÓN COLOR: Fondo Dark Teal */
+    color: var(--color-background); 
+    background-color: var(--color-primary-text); 
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.fact-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.fact-icon {
+    font-size: 2.5rem;
+    color: var(--color-accent); /* Terracota */
+    margin-bottom: 0.5rem;
+}
+
+.fact-detail {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--color-background);
+    margin-top: 0.5rem;
+}
+
+.fact-description {
+    font-size: 0.9rem;
+    color: #cccccc;
+}
+
+.divider {
+    border: 0;
+    height: 1px;
+    background: #dddddd;
+    margin: 4rem 0;
+    flex-shrink: 0; /* No se encoge */
+}
+
+/* ---------------------------------- */
+/* 2. Mapa y Galería (Distribución del Espacio Restante) */
+/* ---------------------------------- */
+.fullscreen-button{
+    margin-left:25px ;
+}
+.map-gallery-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 30% mapa, 70% imágenes */
+    gap: 40px;
+    
+    /* ✅ CLAVE: Ocupa todo el espacio vertical RESTANTE de la sección */
+    flex-grow: 1; 
+    height: 100%; 
+    overflow: hidden; 
+}
+
+/* === Columna Izquierda: Mapa (Máximo 500px) === */
+.map-container {
+    position: relative;
+    /* ✅ CLAVE: Límite de 500px. La galería determinará la altura final. */
+    max-height: 100%; 
+    height: 100%;
+    
+    /* ✅ CRÍTICO: Flex Column para distribuir Header y Wrapper */
+    display: flex;
+    flex-direction: column; 
+    
+    background-color: transparent; /* Fondo transparente */
+    padding: 0; 
+    border-radius: 10px;
+    color: var(--color-primary-text); 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    overflow: hidden; 
+}
+
+.map-header {
+    background-color: var(--color-primary-text);
+    color: var(--color-background);
+    padding: 15px; 
+    margin-bottom: 0; 
+    width: 100%;
+    flex-shrink: 0; /* No se encoge */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.map-image-wrapper {
+    cursor: pointer;
+    border-radius: 0;
+    width: 100%;
+    
+    /* ✅ CRÍTICO: Ocupa el espacio restante bajo el header */
+    flex-grow: 1; 
+    height: 100%; 
+    
+    overflow: hidden;
+    background-color: var(--color-background); /* Fondo para el mapa PNG */
+}
+
+.map-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; 
+    display: block;
+}
+
+/* === Columna Derecha: Galería de Amenidades === */
+.amenities-gallery-container {
+    height: 100%; 
+    width: 100%;
+    /* ✅ CRÍTICO: Flex Column para distribuir Título y Grid de Imágenes */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.amenities-gallery-container h3 {
+    flex-shrink: 0;
+    margin-bottom: 15px;
+}
+
+.amenities-grid {
+    display: grid;
+    grid-template-columns: 1fr; 
+    /* ✅ CLAVE: 3 filas de igual tamaño */
+    grid-template-rows: repeat(3, 1fr); 
+    gap: 15px; 
+    width: 100%;
+    /* ✅ CLAVE: Ocupa todo el espacio vertical restante bajo el título */
+    flex-grow: 1; 
+    height: 100%; 
+    overflow: hidden; 
+    padding: 0;
+}
+
+.gallery-item {
+    overflow: hidden;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    height: 100%; 
+    width: 100%;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    transition: transform 0.3s;
+}
+
+/* ---------------------------------- */
+/* Media Queries (Ajuste del mapa/galería) */
+/* ---------------------------------- */
+
+/* Tablet (Max-width 992px) */
+@media (max-width: 992px) {
+    .location-section {
+        /* Se desactiva la altura fija y overflow en móvil/tablet para apilamiento */
+        max-height: none; 
+        height: auto;
+        overflow: visible;
+    }
+    
+    /* Tarjetas: 2 columnas */
+    .location-facts-container {
+        grid-template-columns: repeat(2, 1fr); 
+        flex-shrink: 1;
+    }
+
+    /* Mapa y Galería: Apilados */
+    .map-gallery-layout {
+        grid-template-columns: 1fr; 
+        flex-grow: 0;
+        height: auto; 
+        max-height: none;
+        overflow: visible; 
+    }
+    
+    .map-container {
+        max-height: 400px; /* Altura fija para el mapa apilado */
+        height: 400px;
+        flex-shrink: 0;
+    }
+    
+    .amenities-gallery-container {
+        margin-top: 2rem;
+        height: 500px; /* Altura fija para la galería apilada */
+    }
+}
+
+/* Móvil (Max-width 576px) */
+@media (max-width: 576px) {
+    .location-section {
+        padding: 2rem 5%;
+    }
+    
+    /* Tarjetas: 1 columna */
+    .location-facts-container {
+        grid-template-columns: 1fr; 
+    }
+    
+    .map-container {
+        max-height: 300px; 
+        height: 300px;
+    }
+    
+    .amenities-gallery-container {
+        height: 400px; 
+    }
+}

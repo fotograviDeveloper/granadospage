@@ -1,0 +1,190 @@
+/* src/components/ProjectSummary.css */
+
+/* Variables de Color (deben estar en tu index.css, pero las repetimos por seguridad) */
+:root {
+    --color-primary-text: #23373a; /* Dark Teal */
+    --color-background: #fbfbfb;
+    --color-accent: #bc7c74; /* Terracota */
+}
+
+.summary-section {
+    padding: 6rem 5%;
+    background-color: var(--color-background);
+    color: var(--color-primary-text);
+    overflow-x: hidden;
+}
+
+/* ---------------------------------- */
+/* Layout Principal (Doble Columna Asimétrica) */
+/* ---------------------------------- */
+.summary-layout-grid {
+    display: grid;
+    /* Columna Concepto: 3 partes (más grande) | Columna Features: 2 partes (más pequeña) */
+    grid-template-columns: 3fr 2fr; 
+    gap: 60px;
+    max-width: 1300px; /* Ancho máximo para contenido */
+    margin: 0 auto;
+}
+
+/* ---------------------------------- */
+/* Columna Izquierda: Concepto y Texto */
+/* ---------------------------------- */
+.summary-concept-container {
+    padding-right: 20px;
+}
+
+.summary-title {
+    font-size: 3rem;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+    color: var(--color-primary-text);
+}
+
+.accent-text {
+    color: var(--color-accent);
+}
+
+.summary-intro-text {
+    font-size: 1.3rem;
+    font-weight: 300;
+    margin-bottom: 1.5rem;
+}
+
+.summary-main-text {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+}
+
+.summary-image-desktop {
+    margin-top: 3rem;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.summary-image-desktop img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+}
+
+/* ---------------------------------- */
+/* Columna Derecha: Tarjetas de Features */
+/* ---------------------------------- */
+.summary-features-container {
+    display: grid;
+    /* 2 columnas en desktop, 4 elementos, creando un layout compacto */
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    align-content: start; /* Asegura que el contenido se pegue arriba */
+}
+
+.feature-card {
+    background-color: #ffffff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border-left: 5px solid var(--color-accent); /* Borde de acento Terracota */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.feature-icon {
+    font-size: 1.5rem;
+    color: var(--color-accent);
+    margin-right: 10px;
+}
+
+.card-title {
+    font-size: 1.1rem;
+    color: var(--color-primary-text);
+    margin: 0;
+}
+
+.card-detail {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: var(--color-primary-text);
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.card-description {
+    font-size: 0.9rem;
+    color: #666;
+    line-height: 1.4;
+}
+
+/* CTA Box */
+.summary-cta-box {
+    grid-column: 1 / -1; /* Ocupa ambas columnas en el grid de features */
+    margin-top: 20px;
+    text-align: center;
+}
+
+.summary-cta-button {
+    display: inline-block;
+    background-color: var(--color-accent);
+    color: white;
+    padding: 1rem 2.5rem;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background-color 0.3s, transform 0.2s;
+    text-transform: uppercase;
+}
+
+.summary-cta-button:hover {
+    background-color: #a46d65; /* Tono más oscuro de Terracota */
+    transform: translateY(-2px);
+}
+
+/* ---------------------------------- */
+/* Media Queries (Responsive) */
+/* ---------------------------------- */
+
+@media (max-width: 992px) {
+    .summary-layout-grid {
+        grid-template-columns: 1fr; /* Apilar en una sola columna */
+        gap: 40px;
+    }
+    
+    .summary-title {
+        font-size: 2.5rem;
+    }
+
+    /* Ocultar la imagen en la columna izquierda en móvil para evitar duplicidad */
+    .summary-image-desktop {
+        display: none; 
+    }
+    
+    /* Mostrar las features en una sola columna */
+    .summary-features-container {
+        grid-template-columns: 1fr; 
+    }
+}
+
+@media (max-width: 576px) {
+    .summary-section {
+        padding: 4rem 5%;
+    }
+    
+    .summary-title {
+        font-size: 2rem;
+    }
+    
+    .summary-intro-text {
+        font-size: 1.1rem;
+    }
+    
+    .summary-main-text {
+        font-size: 1rem;
+    }
+}
