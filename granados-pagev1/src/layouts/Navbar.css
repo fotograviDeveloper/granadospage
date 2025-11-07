@@ -2,7 +2,7 @@
 
 /* Variables de Branding */
 :root {
-  --primary-color: #bc7c74; /* Fondo: Terracota */
+  --primary-color: #383636; /* Fondo: Terracota */
   --secondary-color: #f1e8d9; /* Texto: Crema/Claro */
   --accent-color: #e4c59f; /* Color de acento para hover */
 }
@@ -27,7 +27,7 @@ button:focus-visible {
   align-items: center;
   background-color: var(--primary-color); 
   color: var(--secondary-color);
-  padding: 1rem 2rem;
+  padding: 1% 60px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   position: sticky; 
   top: 0;

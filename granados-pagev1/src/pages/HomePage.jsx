@@ -7,6 +7,7 @@ import InteractiveMap from '../components/InteractiveMap';
 import PhotoGallery from '../components/PhotoGallery';
 import ContactForm from '../components/ContactForm';
 import LocationMap from '../components/LocationMap';
+import AmenityTrioHero from '../components/AmenityTrioHero';
 import LocationAndMap from '../components/LocationAndMap';
 // Importamos el archivo CSS de la página (lo crearemos después)
 import './HomePage.css'; 
@@ -21,6 +22,8 @@ const HomePage = () => {
       </section>
 <section id="LocationAndMap">
   <LocationAndMap></LocationAndMap> </section>
+  {/* 2. Sección de Amenidades Destacadas (REEMPLAZADA) */}
+            <AmenityTrioHero />
       {/* 2. SECCIÓN DE INFORMACIÓN Y RESUMEN DEL PROYECTO */}
       <section id="proyecto-resumen">
         {/* Componente placeholder: Descripción y datos clave */}
@@ -28,10 +31,7 @@ const HomePage = () => {
       </section>
 
       {/* 3. SECCIÓN DE MAPA INTERACTIVO DE TERRENOS */}
-      <section id="mapa-interactivo">
-        {/* Componente placeholder: Mapa de los lotes/terrenos */}
-        <InteractiveMap />
-      </section>
+  
 
       {/* 4. SECCIÓN DE GALERÍA DE FOTOS */}
       <section id="galeria">

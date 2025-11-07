@@ -28,7 +28,7 @@
     font-size: 2rem;
     font-weight: 700;
     margin-bottom: 10px;
-    color: var(--color-primary-accent); /* Usamos el acento para resaltar el título */
+    color:#f0f0f0; /* Usamos el acento para resaltar el título */
 }
 
 .location-map-subtitle {

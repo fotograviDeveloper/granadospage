@@ -43,7 +43,7 @@ const Navbar = () => {
           {/* ... Enlaces de Navegación ... */}
           <li><Link to="/" onClick={closeMenu}>Inicio</Link></li>
           <li><Link to="/proyecto" onClick={closeMenu}>Conoce el Proyecto</Link></li>
-          <li><Link to="/precios" onClick={closeMenu}>Precios y Lotes</Link></li>
+          <li><Link to="/precios" onClick={closeMenu}>Disponibilidad y Precios</Link></li>
           <li><Link to="/galeria" onClick={closeMenu}>Galería</Link></li>
         </ul>
         
@@ -52,9 +52,9 @@ const Navbar = () => {
             <p>Síguenos:</p>
             <div className="social-icon-links">
                 {/* Íconos de Font Awesome */}
-                <a href="https://www.facebook.com/" target="_blank" aria-label="Facebook"><FontAwesomeIcon icon={faFacebookF} className="social-icon" /></a>
-                <a href="https://www.instagram.com/" target="_blank" aria-label="Instagram"><FontAwesomeIcon icon={faInstagram} className="social-icon" /></a>
-                <a href="https://wa.me/" target="_blank" aria-label="WhatsApp"><FontAwesomeIcon icon={faWhatsapp} className="social-icon" /></a>
+                <a href="https://www.facebook.com/profile.php?id=61581870316206" target="_blank" aria-label="Facebook"><FontAwesomeIcon icon={faFacebookF} className="social-icon" /></a>
+                <a href="https://www.instagram.com/granadosmediterraneo/" target="_blank" aria-label="Instagram"><FontAwesomeIcon icon={faInstagram} className="social-icon" /></a>
+                <a href="https://wa.me/528123852034?text=" target="_blank" aria-label="WhatsApp"><FontAwesomeIcon icon={faWhatsapp} className="social-icon" /></a>
             </div>
             <Link to="/contacto" className="contact-button" onClick={closeMenu}>
               Contáctanos
@@ -65,9 +65,9 @@ const Navbar = () => {
       {/* 4. Iconos de Redes Sociales (Escritorio) */}
       <div className="navbar-social-desktop">
         {/* Íconos de Font Awesome */}
-        <a href="https://www.facebook.com/" target="_blank" aria-label="Facebook"><FontAwesomeIcon icon={faFacebookF} className="social-icon" /></a>
-        <a href="https://www.instagram.com/" target="_blank" aria-label="Instagram"><FontAwesomeIcon icon={faInstagram} className="social-icon" /></a>
-        <a href="https://wa.me/" target="_blank" aria-label="WhatsApp"><FontAwesomeIcon icon={faWhatsapp} className="social-icon" /></a>
+        <a href="https://www.facebook.com/profile.php?id=61581870316206" target="_blank" aria-label="Facebook"><FontAwesomeIcon icon={faFacebookF} className="social-icon" /></a>
+        <a href="https://www.instagram.com/granadosmediterraneo/" target="_blank" aria-label="Instagram"><FontAwesomeIcon icon={faInstagram} className="social-icon" /></a>
+        <a href="https://wa.me/528123852034?text=" target="_blank" aria-label="WhatsApp"><FontAwesomeIcon icon={faWhatsapp} className="social-icon" /></a>
       </div>
     </header>
   );

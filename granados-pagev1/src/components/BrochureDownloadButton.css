@@ -1,0 +1,28 @@
+/* src/components/BrochureDownloadButton.css */
+
+.download-button {
+    /* Estilos de Botón Estándar */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px 30px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
+    white-space: nowrap; /* Evita saltos de línea dentro del botón */
+
+    /* Estilos de color por defecto (pueden ser sobrescritos) */
+    background-color: var(--color-primary-accent, #4e7c3e); /* Un verde/azul primario */
+    color: white;
+    border: none;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.download-button:hover {
+    background-color: var(--color-primary-dark, #3b5f2e); /* Tono más oscuro */
+    transform: translateY(-2px);
+}

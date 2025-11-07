@@ -12,13 +12,13 @@
 }
 
 .contact-section {
-    padding: 80px 5%;
+    padding: 80px 1%;
     background-color: var(--color-dark-bg); /* 🛑 Fondo Gris Oscuro */
     color: var(--color-light-text);
 }
 
 .contact-layout-container {
-    max-width: 800px;
+    max-width: 80%;
     margin: 0 auto;
 }
 

@@ -12,6 +12,7 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
+  padding: 5%;
   overflow: hidden;
 }
 
@@ -26,7 +27,7 @@
 .sector-info {
   width: 35%;
   min-width: 280px;
-  max-width: 400px;
+  max-width: auto;
   padding: 2rem;
   background: #f8f9fa;
   border-right: 1px solid #dee2e6;
@@ -79,8 +80,8 @@
 /* Container Map */
 .container-map {
   position: relative;
-  width: 100%;
-  height: 100%;
+  width: 90%;
+  height: 90%;
   overflow: hidden;
 }
 

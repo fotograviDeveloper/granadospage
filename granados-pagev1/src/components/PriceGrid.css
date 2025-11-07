@@ -1,0 +1,171 @@
+/* src/components/PriceGrid.css */
+
+/* --- Contenedor General --- */
+.price-grid-container {
+    display: flex;
+    flex-direction: column;
+    gap: 70px; /* Más espacio entre las etapas */
+}
+
+/* --- Sección de Etapas (Contenedor de 3 tarjetas) --- */
+.stage-section {
+    background-color: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08); /* Sombra más pronunciada para la etapa */
+    border-top: 5px solid var(--color-primary-accent, #1a4f32);
+}
+
+.stage-header-wrapper {
+    text-align: center;
+    margin-bottom: 40px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.stage-title {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: var(--color-primary-accent, #1a4f32);
+    margin: 0 0 5px 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.stage-tagline {
+    font-size: 1.1rem;
+    color: #666;
+    font-style: italic;
+}
+
+/* Estilo para resaltar Friends and Family (el más exclusivo) */
+.stage-highlight {
+    color: var(--color-secondary-accent, #4e7c3e); /* Color de acento verde */
+    border-bottom: 2px solid var(--color-secondary-accent, #4e7c3e);
+    display: inline-block;
+    padding-bottom: 5px;
+}
+
+/* --- Lot Cards (Las tarjetas individuales) --- */
+.lot-cards-wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.lot-card {
+    background-color: var(--color-light-bg, #fcfcfc); /* Fondo casi blanco */
+    border-radius: 10px;
+    padding: 25px;
+    text-align: center;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
+    border: 1px solid #eee;
+    transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.lot-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.1);
+    border-color: var(--color-secondary-accent, #4e7c3e); /* Resaltar borde al pasar el mouse */
+}
+
+.lot-type-tag {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--color-text-dark, #333);
+    background-color: transparent; /* Fondo transparente */
+    border: 2px solid #ddd;
+    padding: 8px 15px;
+    display: inline-block;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+}
+
+/* Colores distintivos de fondo para las tarjetas según el tipo de lote */
+.lot-type-aa {
+    background-color: #fff9f0; /* Fondo ligeramente ámbar para destacar */
+}
+.lot-type-aaa {
+    background-color: #f0fff4; /* Fondo ligeramente verde */
+    border-color: var(--color-secondary-accent);
+}
+
+.lot-size-range {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #999;
+    margin-bottom: 20px;
+    letter-spacing: 0.5px;
+}
+
+.lot-price-box {
+    background-color: #ffffff; /* Blanco limpio */
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border-left: 5px solid var(--color-secondary-accent); /* Barra de color como acento */
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.05);
+}
+
+.price-label {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--color-text-dark, #333);
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.price-value {
+    font-size: 2.8rem;
+    font-weight: 900;
+    color: var(--color-primary-accent, #1a4f32);
+    display: block;
+}
+
+.lot-detail {
+    font-size: 0.9rem;
+    color: #555;
+    min-height: 40px; 
+    margin-bottom: 25px;
+}
+
+.lot-cta-button {
+    display: inline-block;
+    width: 100%;
+    padding: 14px 0;
+    background-color: var(--color-secondary-accent, #4e7c3e);
+    color: white;
+    text-decoration: none;
+    font-weight: 700;
+    border-radius: 4px;
+    transition: background-color 0.3s, transform 0.1s;
+    margin-top: auto;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.lot-cta-button:hover {
+    background-color: var(--color-primary-accent, #1a4f32);
+    transform: translateY(-2px);
+}
+
+/* --- Media Queries --- */
+@media (max-width: 900px) {
+    .stage-section {
+        padding: 20px;
+    }
+    .stage-title {
+        font-size: 2rem;
+    }
+    .lot-cards-wrapper {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+    .price-value {
+        font-size: 2.2rem;
+    }
+}

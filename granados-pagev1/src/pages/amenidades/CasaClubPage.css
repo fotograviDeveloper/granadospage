@@ -1,0 +1,343 @@
+/* src/pages/amenidades/CasaClubPage.css */
+
+.amenity-detail-page {
+    background-color: var(--color-light-bg, #f4f7f6);
+}
+
+.amenity-inner-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 5%;
+}
+
+/* --- 1. Hero (CORRECCIÓN FINAL DE ESTILO) --- */
+.amenity-hero {
+    height: 60vh; 
+    min-height: 450px;
+    background-size: cover;
+    background-position: center;
+    position: relative; 
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6); 
+    
+    /* Centrado Total */
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    padding: 0; 
+}
+
+/* CONTENIDO DEL HERO (Título y Tagline) - Centrado */
+.hero-content-detail {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 5%;
+    color: white; 
+    
+    position: relative; 
+    bottom: auto; 
+    
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center; 
+    
+    z-index: 1000; 
+}
+
+/* 🛑 ENLACE DE REGRESO - Posicionamiento Superior Izquierdo */
+.back-link {
+    color: white;
+    text-decoration: none;
+    font-size: 1.1rem; 
+    font-weight: 500;
+    opacity: 0.9;
+    transition: opacity 0.3s, color 0.3s;
+    
+    position: absolute;
+    top: 50px; 
+    left: 5%; 
+    z-index: 1001; 
+    padding: 8px 15px;
+  
+    border-radius: 5px;
+}
+
+.back-link:hover {
+    opacity: 1;
+  
+}
+
+/* 🛑 TÍTULO (CORRECCIÓN DE MARGEN INFERIOR) */
+.amenity-title {
+    font-size: 4rem; 
+    color: rgb(255, 255, 255);
+    /* 🛑 CORRECCIÓN CLAVE: Agregamos un margen inferior considerable */
+    margin: 0 0 20px 0; 
+    font-weight: 900;
+    line-height: 1.1; /* Ajustamos ligeramente line-height para el texto */
+    text-transform: uppercase; 
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 1); 
+    opacity: 1; 
+    /* 🛑 CORRECCIÓN: Aseguramos que no tenga fondo ni sombra de caja */
+    background-color: transparent !important; /* Fuerza a que el fondo sea transparente */
+    box-shadow: none !important; /* Elimina cualquier sombra de caja */
+    border: none !important;
+}
+
+/* 🛑 TAGLINE (CORRECCIÓN DE MARGEN SUPERIOR) */
+.amenity-tagline {
+    font-size: 2rem; 
+    font-weight: 400;
+    /* 🛑 CORRECCIÓN CLAVE: Quitamos el margin-top si ya lo pusimos en el title, 
+       pero lo dejamos para asegurar la separación si se edita el title. */
+    margin-top: 20px; 
+    margin-bottom: 0;
+    /* 🛑 CORRECCIÓN: Aseguramos que no tenga fondo ni sombra de caja */
+    background-color: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+}
+
+/* --- 2. Contenido Principal / Intro Section --- */
+.amenity-intro-section {
+    padding: 60px 0;
+}
+
+.intro-content-layout {
+    display: flex;
+    gap: 50px;
+    align-items: flex-start;
+}
+
+.text-and-image-column {
+    flex: 2; 
+    display: flex;
+    flex-direction: column; 
+    gap: 30px; 
+}
+
+.intro-text {
+    text-align: left; 
+}
+
+.section-heading {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--color-primary-accent, #1a4f32);
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.intro-text p {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: #444;
+    margin-bottom: 15px;
+}
+
+.intro-image-wrapper {
+    width: 100%; 
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.intro-section-img {
+    width: 100%;
+    height: 350px; 
+    object-fit: cover; 
+    display: block;
+}
+
+.features-list-wrapper {
+    flex: 1; 
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.features-title {
+    font-size: 1.5rem;
+    color: var(--color-secondary-accent, #4e7c3e);
+    margin-top: 0;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #eee;
+    margin-bottom: 20px;
+}
+
+.features-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+    font-size: 1rem;
+    color: #333;
+}
+
+.feature-item:last-child {
+    border-bottom: none;
+}
+
+.feature-icon {
+    color: var(--color-secondary-accent, #4e7c3e);
+    margin-right: 15px;
+    font-size: 1.2rem;
+}
+
+
+/* --- 3. Sub-sección: Play Club --- */
+.play-club-section {
+    padding: 60px 0;
+    background-color: white; 
+}
+
+.play-club-content {
+    display: flex;
+    gap: 50px;
+    align-items: center;
+}
+
+.play-club-image-wrapper {
+    flex: 1;
+    position: relative; 
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    max-width: 600px; 
+}
+
+.play-club-img {
+    width: 100%;
+    height: 350px; 
+    object-fit: cover; 
+    display: block;
+}
+
+.play-club-details {
+    flex: 1;
+}
+
+.play-club-details .section-heading {
+    color: var(--color-text-dark, #333); 
+    margin-bottom: 25px;
+}
+
+
+/* --- 4. Llamada a la Acción (CTA) --- */
+.amenity-cta-section {
+    padding: 60px 0;
+    background-color: var(--color-primary-accent, #1a4f32);
+    color: white;
+    text-align: center;
+}
+
+.cta-inner-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 5%;
+}
+
+.amenity-cta-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    font-weight: 800;
+}
+
+.amenity-cta-section p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+}
+
+.cta-button {
+    display: inline-block;
+    padding: 15px 35px;
+    background-color: var(--color-secondary-accent, #4e7c3e);
+    color: white;
+    text-decoration: none;
+    font-weight: 700;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.cta-button:hover {
+    background-color: #3f6832;
+}
+
+
+/* --- Responsive (Ajustes finales para móvil) --- */
+@media (max-width: 900px) {
+    
+    /* HERO en Móvil */
+    .amenity-hero {
+        height: 40vh;
+        min-height: 300px;
+    }
+    
+    .amenity-title {
+        font-size: 2.5rem; 
+        margin-bottom: 10px; /* Menos espacio en móvil */
+    }
+    .amenity-tagline {
+        font-size: 1.2rem;
+        margin-top: 10px;
+    }
+    
+    .back-link {
+        top: 30px; 
+        left: 5%;
+        font-size: 1rem;
+        transform: translateX(0); 
+    }
+    
+    .hero-content-detail {
+        margin: 0 auto; 
+    }
+    
+    /* Introducción: Todos se apilan en columna */
+    .intro-content-layout {
+        flex-direction: column; 
+        align-items: center; 
+        gap: 40px;
+    }
+    .text-and-image-column {
+        width: 100%; 
+        gap: 20px;
+    }
+    .intro-section-img {
+        height: 250px; 
+    }
+    .features-list-wrapper {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* Play Club en Móvil: Texto arriba de Imagen */
+    .play-club-content {
+        flex-direction: column-reverse; 
+        text-align: center;
+    }
+
+    .play-club-image-wrapper {
+        margin-bottom: 30px; 
+        width: 100%; 
+        max-width: none;
+    }
+    .play-club-img {
+        height: 250px; 
+    }
+    
+}

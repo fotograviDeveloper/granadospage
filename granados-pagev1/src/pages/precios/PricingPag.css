@@ -1,42 +1,91 @@
-/* src/pages/precios/PricingPag.css */
+/* src/pages/precios/PricingPage.css */
 
-.pricing-page-section {
-    padding: 4rem 2rem;
-    max-width:100%;
-    margin: 0 auto;
+.pricing-page {
+    padding-top: 50px; 
+    background-color: var(--color-light-bg, #f4f7f6);
 }
 
-.pricing-header {
-    text-align: center;
-    margin-bottom: 3rem;
-}
-
-.pricing-header h1 {
-    font-size: 2.5rem;
-    color: #1a202c;
-}
-
-.pricing-header p {
-    font-size: 1.1rem;
-    color: #4a5568;
+.page-heading-container {
     max-width: 800px;
-    margin: 0.5rem auto 0;
+    margin: 0 auto 50px;
+    text-align: center;
+    padding: 0 5%;
 }
 
-/* ---------------------------------- */
-/* Cuadrícula de Tarjetas Responsive */
-/* ---------------------------------- */
-.pricing-grid {
-    display: grid;
-    /* Adapta el número de columnas automáticamente. Minimo 300px, máximo 1 fracción. */
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    align-items: flex-start; /* Alinea las tarjetas por arriba */
+.page-title {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--color-primary-accent, #1a4f32);
+    margin-bottom: 10px;
 }
 
-/* Adaptación para pantallas muy pequeñas */
-@media (max-width: 650px) {
-    .pricing-grid {
-        grid-template-columns: 1fr; /* Una sola columna en móviles */
+.page-subtitle {
+    font-size: 1.2rem;
+    color: #555;
+}
+
+/* --- Masterplan Section --- */
+.map-section {
+    padding: 50px 0;
+}
+
+.masterplan-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.masterplan-image {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* --- Prices Section --- */
+.prices-section {
+    padding: 80px 0;
+}
+
+.prices-inner-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 5%;
+}
+
+.prices-section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-text-dark, #333);
+    margin-bottom: 50px;
+}
+
+/* --- Disclaimer --- */
+.prices-disclaimer-box {
+    margin-top: 60px;
+    padding: 20px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.disclaimer-text {
+    font-size: 0.9rem;
+    color: #777;
+    line-height: 1.5;
+}
+.disclaimer-text strong {
+    color: var(--color-secondary-accent, #4e7c3e);
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+    .page-title {
+        font-size: 2.2rem;
+    }
+    .prices-section-title {
+        font-size: 2rem;
     }
 }

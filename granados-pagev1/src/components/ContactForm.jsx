@@ -27,8 +27,19 @@ const ContactForm = ({ lotesData }) => {
         setIsSubmitting(true);
         setStatus('idle');
 
-        // 🛑 Aquí debes reemplazar con la URL de tu endpoint de backend (ej. N8N o una API)
-        const ENDPOINT_URL = 'https://n8n.srv894483.hstgr.cloud/webhook/form-contacto'; 
+        // 🛑 CORRECCIÓN CLAVE 1: Usar la URL de tu API de Express
+        const ENDPOINT_URL = 'https://granadosdelmediterraneo.com/api/email/send-form';
+
+        // 🛑 CORRECCIÓN CLAVE 2: Mapear los nombres de campo del frontend (inglés) 
+        // a los nombres de campo que tu API espera (español)
+        const payload = {
+            nombre: formData.name,      // Frontend 'name' -> Backend 'nombre'
+            email: formData.email,      // Email coincide
+            mensaje: formData.message,  // Frontend 'message' -> Backend 'mensaje'
+            // Opcional: puedes incluir el teléfono y lote si los necesitas en el correo
+            telefono: formData.phone,
+            loteInteres: formData.loteInteres,
+        };
 
         try {
             const response = await fetch(ENDPOINT_URL, {
@@ -36,17 +47,23 @@ const ContactForm = ({ lotesData }) => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(formData),
+                // Enviar el nuevo objeto 'payload'
+                body: JSON.stringify(payload), 
             });
+
+            // Leer la respuesta JSON (útil para ver mensajes de error)
+            const result = await response.json(); 
 
             if (response.ok) {
                 setStatus('success');
                 setFormData({ name: '', email: '', phone: '', message: '', loteInteres: '' }); // Limpiar formulario
             } else {
+                // Muestra el mensaje de error de la API (ej. 'Faltan campos obligatorios...')
+                console.error("Error de la API:", result.error.message);
                 setStatus('error');
             }
         } catch (error) {
-            console.error('Error al enviar el formulario:', error);
+            console.error('Error de conexión al enviar el formulario:', error);
             setStatus('error');
         } finally {
             setIsSubmitting(false);
@@ -57,7 +74,7 @@ const ContactForm = ({ lotesData }) => {
     const lotesOptions = Object.keys(lotesData || {}).filter(id => {
         const data = lotesData[id];
         return data && data.estado !== 'vendido';
-    }).sort((a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' })); // Ordenación numérica más robusta
+    }).sort((a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' })); 
     
     // Contenido dinámico del botón de envío
     const buttonContent = isSubmitting ? 'Enviando...' : (
@@ -183,4 +200,4 @@ const ContactForm = ({ lotesData }) => {
     );
 };
 
-export default ContactForm; 
+export default ContactForm;

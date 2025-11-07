@@ -8,10 +8,12 @@
 }
 
 .summary-section {
-    padding: 6rem 5%;
+    padding: 3rem 5%;
     background-color: var(--color-background);
     color: var(--color-primary-text);
     overflow-x: hidden;
+   width: 100%;
+
 }
 
 /* ---------------------------------- */
@@ -22,7 +24,7 @@
     /* Columna Concepto: 3 partes (más grande) | Columna Features: 2 partes (más pequeña) */
     grid-template-columns: 3fr 2fr; 
     gap: 60px;
-    max-width: 1300px; /* Ancho máximo para contenido */
+  /* Ancho máximo para contenido */
     margin: 0 auto;
 }
 
