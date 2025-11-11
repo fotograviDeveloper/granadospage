@@ -1,290 +1,313 @@
-/* InteractiveMap.css - VERSIÓN FINAL: 35|65 en web, mapa full en móvil */
+/* ---------------------------------------------------- */
+/* InteractiveMap.css - CÓDIGO FINAL CORREGIDO DE DISEÑO (Sticky, Contraste y Modal) */
+/* ---------------------------------------------------- */
 
-/* Reset básico */
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
-/* Main Mapa */
-.mapa {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  padding: 5%;
-  overflow: hidden;
+/* 1. ESTRUCTURA PRINCIPAL */
+.mapa-wrapper {
+    width: 100%;
+    /* Espacio para el Navbar fijo */
+  
 }
 
-/* Layout */
-.layout-container {
-  display: flex;
-  flex: 1;
-  overflow: hidden;
+.mapa-main-container {
+    max-width: 1400px;
+    margin: 0 auto;
+   
+    background: #d5d4d4;
+    display: flex;
+    flex-direction: column;
 }
 
-/* Sector Info */
-.sector-info {
-  width: 35%;
-  min-width: 280px;
-  max-width: auto;
-  padding: 2rem;
-  background: #f8f9fa;
-  border-right: 1px solid #dee2e6;
-  overflow-y: auto;
+/* Leyenda */
+.map-header {
+    background: #d5d4d4;
+    padding: 1.5rem;
+    padding-top: 0;
+    margin-bottom: 20px;
+    
+    border-radius: 8px;
+
+    /* Usar Flexbox para centrar los elementos */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
 }
 
-.sector-title {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
+.legend-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 0.5rem; color: #212529; }
+.legend-subtitle { font-size: 0.9rem; margin-bottom: 1rem; color: #6c757d; }
+.status-legend { 
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap; 
+    gap: 1.5rem; 
+}
+.status-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; color: #343a40; font-weight: 500;}
+.status-color { 
+    display: inline-block; width: 16px; height: 16px; border-radius: 3px; 
+    border: 1px solid rgba(0,0,0,0.1);
+}
+/* Colores de Estado */
+.sold { background: #ef5350; } 
+.reserved { background: #ffc107; } 
+.available { background: #2a5a54; } 
+.blocked { background: #e5e7eb; } 
+
+
+/* 2. LAYOUT DE COLUMNAS Y STICKY (Ajustes para el Scroll) */
+.mapa-section {
+  display: grid;
+  grid-template-columns: 30% 70%; 
+padding: 0;
+  width: 100%;
+  align-items: start; /* Asegura que el contenido comience arriba */
+  min-height: 1000px; /* CRÍTICO: Asegura que el contenedor tenga suficiente altura para el scroll del sticky */
 }
 
-.sector-subtitle {
-  font-size: 1rem;
-  margin-bottom: 2rem;
-  color: #555;
+.info-sticky-wrapper {
+    position: relative;
 }
 
-.status-legend {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+/* PANEL STICKY (Recuadro de Información del Lote) */
+.lot-info-sticky-panel {
+  position: sticky;
+  top: 70px; /* CRÍTICO: Posiciona el panel 70px debajo del tope de la ventana, permitiendo seguimiento */
+  width: 100%;
+  padding: 1.5rem;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: background 0.4s ease, color 0.4s ease, border-color 0.4s ease;
 }
 
-.status-item {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
+/* ESTADO 1: INITIAL / HOVER (Panel Blanco - Contraste Mejorado) */
+.lot-info-sticky-panel.initial-state {
+    background: #ffffff; 
+    color: #343a40; /* Texto oscuro para legibilidad */
+    border: 1px solid #dee2e6; 
+}
+.lot-info-sticky-panel.initial-state .panel-title,
+.lot-info-sticky-panel.initial-state .lot-note,
+.lot-info-sticky-panel.initial-state .lot-status {
+    color: #6c757d; /* Texto secundario gris */
+}
+.lot-info-sticky-panel.initial-state .lot-number {
+    color: #212529; /* Título principal oscuro */
 }
 
-.status-color {
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
+/* ESTADO 2: ACTIVE / CLICK (Panel Verde) */
+.lot-info-sticky-panel.active {
+    background: #2a5a54; /* Fondo verde oscuro */
+    color: white; /* Texto blanco */
+    border: 1px solid #2a5a54; 
+}
+.lot-info-sticky-panel.active .panel-title,
+.lot-info-sticky-panel.active .lot-note,
+.lot-info-sticky-panel.active .lot-status {
+    color: #c0c0c0; /* Texto secundario claro */
 }
 
-.sold { background: #ef5350; }
-.reserved { background: #fde68a; }
-.available { background: #66bb6a; }
-.blocked { background: #e5e7eb; }
 
-/* Delimiter */
-.delimiter {
-  flex: 1;
+/* Estilos de Tipografía y Espaciado */
+.panel-title { font-size: 0.8rem; font-weight: 300; margin-bottom: 0.5rem; text-transform: uppercase; }
+.lot-number { font-size: 1.8rem; font-weight: 700; margin-bottom: 0.75rem; line-height: 1.2; }
+.lot-status { font-size: 1rem; font-weight: 500; margin-bottom: 1.5rem; }
+
+/* Detalles del lote (Superficie, Tipo, Costo) */
+.lot-details {
+    margin: 1rem 0;
+    padding: 0 10px;
+    font-size: 0.95rem;
+    padding-top: 1rem;
+    text-align: left;
+    border-top: 1px solid; 
+}
+/* Color del borde en estado activo */
+.lot-info-sticky-panel.active .lot-details {
+    border-color: rgba(255, 255, 255, 0.3); 
+}
+/* Color del borde en estado inicial/hover */
+.lot-info-sticky-panel.initial-state .lot-details {
+    border-color: rgba(0, 0, 0, 0.1); 
+}
+.lot-details p { margin-bottom: 5px; }
+.lot-details strong { font-weight: 700; }
+.lot-note { 
+    font-size: 0.85rem; 
+    margin-top: 10px; 
+    margin-bottom: 15px; 
+    font-style: italic;
+}
+
+
+/* Estilo base para botones de acción */
+.btn {
+    display: block; 
+    width: 100%; 
+    padding: 0.75rem; 
+    text-align: center; 
+    text-decoration: none; 
+    border-radius: 6px;
+    font-weight: 700; 
+    transition: background 0.2s, opacity 0.2s, color 0.2s, border-color 0.2s; 
+    text-transform: uppercase;
+}
+
+/* Botón Cotizar */
+.cotizar-btn {
+  background: #66bb6a; 
+  color: white; 
+  margin-bottom: 10px; 
+  border: 1px solid #66bb6a;
+}
+.cotizar-btn:hover { background: #50a854; border-color: #50a854;}
+
+.cotizar-btn.disabled-btn {
+    background: #9e9e9e; 
+    border-color: #9e9e9e;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* Botón Cambiar de Lote (Contraste Perfecto en estado Active) */
+.change-lot-btn {
+    background: #50a8543e; 
+    color: rgb(61, 61, 61); /* Texto blanco sobre verde oscuro */
+    border: 1px solid rgba(232, 225, 15, 0.226); /* Borde blanco para contraste */
+    font-size: 0.9rem;
+    cursor: pointer;
+    margin-bottom: 0;
+}
+.change-lot-btn:hover {
+    background: rgba(255, 255, 255, 0.1); /* Ligero hover transparente */
+    color: rgb(104, 104, 104);
+    border-color: rgb(194, 230, 15);
+}
+
+/* Columna Mapa */
+.map-column {
   position: relative;
-  overflow: hidden;
-  background: #fff;
+  background: #06190c; 
+  min-height: 700px; 
+  padding: 15px; 
+  border-radius: 8px;
+  overflow: hidden; 
+  display: flex; 
 }
 
-/* Container Map */
-.container-map {
-  position: relative;
-  width: 90%;
-  height: 90%;
-  overflow: hidden;
-}
-
-/* SVG Map */
 .svgmap {
   width: 100% !important;
   height: 100% !important;
-  object-fit: contain;
+  object-fit: contain; 
   display: block;
 }
 
-/* Tooltip */
-.tooltip {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  width: 260px;
-  max-width: 90vw;
-  padding: 1rem;
-  background: white;
-  border: 1px solid #ccc;
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-  z-index: 20;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.25s ease, transform 0.15s ease;
-  transform: translateY(-10px);
-  font-family: system-ui, -apple-system, sans-serif;
+.svgmap path, .svgmap polygon, .svgmap rect, .svgmap ellipse {
+    transition: fill 0.3s, fill-opacity 0.3s, filter 0.2s;
 }
 
-.tooltip.show {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
+/* Pie de Página */
+.mapa-footer {
+    background: #ffffff;
+    padding: 1rem;
+    margin-top: 20px;
+    text-align: center;
+    border-radius: 8px;
+    color: #343a40;
+    border: 1px solid #dee2e6;
 }
 
-.tooltip.is-fixed {
-  position: absolute;
-  top: 10px !important;
-  right: 10px !important;
-  left: auto !important;
+
+/* VENTANA MODULAR DE BIENVENIDA (Ajuste Final de Botón) */
+.welcome-modal {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.85); 
+    display: flex; justify-content: center; align-items: center;
+    z-index: 1000;
+    opacity: 0; visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
-/* Tooltip no fijo: transición suave en Y */
-.tooltip:not(.is-fixed) {
-  transition: top 0.1s ease, opacity 0.25s ease, transform 0.15s ease;
+.welcome-modal.active { opacity: 1; visibility: visible; }
+
+.welcome-content {
+    background: #ffffff; 
+    padding: 2rem; 
+    border-radius: 12px;
+    max-width: 400px; 
+    text-align: center; 
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    /* CRÍTICO: Usamos flex-direction column para asegurar que los elementos se apilen */
+    display: flex; 
+    flex-direction: column; 
+    align-items: center;
 }
 
-/* Close Btn */
-.close-btn {
-  position: absolute;
-  top: 8px;
-  right: 12px;
-  width: 28px;
-  height: 28px;
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 50%;
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: #999;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 5;
-  transition: all 0.2s;
+.welcome-content .title { 
+    color: #2a5a54; 
+    font-size: 1.8rem; 
+    margin-bottom: 1rem; 
+    line-height: 1.2;
+}
+.welcome-content .minor { 
+    color: #495057; 
+    font-size: 1rem; 
+    /* Margen aumentado para separar el texto del botón y evitar desbordamiento */
+    margin-bottom: 1.5rem; 
 }
 
-.close-btn:hover {
-  background: #f0f0f0;
-  color: #333;
-  transform: scale(1.1);
+/* Contenedor explícito para el botón del modal (Asegura centrado y ancho) */
+.modal-button-wrapper {
+    width: 100%; 
+    display: flex; 
+    justify-content: center;
+    margin-top: 0.5rem; /* Pequeño espacio extra sobre el botón */
 }
 
-.title {
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: #222;
-  margin-bottom: 0.5rem;
-  padding-right: 30px;
+.modal-close-btn {
+    padding: 0.75rem 1.5rem; 
+    background: #66bb6a;
+    color: white; 
+    font-weight: bold; 
+    border: none; 
+    border-radius: 6px;
+    cursor: pointer; 
+    transition: background 0.2s;
+    width: 80%; 
+    max-width: 200px; 
+    display: inline-block; /* NECESARIO para que las propiedades de ancho funcionen */
 }
 
-.minor {
-  font-size: 0.9rem;
-  color: #666;
-  margin-bottom: 1rem;
-  line-height: 1.4;
-}
+.modal-close-btn:hover { background: #50a854; }
 
-.btn {
-  display: inline-block;
-  width: 100%;
-  padding: 0.75rem;
-  background: #007bff;
-  color: white;
-  text-align: center;
-  text-decoration: none;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 1rem;
-  transition: background 0.2s;
-}
 
-.btn:hover {
-  background: #0056b3;
-}
-
-/* Welcome Banner */
-.welcome-banner {
-  position: absolute;
-  padding: 0.8rem 1.2rem;
-  background: rgba(255,255,255,0.9);
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  z-index: 5;
-  opacity: 0;
-  transition: opacity 0.2s ease, transform 0.1s ease;
-  max-width: 220px;
-  font-size: 0.9rem;
-  cursor: pointer; /* Para click en móvil */
-}
-
-.welcome-banner.show {
-  display: block;
-  opacity: 1;
-}
-
-.welcome-banner.minimized {
-  transform: scale(0.8);
-}
-
-/* === MÓVIL: Modal Pantalla Completa === */
-.mobile-modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0,0,0,0.85);
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.mobile-modal-content {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  background: #fff;
-  overflow: hidden;
-}
-
-.mobile-modal .close-btn {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  width: 36px;
-  height: 36px;
-  background: rgba(255,255,255,0.9);
-  border-radius: 50%;
-  font-size: 1.5rem;
-  color: #333;
-  z-index: 50;
-  cursor: pointer;
-}
-
-/* Responsivo */
-@media (max-width: 768px) {
-  .layout-container {
-    flex-direction: column;
+/* RESPONSIVE: MÓVIL */
+@media (max-width: 992px) {
+  .mapa-main-container { padding: 10px; }
+  .mapa-section { 
+      grid-template-columns: 1fr; 
+      min-height: auto; 
   }
-
-  .sector-info {
-    width: 100%;
-    border-right: none;
-    border-bottom: 1px solid #dee2e6;
-  }
-
-  .delimiter {
-    height: 80vh; /* 80% en móvil */
-  }
-
-  .svgmap {
-    height: auto;
-  }
-
-  .tooltip {
-    top: 8px !important;
-    right: 8px !important;
-    width: 240px;
-  }
-
-  .welcome-banner {
-    padding: 0.8rem 1rem;
-    max-width: 90%;
-    font-size: 0.9rem;
-  }
-
-  .welcome-banner .title {
-    font-size: 1rem;
+  
+  .map-header { order: 1; margin-bottom: 10px; padding: 1rem; }
+  .map-column { order: 2; min-height: 60vh; padding: 10px; }
+  .info-sticky-wrapper { order: 3; }
+  
+  /* El panel deja de ser sticky en móvil */
+  .lot-info-sticky-panel { 
+    position: relative; 
+    top: auto; 
+    margin-top: 10px; 
+    transform: none;
+    padding: 1rem;
   }
 }

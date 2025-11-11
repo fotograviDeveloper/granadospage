@@ -3,6 +3,7 @@ import React from 'react';
 // Asegúrate de que esta ruta sea correcta para tu componente
 import PriceGrid from '../../components/PriceGrid'; 
 import './PricingPag.css';
+import InteractiveMap from '../../components/InteractiveMap.jsx';
 
 // 🛑 RUTA DE IMAGEN: Usa la ruta de tu nuevo mapa de masterplan
 const MASTERPLAN_IMAGE = '/img/masterplan.jpg'; 
@@ -13,19 +14,7 @@ const PricingPage = () => {
             
             {/* Sección de Encabezado y Mapa */}
             <section className="map-section">
-                <div className="page-heading-container">
-                    <h1 className="page-title">Lotes Disponibles y Precios</h1>
-                    <p className="page-subtitle">Visualiza la distribución del club residencial y el valor de inversión por etapa.</p>
-                </div>
-
-                <div className="masterplan-wrapper">
-                    <img 
-                        src={MASTERPLAN_IMAGE} 
-                        alt="Masterplan de Granados del Mediterráneo" 
-                        className="masterplan-image"
-                        loading="lazy"
-                    />
-                </div>
+                <InteractiveMap/>
             </section>
 
             {/* Sección de Precios (usando el PriceGrid) */}

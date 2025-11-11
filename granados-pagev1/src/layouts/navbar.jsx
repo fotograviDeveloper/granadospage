@@ -45,6 +45,7 @@ const Navbar = () => {
           <li><Link to="/proyecto" onClick={closeMenu}>Conoce el Proyecto</Link></li>
           <li><Link to="/precios" onClick={closeMenu}>Disponibilidad y Precios</Link></li>
           <li><Link to="/galeria" onClick={closeMenu}>Galería</Link></li>
+           <li><Link to="/Contacto" onClick={closeMenu}>Contacto</Link></li>
         </ul>
         
         {/* Iconos de Redes Sociales (Móvil) */}

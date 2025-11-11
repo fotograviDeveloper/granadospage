@@ -1,127 +1,186 @@
-/* src/components/InvestmentOverview.css */
+/* src/components/InvestmentOverview.css - Estilos Actualizados (Terracota) */
+
+/* Definición de la variable Terracota (EJEMPLO) */
+/* Debes asegurar que esta variable esté definida globalmente o reemplazarla por un valor hexadecimal */
+:root {
+    --color-terracota: #83422f; /* Ejemplo de Rosa Terracota/Ladrillo */
+    --color-terracota-dark: #a84332; 
+    --color-terracota-light: #a6685e; 
+    /* El verde anterior: --color-primary-accent: #4e7c3e; */
+}
+
 
 .investment-overview {
-    padding: 30px 0;
+    padding: 20px 0;
 }
 
 .investment-heading {
     text-align: center;
     font-size: 1.8rem;
     font-weight: 700;
-    color: var(--color-text-dark);
+    color: #333;
     margin-bottom: 40px;
 }
 
 .investment-grid {
-    display: flex;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 30px;
 }
 
 .investment-card {
-    flex: 1;
-    max-width: 450px;
-    background-color: white;
+    background: white;
+    border: 1px solid #ddd;
     border-radius: 10px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    border: 3px solid #f0f0f0;
     overflow: hidden;
-    text-align: center;
-    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s;
+    /* Asegura que la lista de beneficios empuje el footer */
+    flex-grow: 1; 
 }
 
 .investment-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
-    border-color: var(--color-secondary-accent);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
 }
 
+/* --- Stage Header --- */
 .card-stage-header {
-    background-color: var(--color-primary-accent); /* Verde Oscuro */
+    /* 🛑 CAMBIO DE COLOR A TERRACOTA */
+    background-color: var(--color-terracota, #cd533c);
     color: white;
-    padding: 15px 0;
+    padding: 15px 20px;
+    text-align: center;
 }
 
 .stage-tag {
-    display: inline-block;
-    font-size: 1.5rem;
-    font-weight: 900;
+    display: block;
+    font-size: 1.4rem;
+    font-weight: 800;
     margin-bottom: 5px;
+    text-transform: uppercase;
 }
 
 .stage-date {
     font-size: 0.9rem;
-    margin: 0;
     opacity: 0.8;
 }
 
+/* --- Price Body --- */
 .card-price-body {
-    padding: 30px 20px;
-    background-color: var(--color-light-bg);
+    padding: 25px 20px 15px;
+    text-align: center;
+    border-bottom: 1px dashed #eee;
 }
 
-.price-tag {
-    font-size: 3.2rem; /* Ligeramente más pequeña para que quepa "Desde" */
-    font-weight: 900;
-    color: var(--color-secondary-accent);
-    display: block;
-    line-height: 1;
+.lot-price-details {
+    margin-bottom: 15px;
 }
 
-.callout {
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--color-text-dark);
-    margin: 5px 0 0;
+.lot-price-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 0;
+    border-bottom: 1px dotted #f0f0f0;
 }
 
-.benefits-list {
-    list-style: none;
-    padding: 20px;
-    margin: 0;
-    text-align: left;
-    background-color: white;
-}
-
-.benefits-list li {
-    padding: 10px 0;
-    border-bottom: 1px solid #eee;
-    font-size: 1rem;
-    color: #444;
-}
-.benefits-list li:last-child {
+.lot-price-item:last-child {
     border-bottom: none;
 }
 
-.investment-cta {
-    display: block;
-    padding: 15px 0;
-    background-color: var(--color-secondary-accent);
+.lot-type {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #555;
+}
+
+.price-tag {
+    font-size: 1.2rem;
+    font-weight: 800;
+    /* 🛑 CAMBIO DE COLOR A TERRACOTA MÁS OSCURO */
+    color: var(--color-terracota-dark, #a84332);
+}
+
+.callout {
+    font-size: 0.9rem;
+    /* 🛑 CAMBIO DE COLOR A TERRACOTA */
+    color: var(--color-terracota, #cd533c);
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+/* --- Benefits List --- */
+.benefits-list {
+    list-style: none;
+    padding: 20px 20px 30px;
+    margin: 0;
+    flex-grow: 1; 
+}
+
+.benefits-list li {
+    font-size: 1rem;
+    padding: 8px 0;
+    border-bottom: 1px dotted #eee;
+    color: #666;
+    display: flex;
+    align-items: flex-start;
+}
+
+.benefits-list li::before {
+    content: "✓"; 
+    /* 🛑 CAMBIO DE COLOR A TERRACOTA */
+    color: var(--color-terracota, #cd533c);
+    font-weight: 900;
+    margin-right: 10px;
+    font-size: 1.2em;
+    line-height: 1;
+}
+
+/* 🛑 ELIMINADO: .investment-cta (El botón individual) */
+
+
+/* --- BOTÓN UNIFICADO AL PIE --- */
+.investment-cta-container {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.global-investment-cta {
+    display: inline-block;
+    padding: 15px 40px;
+    /* 🛑 CAMBIO DE COLOR A TERRACOTA */
+    background-color: var(--color-terracota, #cd533c);
     color: white;
     text-decoration: none;
     font-weight: 700;
-    transition: background-color 0.3s;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    transition: background-color 0.3s, transform 0.2s;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-.investment-cta:hover {
-    background-color: #2a4123;
+.global-investment-cta:hover {
+    /* 🛑 CAMBIO DE COLOR A TERRACOTA MÁS OSCURO */
+    background-color: var(--color-terracota-dark, #a84332);
+    transform: translateY(-2px);
 }
 
+
+/* --- Disclaimer --- */
 .disclaimer {
     text-align: center;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     color: #888;
-    margin-top: 30px;
+    margin-top: 20px;
+    padding: 0 10px;
 }
 
-/* --- Responsive --- */
-@media (max-width: 900px) {
+/* Responsive */
+@media (max-width: 768px) {
     .investment-grid {
-        flex-direction: column;
-        align-items: center;
-    }
-    .investment-card {
-        width: 90%;
-        max-width: 400px;
+        grid-template-columns: 1fr;
     }
 }

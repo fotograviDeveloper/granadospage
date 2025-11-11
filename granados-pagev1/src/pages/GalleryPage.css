@@ -1,0 +1,271 @@
+/* src/pages/GalleryPage.css - CORREGIDO Y AMPLIADO */
+
+/* Variables de Color (Terracota) */
+:root {
+    --color-terracota: #cd533c; 
+    --color-terracota-dark: #a84332; 
+    --color-terracota-light: #e09689; 
+    --color-light-bg: #f4f7f6;
+    --color-dark-text: #222;
+}
+
+/* --- Reutilizables --- */
+.info-inner-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 5%;
+}
+.section-heading {
+    text-align: center;
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--color-dark-text);
+    margin-bottom: 10px;
+}
+.section-subheading {
+    text-align: center;
+    font-size: 1.1rem;
+    color: #666;
+    margin-bottom: 40px;
+}
+.cta-icon-right {
+    margin-left: 10px;
+    font-size: 0.9em;
+}
+
+
+/* --- 1. Portada Hero (Mantiene estilos Terracota) --- */
+.gallery-hero-cover {
+    min-height: 85vh; 
+    background-size: cover;
+    background-position: center 40%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    text-align: center;
+}
+.gallery-hero-cover::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4); 
+}
+.hero-content-gallery {
+    position: relative;
+    z-index: 2;
+    color: white;
+    max-width: 900px;
+    padding: 40px 5%;
+}
+.hero-title {
+    font-size: 4rem;
+    font-weight: 900;
+    margin: 0 0 15px;
+    text-shadow: 0 3px 5px rgba(0, 0, 0, 0.7);
+}
+.hero-tagline {
+    font-size: 1.6rem;
+    font-weight: 300;
+    margin-bottom: 40px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
+}
+.hero-cta-button-gallery {
+    display: inline-block;
+    padding: 15px 40px;
+    background-color: var(--color-terracota);
+    color: white;
+    text-decoration: none;
+    font-weight: 700;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    transition: background-color 0.3s, transform 0.2s;
+}
+.hero-cta-button-gallery:hover {
+    background-color: var(--color-terracota-dark);
+    transform: translateY(-2px);
+}
+
+
+/* --- 2. Galería por Secciones (Tabs & Collage) --- */
+.gallery-tabs-section {
+    padding: 80px 0;
+    background-color: white;
+    position: relative; /* Contenedor principal para el popup flotante */
+}
+
+/* 🛑 POPUP FLOTANTE (ESTILO SIMILAR AL CUADRO ROJO) */
+.descriptive-popup {
+    position: absolute;
+    top: 100px; /* Ajustar posición vertical */
+    left: 5%;
+    max-width: 350px;
+    background-color: var(--color-terracota); /* Color base */
+    color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    z-index: 100;
+    animation: fadeIn 0.5s ease-out;
+}
+.popup-close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: opacity 0.3s;
+}
+.popup-close-btn:hover {
+    opacity: 1;
+}
+.popup-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+
+/* Navegación de Pestañas (Mantiene estilos Terracota) */
+.gallery-tabs-nav {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 25px; /* Reducimos el margen para acercar el texto dinámico */
+    flex-wrap: wrap;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.gallery-tab {
+    background: none;
+    border: none;
+    padding: 10px 20px 15px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #999;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s;
+}
+.gallery-tab.active {
+    color: var(--color-terracota);
+    border-bottom: 3px solid var(--color-terracota);
+}
+
+/* 🛑 TEXTO DESCRIPTIVO DINÁMICO */
+.dynamic-description-container {
+    max-width: 900px;
+    margin: 0 auto 40px;
+    text-align: center;
+    padding: 0 5%;
+}
+.dynamic-description-text {
+    font-size: 1.15rem;
+    color: var(--color-dark-text);
+    line-height: 1.6;
+    font-style: italic;
+    transition: opacity 0.5s;
+}
+
+
+/* Contenido de la Galería (Collage) */
+.gallery-content-display {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+.image-collage-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: auto auto; 
+    gap: 20px;
+}
+.collage-item {
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    height: 100%; /* Asegura que el contenedor respete el grid */
+}
+.collage-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s;
+}
+
+/* Estilos de Collage Dinámico */
+/* Primera imagen vertical - ocupa 2 filas */
+.collage-item.item-1 {
+    grid-row: span 2; 
+}
+/* Cuarta imagen horizontal - ocupa 2 columnas */
+.collage-item.item-4 {
+    grid-column: span 2;
+}
+
+
+/* --- 4. Contact CTA (Footer de la página) --- */
+.contact-cta-section-gallery {
+    padding: 80px 0;
+    background-color: var(--color-dark-text);
+    color: white;
+    text-align: center;
+}
+.cta-content-gallery h2 {
+    font-size: 2.8rem;
+    font-weight: 900;
+    margin-bottom: 10px;
+}
+.cta-content-gallery p {
+    font-size: 1.2rem;
+    margin-bottom: 40px;
+    color: var(--color-terracota-light);
+}
+
+
+/* --- Responsive Móvil/Tablet --- */
+@media (max-width: 1024px) {
+    .descriptive-popup {
+        /* Ocultamos el popup en tablet/móvil para evitar estorbar */
+        display: none; 
+    }
+}
+
+@media (max-width: 768px) {
+    .image-collage-grid {
+        /* En móvil, volvemos a una cuadrícula simple de 2 columnas */
+        grid-template-columns: 1fr 1fr; 
+        grid-template-rows: auto;
+        gap: 15px;
+    }
+
+    /* Reseteamos los span para que fluyan en una cuadrícula simple */
+    .collage-item.item-1,
+    .collage-item.item-4 {
+        grid-row: span 1;
+        grid-column: span 1;
+    }
+}
+
+@media (max-width: 500px) {
+    .image-collage-grid {
+        grid-template-columns: 1fr; /* Una columna en teléfonos */
+    }
+    .hero-title {
+        font-size: 3rem;
+    }
+}

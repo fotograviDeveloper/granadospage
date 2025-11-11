@@ -1,7 +1,7 @@
 /* src/pages/precios/PricingPage.css */
 
 .pricing-page {
-    padding-top: 50px; 
+
     background-color: var(--color-light-bg, #f4f7f6);
 }
 
@@ -26,7 +26,7 @@
 
 /* --- Masterplan Section --- */
 .map-section {
-    padding: 50px 0;
+    padding: 0px 0;
 }
 
 .masterplan-wrapper {

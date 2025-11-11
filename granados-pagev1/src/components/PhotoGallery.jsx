@@ -12,7 +12,7 @@ const galleryItems = [
     id: 1, 
     slug: 'casa-club',
     title: 'Casa Club y Amenidades', 
-    cover: 'img/galeria/club-cover.jpg', 
+    cover: 'img/casa1.jpg', 
     concept: 'El corazón social del proyecto. Más de 1000m² dedicados al esparcimiento.',
     technicalData: 'Superficie total: 1200 m² / Piscina semiolímpica / Salón de eventos para 150 personas.',
     images: [ // Array de imágenes para el slider interno

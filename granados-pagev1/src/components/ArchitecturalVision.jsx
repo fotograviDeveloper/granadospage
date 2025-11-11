@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import './ArchitecturalVision.css';
 
 // 🛑 IMAGEN PLACEHOLDER: Imagen de arquitectura Mediterránea o render de un lote
-const VISION_IMAGE = '/img/masterplan.jpg'; 
+const VISION_IMAGE = '/img/casa1.jpg'; 
 
 const ArchitecturalVision = () => {
     return (
@@ -20,9 +20,7 @@ const ArchitecturalVision = () => {
                 <p className="vision-text">
                     Nuestra **arquitectura mediterránea** no solo ofrece calidez visual, sino que está diseñada para elevar el valor de tu patrimonio y consolidar tu legado familiar en un entorno campestre exclusivo.
                 </p>
-                <Link to="/masterplan" className="vision-cta-button">
-                    Descubrir Masterplan
-                </Link>
+               
             </div>
             
             <div className="vision-image-wrapper">

@@ -1,4 +1,4 @@
-/* src/pages/ProjectInfoPage.css */
+/* src/pages/ProjectInfoPage.css - LIMPIO Y OPTIMIZADO */
 
 /* Contenedor central para el contenido */
 .info-inner-container {
@@ -12,7 +12,7 @@
     text-align: center;
     font-size: 2.2rem;
     font-weight: 800;
-    color: var(--color-primary-accent); /* Verde oscuro */
+    color: var(--color-primary-accent, #4e7c3e); /* Verde oscuro por defecto */
     margin-bottom: 10px;
 }
 
@@ -25,14 +25,24 @@
 
 /* --- 1. Project Hero (Banner Principal) --- */
 .project-hero {
-    min-height: 70vh; /* Altura mínima para que se sienta imponente */
+    min-height: 70vh; 
     background-size: cover;
     background-position: center;
     display: flex;
     align-items: center;
     position: relative;
 }
-
+/* Apuntando al elemento SVG dentro de .feature-icon */
+.feature-icon-wrapper svg {
+    /* 🛑 Propiedad para cambiar el color del dibujo del ícono */
+    fill: white !important; 
+    color: rgb(255, 255, 255);
+    width: 60px;
+    height: 30px;
+    margin: 0;
+    align-items: center;
+    text-align: center;
+}
 /* Overlay oscuro para que el texto resalte */
 .project-hero::before {
     content: '';
@@ -58,38 +68,46 @@
     font-size: 3.5rem;
     font-weight: 900;
     margin: 0 0 15px;
+    /* Sombra de texto para mejorar legibilidad sobre imágenes claras */
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); 
 }
 
 .hero-tagline {
     font-size: 1.5rem;
     font-weight: 300;
     margin-bottom: 30px;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5); 
 }
 
+/* 🛑 Estilos compartidos por Link y BrochureDownloadButton */
 .hero-cta-button {
     display: inline-block;
     padding: 15px 35px;
-    background-color: var(--color-secondary-accent);
+    /* Usamos la variable de acento (asumida como el verde oscuro) */
+    background-color: var(--color-primary-accent, #4e7c3e); 
     color: white;
     text-decoration: none;
     font-weight: 700;
     border-radius: 5px;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, transform 0.2s;
 }
 
 .hero-cta-button:hover {
-    background-color: #2a4123;
+    /* 🛑 CORRECCIÓN: Usamos la variable de color oscuro para consistencia */
+    background-color: var(--color-primary-dark, #3b5f2e); 
+    transform: translateY(-2px); /* Pequeño efecto de levantamiento */
 }
 
 /* --- 2. Value Proposition (Grid de Feature Cards) --- */
 .value-proposition-section {
     padding: 80px 0;
-    background-color: var(--color-light-bg);
+    background-color: var(--color-light-bg, #f4f7f6); /* Fondo claro */
 }
 
 .feature-cards-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* 4 columnas o menos en responsive */
+    /* 4 columnas en desktop, se ajusta a menos en tablet/móvil */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
     gap: 30px;
 }
 
@@ -98,20 +116,27 @@
     padding: 60px 0;
     background-color: white;
 }
-.investment-placeholder {
-    padding: 50px;
-    border: 1px dashed #ccc;
-    text-align: center;
-    color: #888;
+
+/* --- 4. Amenity Highlights (Sección con AmenityCard) --- */
+.amenity-highlights-section {
+    padding: 80px 0;
+    /* Este es el contenedor que rodea AmenityCard y el Mapa, mantenerlo limpio */
 }
 
-/* --- 4. Contact CTA --- */
+/* --- 5. Visión Arquitectónica (Sección agregada previamente) --- */
+.vision-section {
+    padding: 80px 0;
+    background-color: var(--color-light-bg, #f4f7f6);
+}
+
+/* --- 6. Contact CTA --- */
 .contact-cta-section {
     padding: 80px 0;
-    background-color: var(--color-primary-accent);
+    background-color: var(--color-primary-accent, #4e7c3e);
     color: white;
     text-align: center;
 }
+
 .cta-content h2 {
     font-size: 2.5rem;
     font-weight: 900;
@@ -122,6 +147,7 @@
     font-size: 1.2rem;
     margin-bottom: 30px;
 }
+
 
 /* --- Responsive (Móvil) --- */
 @media (max-width: 768px) {
@@ -137,7 +163,14 @@
     .section-heading {
         font-size: 1.8rem;
     }
-    .value-proposition-section {
+    .section-subheading {
+        margin-bottom: 30px;
+    }
+    .value-proposition-section,
+    .investment-section,
+    .amenity-highlights-section,
+    .vision-section,
+    .contact-cta-section {
         padding: 50px 0;
     }
 }

@@ -3,10 +3,10 @@
     "id": "lote1",
     "estado": "disponible",
     "titulo": "Lote 1",
-    "tipo": "Residencial",
+    "tipo": "AAA",
     "superficie_m2": 150,
     "costo_m2": 4500,
-    "nota": "Contacta para más info",
+    "nota": "da clcik para ver mas info",
     "link": "",
     "color": "verde"
   },

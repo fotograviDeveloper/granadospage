@@ -59,7 +59,7 @@
     height: 5%; 
     background: linear-gradient(
         to bottom, 
-        #bc7c74, 
+        #7c4d47, 
         rgba(188, 124, 116, 0.0) 
     );
     z-index: 5;
@@ -71,10 +71,10 @@
     to right, 
     
     /* 1. Color de inicio (Opaco) */
-    #bc7c74 0%, 
+    #7f4740ff 0%, 
     
     /* 2. Punto medio (Totalmente transparente) */
-    rgba(188, 124, 116, 0) 50%,
+    rgba(200, 78, 62, 0) 50%,
     
     /* 3. El resto (50% al 100%) permanece transparente */
     rgba(188, 124, 116, 0) 100% 

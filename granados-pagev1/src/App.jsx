@@ -14,6 +14,8 @@ import NotFoundPage from './pages/NotFoundPage';
 import ParqueLinealPage from './pages/amenidades/ParqueLinealPage';
 
 import LagoonClubPage from './pages/amenidades/LagoonClubPage';
+import GallerySection from './components/GallerySection';
+import GalleryPage from './pages/GalleryPage';
 function App() {
   return (
     <Routes>
@@ -27,11 +29,11 @@ function App() {
         {/* Ruta: /proyecto */}
         <Route path="proyecto" element={<ProjectInfoPage />} />
         {/* Ruta: /contacto */}
-        <Route path="contacto" element={<ContactPage />} />
+        <Route path="Contacto" element={<ContactPage />} />
         {/* NUEVA RUTA: /precios */}
         <Route path="precios" element={<PricingPage />} />
         {/* NUEVA RUTA: /galeria */}
-        <Route path="galeria" element={<PhotoGallery/>} />
+        <Route path="galeria" element={<GalleryPage/>} />
 {/* 🛑 NUEVA RUTA DE AMENIDAD */}
         <Route 
             path="/amenidades/casa-club" 
