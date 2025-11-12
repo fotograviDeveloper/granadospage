@@ -2,7 +2,7 @@
 import React from 'react';
 // Asegúrate de que esta ruta sea correcta para tu componente
 import PriceGrid from '../../components/PriceGrid'; 
-import './PricingPag.css';
+import './PricingPage.css';
 import InteractiveMap from '../../components/InteractiveMap.jsx';
 
 // 🛑 RUTA DE IMAGEN: Usa la ruta de tu nuevo mapa de masterplan
