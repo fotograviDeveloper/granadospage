@@ -12,29 +12,23 @@
 /* 1. ESTRUCTURA PRINCIPAL */
 .mapa-wrapper {
     width: 100%;
-    /* Espacio para el Navbar fijo */
-  
 }
 
 .mapa-main-container {
     max-width: 1400px;
     margin: 0 auto;
-   
-    background: #d5d4d4;
+    background: #f8f9fa;
     display: flex;
     flex-direction: column;
 }
 
 /* Leyenda */
 .map-header {
-    background: #d5d4d4;
-    padding: 1.5rem;
-    padding-top: 0;
+    background: #ffffff;
+    padding: 2rem;
     margin-bottom: 20px;
-    
     border-radius: 8px;
-
-    /* Usar Flexbox para centrar los elementos */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -42,18 +36,18 @@
     align-items: center;
 }
 
-.legend-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 0.5rem; color: #212529; }
-.legend-subtitle { font-size: 0.9rem; margin-bottom: 1rem; color: #6c757d; }
+.legend-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; color: #212529; }
+.legend-subtitle { font-size: 1rem; margin-bottom: 1.5rem; color: #6c757d; max-width: 600px; }
 .status-legend { 
     display: flex; 
     justify-content: center;
     align-items: center;
     flex-wrap: wrap; 
-    gap: 1.5rem; 
+    gap: 2rem;
 }
 .status-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; color: #343a40; font-weight: 500;}
 .status-color { 
-    display: inline-block; width: 16px; height: 16px; border-radius: 3px; 
+    display: inline-block; width: 18px; height: 18px; border-radius: 4px;
     border: 1px solid rgba(0,0,0,0.1);
 }
 /* Colores de Estado */
@@ -63,103 +57,99 @@
 .blocked { background: #e5e7eb; } 
 
 
-/* 2. LAYOUT DE COLUMNAS Y STICKY (Ajustes para el Scroll) */
+/* 2. LAYOUT DE COLUMNAS Y STICKY */
 .mapa-section {
   display: grid;
-  grid-template-columns: 30% 70%; 
-padding: 0;
+  grid-template-columns: 320px 1fr;
+  gap: 20px;
+  padding: 0 20px;
   width: 100%;
-  align-items: start; /* Asegura que el contenido comience arriba */
-  min-height: 1000px; /* CRÍTICO: Asegura que el contenedor tenga suficiente altura para el scroll del sticky */
+  align-items: flex-start;
+  min-height: 100vh;
 }
 
 .info-sticky-wrapper {
-    position: relative;
+    position: sticky;
+    top: 20px;
 }
 
-/* PANEL STICKY (Recuadro de Información del Lote) */
+/* PANEL STICKY */
 .lot-info-sticky-panel {
-  position: sticky;
-  top: 70px; /* CRÍTICO: Posiciona el panel 70px debajo del tope de la ventana, permitiendo seguimiento */
   width: 100%;
   padding: 1.5rem;
-  border-radius: 8px;
+  border-radius: 12px;
   text-align: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  transition: background 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-in-out;
 }
 
-/* ESTADO 1: INITIAL / HOVER (Panel Blanco - Contraste Mejorado) */
+/* ESTADO 1: INITIAL / HOVER */
 .lot-info-sticky-panel.initial-state {
     background: #ffffff; 
-    color: #343a40; /* Texto oscuro para legibilidad */
+    color: #343a40;
     border: 1px solid #dee2e6; 
 }
 .lot-info-sticky-panel.initial-state .panel-title,
-.lot-info-sticky-panel.initial-state .lot-note,
-.lot-info-sticky-panel.initial-state .lot-status {
-    color: #6c757d; /* Texto secundario gris */
+.lot-info-sticky-panel.initial-state .lot-note {
+    color: #6c757d;
 }
 .lot-info-sticky-panel.initial-state .lot-number {
-    color: #212529; /* Título principal oscuro */
+    color: #212529;
 }
 
-/* ESTADO 2: ACTIVE / CLICK (Panel Verde) */
+/* ESTADO 2: ACTIVE / CLICK */
 .lot-info-sticky-panel.active {
-    background: #2a5a54; /* Fondo verde oscuro */
-    color: white; /* Texto blanco */
+    background: #2a5a54;
+    color: white;
     border: 1px solid #2a5a54; 
+    transform: translateY(-5px);
 }
 .lot-info-sticky-panel.active .panel-title,
-.lot-info-sticky-panel.active .lot-note,
-.lot-info-sticky-panel.active .lot-status {
-    color: #c0c0c0; /* Texto secundario claro */
+.lot-info-sticky-panel.active .lot-note {
+    color: #e0e0e0;
 }
 
 
-/* Estilos de Tipografía y Espaciado */
-.panel-title { font-size: 0.8rem; font-weight: 300; margin-bottom: 0.5rem; text-transform: uppercase; }
-.lot-number { font-size: 1.8rem; font-weight: 700; margin-bottom: 0.75rem; line-height: 1.2; }
-.lot-status { font-size: 1rem; font-weight: 500; margin-bottom: 1.5rem; }
+/* Tipografía y Espaciado */
+.panel-title { font-size: 0.85rem; font-weight: 400; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.5px; }
+.lot-number { font-size: 2rem; font-weight: 700; margin-bottom: 1rem; line-height: 1.2; }
+.lot-status { font-size: 1.1rem; font-weight: 600; margin-bottom: 1.5rem; }
 
-/* Detalles del lote (Superficie, Tipo, Costo) */
+/* Detalles del lote */
 .lot-details {
-    margin: 1rem 0;
-    padding: 0 10px;
-    font-size: 0.95rem;
-    padding-top: 1rem;
+    margin: 1.5rem 0;
+    padding: 1rem 0;
+    font-size: 1rem;
     text-align: left;
     border-top: 1px solid; 
 }
-/* Color del borde en estado activo */
 .lot-info-sticky-panel.active .lot-details {
-    border-color: rgba(255, 255, 255, 0.3); 
+    border-color: rgba(255, 255, 255, 0.2);
 }
-/* Color del borde en estado inicial/hover */
 .lot-info-sticky-panel.initial-state .lot-details {
-    border-color: rgba(0, 0, 0, 0.1); 
+    border-color: #e9ecef;
 }
-.lot-details p { margin-bottom: 5px; }
-.lot-details strong { font-weight: 700; }
+.lot-details p { margin-bottom: 8px; }
+.lot-details strong { font-weight: 600; }
 .lot-note { 
-    font-size: 0.85rem; 
-    margin-top: 10px; 
-    margin-bottom: 15px; 
+    font-size: 0.9rem;
+    margin: 1rem 0;
     font-style: italic;
 }
 
 
-/* Estilo base para botones de acción */
+/* Botones de acción */
 .btn {
     display: block; 
     width: 100%; 
-    padding: 0.75rem; 
+    padding: 0.85rem 1rem;
     text-align: center; 
     text-decoration: none; 
-    border-radius: 6px;
+    border-radius: 8px;
     font-weight: 700; 
-    transition: background 0.2s, opacity 0.2s, color 0.2s, border-color 0.2s; 
+    transition: all 0.2s ease-in-out;
     text-transform: uppercase;
+    cursor: pointer;
 }
 
 /* Botón Cotizar */
@@ -167,70 +157,67 @@ padding: 0;
   background: #66bb6a; 
   color: white; 
   margin-bottom: 10px; 
-  border: 1px solid #66bb6a;
+  border: 1px solid transparent;
 }
-.cotizar-btn:hover { background: #50a854; border-color: #50a854;}
+.cotizar-btn:hover { background: #5aae5e; transform: translateY(-2px); }
 
 .cotizar-btn.disabled-btn {
-    background: #9e9e9e; 
-    border-color: #9e9e9e;
+    background: #adb5bd;
     cursor: not-allowed;
-    opacity: 0.7;
+    opacity: 0.8;
 }
+.cotizar-btn.disabled-btn:hover { background: #adb5bd; transform: none; }
 
-/* Botón Cambiar de Lote (Contraste Perfecto en estado Active) */
+
+/* Botón Cambiar de Lote */
 .change-lot-btn {
-    background: #50a8543e; 
-    color: rgb(61, 61, 61); /* Texto blanco sobre verde oscuro */
-    border: 1px solid rgba(232, 225, 15, 0.226); /* Borde blanco para contraste */
+    background: transparent;
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.5);
     font-size: 0.9rem;
-    cursor: pointer;
-    margin-bottom: 0;
 }
 .change-lot-btn:hover {
-    background: rgba(255, 255, 255, 0.1); /* Ligero hover transparente */
-    color: rgb(104, 104, 104);
-    border-color: rgb(194, 230, 15);
+    background: rgba(255, 255, 255, 0.1);
+    border-color: white;
 }
 
 /* Columna Mapa */
 .map-column {
   position: relative;
-  background: #06190c; 
-  min-height: 700px; 
+  background: #ffffff;
   padding: 15px; 
-  border-radius: 8px;
+  border-radius: 12px;
   overflow: hidden; 
-  display: flex; 
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
 
 .svgmap {
-  width: 100% !important;
-  height: 100% !important;
+  width: 100%;
+  height: auto;
   object-fit: contain; 
   display: block;
 }
 
 .svgmap path, .svgmap polygon, .svgmap rect, .svgmap ellipse {
-    transition: fill 0.3s, fill-opacity 0.3s, filter 0.2s;
+    transition: fill 0.2s, fill-opacity 0.2s, filter 0.2s;
 }
 
 /* Pie de Página */
 .mapa-footer {
     background: #ffffff;
-    padding: 1rem;
+    padding: 1.5rem;
     margin-top: 20px;
     text-align: center;
     border-radius: 8px;
-    color: #343a40;
-    border: 1px solid #dee2e6;
+    color: #6c757d;
+    border-top: 1px solid #e9ecef;
 }
 
 
-/* VENTANA MODULAR DE BIENVENIDA (Ajuste Final de Botón) */
+/* VENTANA MODULAR DE BIENVENIDA */
 .welcome-modal {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.85); 
+    background: rgba(0, 0, 0, 0.7);
     display: flex; justify-content: center; align-items: center;
     z-index: 1000;
     opacity: 0; visibility: hidden;
@@ -241,12 +228,11 @@ padding: 0;
 
 .welcome-content {
     background: #ffffff; 
-    padding: 2rem; 
-    border-radius: 12px;
-    max-width: 400px; 
+    padding: 2.5rem;
+    border-radius: 16px;
+    max-width: 450px;
     text-align: center; 
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    /* CRÍTICO: Usamos flex-direction column para asegurar que los elementos se apilen */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
     display: flex; 
     flex-direction: column; 
     align-items: center;
@@ -254,60 +240,64 @@ padding: 0;
 
 .welcome-content .title { 
     color: #2a5a54; 
-    font-size: 1.8rem; 
+    font-size: 2rem;
     margin-bottom: 1rem; 
     line-height: 1.2;
 }
 .welcome-content .minor { 
     color: #495057; 
-    font-size: 1rem; 
-    /* Margen aumentado para separar el texto del botón y evitar desbordamiento */
-    margin-bottom: 1.5rem; 
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
 }
 
-/* Contenedor explícito para el botón del modal (Asegura centrado y ancho) */
 .modal-button-wrapper {
     width: 100%; 
-    display: flex; 
-    justify-content: center;
-    margin-top: 0.5rem; /* Pequeño espacio extra sobre el botón */
 }
 
 .modal-close-btn {
-    padding: 0.75rem 1.5rem; 
+    padding: 0.85rem 1.5rem;
     background: #66bb6a;
     color: white; 
     font-weight: bold; 
     border: none; 
-    border-radius: 6px;
+    border-radius: 8px;
     cursor: pointer; 
-    transition: background 0.2s;
-    width: 80%; 
-    max-width: 200px; 
-    display: inline-block; /* NECESARIO para que las propiedades de ancho funcionen */
+    transition: all 0.2s ease-in-out;
+    width: 100%;
 }
 
-.modal-close-btn:hover { background: #50a854; }
+.modal-close-btn:hover { background: #5aae5e; transform: translateY(-2px); }
 
 
-/* RESPONSIVE: MÓVIL */
+/* RESPONSIVE: TABLET Y MÓVIL */
 @media (max-width: 992px) {
-  .mapa-main-container { padding: 10px; }
+  .mapa-main-container { padding: 15px; }
   .mapa-section { 
       grid-template-columns: 1fr; 
       min-height: auto; 
+      padding: 0;
   }
   
-  .map-header { order: 1; margin-bottom: 10px; padding: 1rem; }
+  .map-header { order: 1; margin-bottom: 15px; padding: 1.5rem; }
   .map-column { order: 2; min-height: 60vh; padding: 10px; }
-  .info-sticky-wrapper { order: 3; }
+  .info-sticky-wrapper { order: 3; position: relative; top: auto; }
   
-  /* El panel deja de ser sticky en móvil */
   .lot-info-sticky-panel { 
     position: relative; 
     top: auto; 
-    margin-top: 10px; 
+    margin-top: 15px;
     transform: none;
-    padding: 1rem;
+    padding: 1.5rem;
   }
+}
+
+@media (max-width: 768px) {
+  .map-header { padding: 1rem; }
+  .legend-title { font-size: 1.3rem; }
+  .legend-subtitle { font-size: 0.9rem; }
+  .status-legend { gap: 1rem; }
+  .map-column { min-height: 50vh; }
+  .lot-info-sticky-panel { padding: 1rem; }
+  .lot-number { font-size: 1.8rem; }
+  .welcome-content { padding: 2rem; max-width: 90%; }
 }
