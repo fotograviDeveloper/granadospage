@@ -1,3 +1,4 @@
+// Re-submitting the file to trigger a new pull request.
 import React, { useEffect, useRef, useCallback, useState } from 'react';
 import './InteractiveMap.css';
 // Asegúrate de que esta ruta sea correcta para tu JSON de respaldo
@@ -158,13 +159,15 @@ export default function InteractiveMap() {
       sessionStorage.setItem(MODAL_SEEN_KEY, 'true'); 
       closeBtn.removeEventListener('click', handler);
       closeBtn.__clickHandler = null;
+      // DISPARADOR DE CARGA DE DATOS: Al hacer clic en "¡Empecemos!"
+      fetchData().then(setData);
     };
     closeBtn.__clickHandler = handler; 
     closeBtn.addEventListener('click', handler);
-  }, []);
+  }, [setData]);
   
   // Efectos de carga de datos y SVG
-  useEffect(() => { fetchData().then(setData); }, []);
+  // El useEffect para la carga inicial de datos se ha eliminado.
 
   useEffect(() => {
     const svgObject = svgObjectRef.current;
