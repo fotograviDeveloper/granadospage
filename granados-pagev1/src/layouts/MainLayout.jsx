@@ -6,11 +6,13 @@ import { Outlet } from 'react-router-dom';
 import Navbar from './navbar'; 
 // Importamos el Footer (asumiendo que tiene un placeholder)
 import Footer from './Footer'; 
+import ScrollToTop from '../components/ScrollToTop';
 
 const MainLayout = () => {
   return (
     <div className="main-layout-wrapper">
       {/* El Navbar siempre se mostrará */}
+      <ScrollToTop />
       <Navbar />
 
       {/* El contenido específico de la página (HomePage, ContactPage, etc.)

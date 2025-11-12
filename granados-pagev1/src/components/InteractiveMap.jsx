@@ -4,24 +4,24 @@ import './InteractiveMap.css';
 import fallbackData from '../assets/fallback-lotes.json'; 
 
 // --- Configuración y Constantes ---
-const DATA_URL = 'https://n8n.srv894483.hstgr.cloud/webhook/lotes-json';
-const WHATSAPP_BASE = 'https://wa.me/528123852034?text='; 
+const DATA_URL = fallbackData // URL del JSON de datos de lotes
+const WHATSAPP_BASE = 'https://wa.me/528123852034?text=enviarmensaje';  
 const CONTACTO_URL = '/Contacto'; 
 const MODAL_SEEN_KEY = 'mapa_interactivo_modal_visto'; 
 const SVG_PATH = '/SVGmapa.svg'; 
 
 const COLOR_BY_STATUS = { 
-    disponible: '#2a5a54',
-    reservado: '#ffc107',
-    vendido: '#ef5350',
-    bloqueado: '#e5e7eb',
-    'n/a': '#e5e7eb'
+    disponible: '#2a5a54',
+    reservado: '#ffc107',
+    vendido: '#ef5350',
+    bloqueado: '#e5e7eb',
+    'n/a': '#e5e7eb'
 };
 const COLOR_PRESETS = { 
-    verde: '#2a5a54', 
-    amarillo: '#ffc107', 
-    rojo: '#ef5350', 
-    gris: '#e5e7eb' 
+    verde: '#2a5a54', 
+    amarillo: '#ffc107', 
+    rojo: '#ef5350', 
+    gris: '#e5e7eb' 
 };
 const FALLBACK_COLOR = '#d1e7dd';
 const SHAPE_SEL = 'path,polygon,rect,ellipse'; 
@@ -30,18 +30,18 @@ const WELCOME_BANNER_CONTENT = `
   <div class="welcome-content">
     <div class="title" style="font-weight:700;">¡Bienvenido al Mapa Interactivo!</div>
     <div class="minor">Identifica la disponibilidad, haz clic en un lote para ver detalles y contactar a un asesor.</div>
-    <div class="modal-button-wrapper"> 
-      <button id="close-modal-btn" class="modal-close-btn">¡Empecemos!</button>
-    </div>
+    <div class="modal-button-wrapper"> 
+      <button id="close-modal-btn" class="modal-close-btn">¡Empecemos!</button>
+    </div>
   </div>
 `;
 const INITIAL_LOT_INFO = { 
-    titulo: 'PASA EL CURSOR POR EL MAPA', 
-    superficie_m2: null, 
-    estado: 'n/a',
-    tipo: 'Tipo',
-    costo_m2: null,
-    nota: 'Da click en el lote para seleccionar' 
+    titulo: 'PASA EL CURSOR POR EL MAPA', 
+    superficie_m2: null, 
+    estado: 'n/a',
+    tipo: 'Tipo',
+    costo_m2: null,
+    nota: 'Da click en el lote para seleccionar' 
 };
 
 // --- Utils ---
@@ -64,6 +64,7 @@ function normalizeRows(j) {
   if (j?.rows) return j.rows;
   return [];
 }
+// Mantenemos fetchData por si se necesita más tarde, pero ya no la llamamos en el useEffect.
 async function fetchData() {
   try {
     const r = await fetch(DATA_URL, { cache: 'no-store' });
@@ -89,19 +90,19 @@ function isPaintable(el) {
 }
 
 function formatCurrency(value) {
-    if (!value) return 'Consultar';
-    
-    const rawValue = String(value).replace(/[$, ]/g, '');
-    const numberValue = parseFloat(rawValue);
+    if (!value) return 'Consultar';
+    
+    const rawValue = String(value).replace(/[$, ]/g, '');
+    const numberValue = parseFloat(rawValue);
 
-    if (isNaN(numberValue)) return 'Consultar';
+    if (isNaN(numberValue)) return 'Consultar';
 
-    // Formato estándar MXN
-    return `$${numberValue.toLocaleString('es-MX', { 
-        minimumFractionDigits: 2, 
-        maximumFractionDigits: 2,
-        useGrouping: true
-    })}`;
+    // Formato estándar MXN
+    return `$${numberValue.toLocaleString('es-MX', { 
+        minimumFractionDigits: 2, 
+        maximumFractionDigits: 2,
+        useGrouping: true
+    })}`;
 }
 
 
@@ -112,7 +113,9 @@ export default function InteractiveMap() {
   const modalRef = useRef(null);
   const cleanupRef = useRef(null); 
   
-  const [data, setData] = useState(null);
+  // === CORRECCIÓN CLAVE 1: Inicializar el estado `data` con los datos de respaldo ===
+  const [data, setData] = useState(fallbackData);
+  
   const [svgDoc, setSvgDoc] = useState(null);
   const [activeEl, setActiveEl] = useState(null); // Elemento SVG seleccionado (clic)
   const [currentInfo, setCurrentInfo] = useState(INITIAL_LOT_INFO); // Info para el panel
@@ -139,33 +142,36 @@ export default function InteractiveMap() {
     if (sessionStorage.getItem(MODAL_SEEN_KEY) === 'true') {
       return;
     }
-    */
+    */
     // <<< Asegúrate de descomentar esto antes de ir a producción. >>>
     
     modal.classList.add('active');
     modal.setAttribute('aria-hidden', 'false');
 
     const closeBtn = document.getElementById('close-modal-btn');
-    // Esto asegura que el evento de cierre solo se aplique una vez
-    const existingHandler = closeBtn.__clickHandler;
-    if (existingHandler) {
-        closeBtn.removeEventListener('click', existingHandler);
-    }
-    
+    // Esto asegura que el evento de cierre solo se aplique una vez
+    const existingHandler = closeBtn.__clickHandler;
+    if (existingHandler) {
+        closeBtn.removeEventListener('click', existingHandler);
+    }
+    
     const handler = () => {
       modal.classList.remove('active');
       modal.setAttribute('aria-hidden', 'true');
       sessionStorage.setItem(MODAL_SEEN_KEY, 'true'); 
       closeBtn.removeEventListener('click', handler);
-      closeBtn.__clickHandler = null;
+      closeBtn.__clickHandler = null;
     };
-    closeBtn.__clickHandler = handler; 
+    closeBtn.__clickHandler = handler; 
     closeBtn.addEventListener('click', handler);
   }, []);
   
   // Efectos de carga de datos y SVG
-  useEffect(() => { fetchData().then(setData); }, []);
-
+  
+  // === CORRECCIÓN CLAVE 2: Eliminar/Comentar el useEffect de llamada a la API ===
+  /*   useEffect(() => { fetchData().then(setData); }, []); 
+  */
+  
   useEffect(() => {
     const svgObject = svgObjectRef.current;
     if (!svgObject) return;
@@ -198,16 +204,16 @@ export default function InteractiveMap() {
     
     const infoToUse = info && Object.keys(info).length > 0 ? info : INITIAL_LOT_INFO;
     
-    // Si hay un lote activo y NO es un clic, ignoramos la actualización (Congelamiento)
-    if (activeEl && !isClick) {
-        return;
-    }
+    // Si hay un lote activo y NO es un clic, ignoramos la actualización (Congelamiento)
+    if (activeEl && !isClick) {
+        return;
+    }
 
     setCurrentInfo(infoToUse);
 
     if (!panel) return;
-    
-    // Si es un clic, activamos la clase para mostrar botones
+    
+    // Si es un clic, activamos la clase para mostrar botones
     if (isClick) {
       panel.classList.add('active'); 
       panel.classList.remove('initial-state');
@@ -246,7 +252,7 @@ export default function InteractiveMap() {
         s.style.pointerEvents = 'auto';
         s.style.cursor = 'pointer';
       });
-        node.style.pointerEvents = 'auto';
+        node.style.pointerEvents = 'auto';
 
       // --- Handlers ---
       const onEnter = () => { 
@@ -323,6 +329,8 @@ export default function InteractiveMap() {
   
   
   useEffect(() => {
+    // Como `data` ya se inicializa con fallbackData, este useEffect se ejecutará
+    // tan pronto como `svgDoc` esté listo.
     if (!data || !svgDoc) return;
 
     cleanupRef.current?.(); 
@@ -341,8 +349,8 @@ export default function InteractiveMap() {
   // Desestructuración y Lógica de Enlaces para el Render
   const { titulo, superficie_m2, estado, tipo, costo_m2, nota, link } = currentInfo;
   const isInitial = currentInfo === INITIAL_LOT_INFO;
-    // activeEl !== null es el estado CRÍTICO para mostrar botones
-    const isPanelActive = activeEl !== null; 
+    // activeEl !== null es el estado CRÍTICO para mostrar botones
+    const isPanelActive = activeEl !== null; 
   
   const numero = norm(titulo) || 'Lote';
   const currentStatus = norm(estado).toUpperCase() || 'VE LOS DATOS AQUÍ';
@@ -365,10 +373,10 @@ export default function InteractiveMap() {
   } else if (estadoLowerCase === 'reservado') {
     // Para reservado, usamos el enlace de contacto si no hay uno específico
     cotizarLink = norm(link) || CONTACTO_URL;
-    cotizarTarget = '_self'; 
+    cotizarTarget = '_self'; 
   } else {
-    // DISPONIBLE: Usar WHATSAPP_BASE con el mensaje del lote (incluye los datos congelados)
-    const waMessage = `Hola, me interesa el lote ${numero}, con superficie de ${sup} y costo por m² de ${formattedCosto}. Estado: ${currentStatus}.`;
+    // DISPONIBLE: Usar WHATSAPP_BASE con el mensaje del lote (incluye los datos congelados)
+    const waMessage = `Hola, me interesa el lote ${numero}, con superficie de ${sup} y costo por m² de ${formattedCosto}. Estado: ${currentStatus}.`;
     cotizarLink = `${WHATSAPP_BASE}${encodeURIComponent(waMessage)}`;
     cotizarTarget = '_blank';
   }
@@ -403,37 +411,37 @@ export default function InteractiveMap() {
               className={`lot-info-sticky-panel ${isPanelActive ? 'active' : ''} ${isInitial ? 'initial-state' : ''}`}
             >
                 <div className="panel-title">{!isInitial ? 'TU LOTE SELECCIONADO' : 'INFORMACIÓN'}</div>
-              
-              <React.Fragment>
-                      <div id="lot-number" className="lot-number">
-                          {numero}
-                      </div>
-                      
-                      {/* Detalles del lote: Se muestran si NO es el estado inicial */}
-                      {!isInitial && (
-                          <div className="lot-details">
-                              <p><strong>Superficie:</strong> {sup}</p>
-                              <p><strong>Tipo:</strong> {norm(tipo)}</p>
-                              <p><strong>Costo m²:</strong> {formattedCosto}</p>
-                          </div>
-                      )}
-                      
-                      {/* Mostrar mensaje de "PASA EL CURSOR" solo en estado inicial */}
-                      {isInitial && (
-                          <div className="initial-instructions">
-                              <p className="large-text">PASA EL CURSOR POR EL MAPA</p>
-                              <p className="small-text">Da click en el lote para seleccionar</p>
-                          </div>
-                      )}
+              
+              <React.Fragment>
+                      <div id="lot-number" className="lot-number">
+                          {numero}
+                      </div>
+                      
+                      {/* Detalles del lote: Se muestran si NO es el estado inicial */}
+                      {!isInitial && (
+                          <div className="lot-details">
+                              <p><strong>Superficie:</strong> {sup}</p>
+                              <p><strong>Tipo:</strong> {norm(tipo)}</p>
+                              <p><strong>Costo m²:</strong> {formattedCosto}</p>
+                          </div>
+                      )}
+                      
+                      {/* Mostrar mensaje de "PASA EL CURSOR" solo en estado inicial */}
+                      {isInitial && (
+                          <div className="initial-instructions">
+                              <p className="large-text">PASA EL CURSOR POR EL MAPA</p>
+                              <p className="small-text">Da click en el lote para seleccionar</p>
+                          </div>
+                      )}
 
 
-                      <div id="lot-status" className="lot-status" style={{ color: pickColor({ estado }) }}>
-                          {currentStatus}
-                      </div>
-                      
-                      <div className="lot-note">{norm(nota)}</div>
-              </React.Fragment>
-              
+                      <div id="lot-status" className="lot-status" style={{ color: pickColor({ estado }) }}>
+                          {currentStatus}
+                      </div>
+                      
+                      <div className="lot-note">{norm(nota)}</div>
+              </React.Fragment>
+              
               {/* Mostrar botones SOLO si hay un lote SELECCIONADO (isPanelActive es true) */}
               {isPanelActive && ( 
                 <>

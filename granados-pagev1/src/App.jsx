@@ -16,9 +16,12 @@ import ParqueLinealPage from './pages/amenidades/ParqueLinealPage';
 import LagoonClubPage from './pages/amenidades/LagoonClubPage';
 import GallerySection from './components/GallerySection';
 import GalleryPage from './pages/GalleryPage';
+import ScrollToTop from './components/ScrollToTop';
+
 function App() {
   return (
     <Routes>
+    
       {/* El MainLayout contiene el Navbar y Footer y permanece fijo. */}
       <Route path="/" element={<MainLayout />}>
         
