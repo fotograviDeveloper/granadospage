@@ -1,12 +1,9 @@
 // src/utils/mapLogic.js (Lógica Completa)
 
 export function initializeMapLogic(refs) {
-    // Referencias DOM pasadas como argumento
-    const { svgObject, delimiter: delimiterEl, tooltip, welcomeBanner, containerMapEl } = refs;
-    
-    // Si el SVG aún no tiene su contenido cargado, salimos.
+    const { svgObject, delimiter: delimiterEl, tooltip, welcomeBanner } = refs;
     if (!svgObject || !svgObject.contentDocument) {
-        return () => {}; // Retorna una función vacía de limpieza
+        return () => {};
     }
 
     console.log('Mapa Interactivo: Inicializando lógica de eventos.');
