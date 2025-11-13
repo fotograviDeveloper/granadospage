@@ -4,7 +4,8 @@ import './InteractiveMap.css';
 import fallbackData from '../assets/fallback-lotes.json'; 
 
 // --- Configuración y Constantes ---
-const DATA_URL = fallbackData // URL del JSON de datos de lotes
+// NOTA: Se ha comentado la URL real por ahora y usamos fallbackData como marcador de posición.
+const DATA_URL = fallbackData 
 const WHATSAPP_BASE = 'https://wa.me/528123852034?text=enviarmensaje';  
 const CONTACTO_URL = '/Contacto'; 
 const MODAL_SEEN_KEY = 'mapa_interactivo_modal_visto'; 
@@ -62,22 +63,22 @@ function normalizeRows(j) {
   if (j?.data) return j.data;
   if (j?.items) return j.items.map(x => x.json ?? x);
   if (j?.rows) return j.rows;
-  return [];
+  return Array.isArray(j) ? j : [];
 }
-// Mantenemos fetchData por si se necesita más tarde, pero ya no la llamamos en el useEffect.
+// Función para simular la llamada a la API (solo usando datos de respaldo por ahora)
 async function fetchData() {
   try {
-    const r = await fetch(DATA_URL, { cache: 'no-store' });
-    if (!r.ok) throw new Error('HTTP ' + r.status);
-    const text = await r.text();
-    if (!text.trim()) return fallbackData;
-    let j;
-    try { j = JSON.parse(text); } catch (e) { return fallbackData; }
-    const normalized = normalizeRows(j);
-    if (normalized.length === 0) return fallbackData;
-    return normalized;
+    // Aquí deberías hacer un fetch real a tu DATA_URL
+    // const r = await fetch(DATA_URL, { cache: 'no-store' });
+    // const text = await r.text();
+    // let j = JSON.parse(text);
+    // return normalizeRows(j);
+    
+    // Por ahora, solo devolvemos los datos de respaldo normalizados
+    return normalizeRows(fallbackData); 
   } catch (e) {
-    return fallbackData; 
+    console.error("Error al cargar datos:", e);
+    return normalizeRows(fallbackData); 
   }
 }
 function isPaintable(el) {
@@ -113,8 +114,9 @@ export default function InteractiveMap() {
   const modalRef = useRef(null);
   const cleanupRef = useRef(null); 
   
-  // === CORRECCIÓN CLAVE 1: Inicializar el estado `data` con los datos de respaldo ===
-  const [data, setData] = useState(fallbackData);
+  // Inicialización de estado con datos de respaldo normalizados
+  const initialData = normalizeRows(fallbackData); 
+  const [data, setData] = useState(initialData); 
   
   const [svgDoc, setSvgDoc] = useState(null);
   const [activeEl, setActiveEl] = useState(null); // Elemento SVG seleccionado (clic)
@@ -137,13 +139,12 @@ export default function InteractiveMap() {
     const modal = modalRef.current;
     if (!modal) return;
     
-    // <<< CORRECCIÓN APLICADA AQUÍ: COMENTAMOS LA REVISIÓN PARA FORZAR LA APARICIÓN >>>
+    // <<< NOTA: Dejar comentado para forzar aparición en desarrollo >>>
     /*
     if (sessionStorage.getItem(MODAL_SEEN_KEY) === 'true') {
       return;
     }
     */
-    // <<< Asegúrate de descomentar esto antes de ir a producción. >>>
     
     modal.classList.add('active');
     modal.setAttribute('aria-hidden', 'false');
@@ -168,33 +169,43 @@ export default function InteractiveMap() {
   
   // Efectos de carga de datos y SVG
   
-  // === CORRECCIÓN CLAVE 2: Eliminar/Comentar el useEffect de llamada a la API ===
-  /*   useEffect(() => { fetchData().then(setData); }, []); 
-  */
+  // El useEffect de llamada a la API (fetchData) permanece COMENTADO por ahora.
+  // useEffect(() => { fetchData().then(setData); }, []); 
   
   useEffect(() => {
     const svgObject = svgObjectRef.current;
     if (!svgObject) return;
+    
+    // Función de chequeo mejorada para disponibilidad del documento SVG
     const checkSvgReady = () => {
       const doc = svgObject.contentDocument;
-      if (doc && doc.documentElement) { setSvgDoc(doc); } else { setTimeout(checkSvgReady, 100); }
+      // Verificamos que el documento y su elemento raíz (documentElement) existan
+      if (doc && doc.documentElement) { 
+          setSvgDoc(doc); 
+      } else { 
+          // Reintento si no está listo (condición de carrera)
+          setTimeout(checkSvgReady, 100); 
+      }
     };
+
     if (svgObject.contentDocument) {
       checkSvgReady();
     } else {
-      const onLoad = () => checkSvgReady();
+      const onLoad = () => {
+          // Pequeño delay después del evento 'load' para asegurar la disponibilidad del DOM interno
+          setTimeout(checkSvgReady, 50);
+      };
       svgObject.addEventListener('load', onLoad);
       return () => svgObject.removeEventListener('load', onLoad);
     }
     return () => { setSvgDoc(null); };
-  }, []);
+}, []);
 
 
   useEffect(() => {
     showModal();
     return () => {
-      // Esto es importante para limpiar el estado del modal si el componente se desmonta.
-      // sessionStorage.removeItem(MODAL_SEEN_KEY);
+      // Lógica de limpieza al desmontar el componente (si es necesario)
     };
   }, [showModal]); 
 
@@ -230,7 +241,7 @@ export default function InteractiveMap() {
     
     const byId = new Map();
     lotesData.forEach(r => {
-      const k = keyify(r.id ?? r.Id ?? '');
+      const k = keyify(r.id ?? r.Id ?? ''); 
       if (k) byId.set(k, r);
     });
 
@@ -242,7 +253,7 @@ export default function InteractiveMap() {
     const cleanupHandlers = [];
 
     lotNodes.forEach(({ node, info }) => {
-      // PINTAR LOTES (se mantiene)
+      // PINTAR LOTES
       const paintables = node.matches(SHAPE_SEL) ? [node] : [...node.querySelectorAll(SHAPE_SEL)].filter(isPaintable);
       const color = pickColor(info);
 
@@ -256,38 +267,31 @@ export default function InteractiveMap() {
 
       // --- Handlers ---
       const onEnter = () => { 
-        if (!activeEl) { // Solo actualiza con HOVER si NO hay un lote seleccionado
+        if (!activeEl) { 
           updateStickyPanel(info, node.id, false);
         }
-        // Siempre aplicamos filtro de hover si no es el lote activo
         if (activeEl !== node) { node.style.filter = 'brightness(1.15)'; }
       };
       
       const onLeave = () => { 
-        // CRÍTICO: Si NO hay un lote seleccionado (activeEl), vuelve al estado inicial.
         if (!activeEl) { 
           updateStickyPanel(INITIAL_LOT_INFO, null, false); 
         }
-        // Quitar filtro de hover si no es el lote activo
         if (activeEl !== node) { node.style.filter = 'none'; } 
       };
 
       const onClick = (ev) => {
         ev.stopPropagation();
 
-        // Si ya es el lote activo, regresamos sin hacer cambios (mantenemos la selección)
         if (activeEl === node) {
           return; 
         }
         
-        // 1. Desactivar el filtro de la selección previa (si existe)
         if (activeEl) { activeEl.style.filter = 'none'; }
         
-        // 2. Establecer el nuevo lote activo y su estilo
         setActiveEl(node);
         node.style.filter = 'brightness(1.06)';
         
-        // 3. Forzar la actualización del panel (CONGELA LA INFO Y MUESTRA BOTONES)
         updateStickyPanel(info, node.id, true); // true = clic
       };
       
@@ -328,20 +332,32 @@ export default function InteractiveMap() {
   }, [activeEl, updateStickyPanel, resetSelection]);
   
   
+  // === useEffect de Sincronización (CORRECCIÓN CLAVE: CON TIMEOUT) ===
   useEffect(() => {
-    // Como `data` ya se inicializa con fallbackData, este useEffect se ejecutará
-    // tan pronto como `svgDoc` esté listo.
+    // 1. Verificación de dependencia: Si falta data o el SVG no está en el DOM, salimos.
     if (!data || !svgDoc) return;
 
-    cleanupRef.current?.(); 
-    cleanupRef.current = initSvgLogic(svgDoc, data);
-    
-    document.getElementById('lot-info-sticky-panel')?.classList.add('initial-state');
-    updateStickyPanel(INITIAL_LOT_INFO, null, false); 
+    // Aseguramos que cualquier lógica previa se detenga
+    cleanupRef.current?.();
+    
+    let timeoutId;
 
+    // 2. CORRECCIÓN CLAVE: Ejecutamos la lógica principal con un pequeño delay de 100ms
+    // Esto es crucial para la primera carga y para que el navegador termine de procesar el SVG.
+    timeoutId = setTimeout(() => {
+        // console.log("SVG y Data listos. Inicializando lógica del mapa."); // Opcional para debug
+        cleanupRef.current = initSvgLogic(svgDoc, data);
+        
+        document.getElementById('lot-info-sticky-panel')?.classList.add('initial-state');
+        updateStickyPanel(INITIAL_LOT_INFO, null, false); 
+    }, 100); 
+
+    // 3. Función de limpieza (Cleanup)
     return () => {
-      cleanupRef.current?.();
-      document.getElementById('lot-info-sticky-panel')?.classList.remove('active');
+        // Limpiamos el timeout y la lógica del SVG al cambiar dependencias o desmontar
+        clearTimeout(timeoutId); 
+        cleanupRef.current?.();
+        document.getElementById('lot-info-sticky-panel')?.classList.remove('active');
     };
   }, [data, svgDoc, initSvgLogic, updateStickyPanel]);
 
@@ -349,7 +365,6 @@ export default function InteractiveMap() {
   // Desestructuración y Lógica de Enlaces para el Render
   const { titulo, superficie_m2, estado, tipo, costo_m2, nota, link } = currentInfo;
   const isInitial = currentInfo === INITIAL_LOT_INFO;
-    // activeEl !== null es el estado CRÍTICO para mostrar botones
     const isPanelActive = activeEl !== null; 
   
   const numero = norm(titulo) || 'Lote';
@@ -371,11 +386,9 @@ export default function InteractiveMap() {
   if (isDisabled) {
     cotizarLink = '#'; 
   } else if (estadoLowerCase === 'reservado') {
-    // Para reservado, usamos el enlace de contacto si no hay uno específico
     cotizarLink = norm(link) || CONTACTO_URL;
     cotizarTarget = '_self'; 
   } else {
-    // DISPONIBLE: Usar WHATSAPP_BASE con el mensaje del lote (incluye los datos congelados)
     const waMessage = `Hola, me interesa el lote ${numero}, con superficie de ${sup} y costo por m² de ${formattedCosto}. Estado: ${currentStatus}.`;
     cotizarLink = `${WHATSAPP_BASE}${encodeURIComponent(waMessage)}`;
     cotizarTarget = '_blank';
