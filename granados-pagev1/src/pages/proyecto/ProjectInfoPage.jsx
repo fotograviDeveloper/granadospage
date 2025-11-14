@@ -18,10 +18,9 @@ import BrochureDownloadButton from '../../components/BrochureDownloadButton';
 import "./ProjectInfoPage.css"; 
 
 const HERO_IMAGE = '/img/hero-granados.jpg'; 
-const LAGOON_IMAGE = '/img/lagoon-club-main.jpg';
+const LAGOON_IMAGE = '/img/amenidades/lagoon_club/lagoclubaerea.jpg';
 const CLUB_IMAGE = '/img/hero-granados.jpg'; 
-
-
+const PARKING_IMAGE = '/img/amenidades/parque_lineal/jardin.jpg'; 
 const ProjectInfoPage = () => {
     return (
         <div className="project-info-page">
@@ -38,7 +37,14 @@ const ProjectInfoPage = () => {
                     />
                 </div>
             </section>
-
+  <section className="vision-section">
+                <div className="info-inner-container">
+                    <ArchitecturalVision />
+                </div>
+            </section>
+             <section>
+                    <InteractiveMasterPlanMap/> 
+                </section>
             {/* 2. Value Proposition (Propuesta de Valor) */}
             <section className="value-proposition-section">
                 <div className="info-inner-container">
@@ -84,33 +90,33 @@ const ProjectInfoPage = () => {
                         isReversed={true}
                     />
                     <AmenityCard 
+                        title="Parque Central y Áreas Verdes" 
+                        description="Espacios diseñados para la convivencia familiar y el contacto con la naturaleza, incluyendo áreas de picnic, juegos infantiles y senderos ecológicos."
+                        imageUrl={PARKING_IMAGE}
+                        linkUrl="/amenidades/parque-lineal"
+                        isReversed={false}
+                    />
+                       <AmenityCard 
                         title="Lagoon Club y Playa Privada" 
                         description="Disfruta de la vida de playa sin salir del club. Nuestro Lagoon Club ofrece una laguna cristalina, área de asadores, fogateros y canchas de arena."
                         imageUrl={LAGOON_IMAGE}
                         linkUrl="/amenidades/lagoon-club"
-                        isReversed={false}
+                        isReversed={true}
                     />
                     
                 </div>
-                <section>
-                    <InteractiveMasterPlanMap/> 
-                </section>
+               
             </section>
             
-            {/* 4. Visión Arquitectónica (Sección agregada previamente) */}
-            <section className="vision-section">
-                <div className="info-inner-container">
-                    <ArchitecturalVision />
-                </div>
-            </section>
+            
 
-            {/* 5. Investment Overview (Precios y Etapas) */}
+            {/* 5. Investment Overview (Precios y Etapas) 
             <section className="investment-section">
                 <div className="info-inner-container">
                     <h2 className="section-heading">Inversión y Etapas de Preventa</h2>
                     <InvestmentOverview />
                 </div>
-            </section>
+            </section>*/}
 
             {/* 6. Contact CTA (Llamada a la Acción) */}
             <section className="contact-cta-section">

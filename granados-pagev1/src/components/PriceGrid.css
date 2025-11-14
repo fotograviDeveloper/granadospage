@@ -1,64 +1,95 @@
 /* src/components/PriceGrid.css */
 
+/* --- Colores Fijos --- */
+/* Verde Oscuro: #1a4f32 */
+/* Verde Secundario: #4e7c3e */
+/* Rosa Terracota: #E27D60 */
+/* Terracota Oscuro: #C9695B */
+
 /* --- Contenedor General --- */
 .price-grid-container {
     display: flex;
     flex-direction: column;
-    gap: 70px; /* Más espacio entre las etapas */
+    gap: 40px; 
+    width: 95%; /* <-- ANCHO TOTAL */
+    margin: 40px auto;
+    padding: 0 20px;
 }
 
-/* --- Sección de Etapas (Contenedor de 3 tarjetas) --- */
-.stage-section {
-    background-color: white;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08); /* Sombra más pronunciada para la etapa */
-    border-top: 5px solid var(--color-primary-accent, #1a4f32);
+/* --- Sección Principal de Precios --- */
+.stage-section.current-stage { 
+    background-color: #fcfcfc;
+    padding: 40px 30px; 
+    border-radius: 16px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+    border-top: 8px solid #E27D60; 
+    border-bottom: 2px solid #C9695B;
 }
 
+/* --- Encabezado y Botón de Agenda --- */
 .stage-header-wrapper {
     text-align: center;
-    margin-bottom: 40px;
+    margin-bottom: 30px; 
     padding-bottom: 20px;
-    border-bottom: 1px solid #e0e0e0;
+    border-bottom: none;
 }
 
 .stage-title {
-    font-size: 2.5rem;
-    font-weight: 900;
-    color: var(--color-primary-accent, #1a4f32);
-    margin: 0 0 5px 0;
+    font-size: 2.5rem; 
+    font-weight: 800;
+    color: #1a4f32; 
+    margin: 0 0 8px 0;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 2px;
 }
 
 .stage-tagline {
     font-size: 1.1rem;
-    color: #666;
-    font-style: italic;
+    color: #C9695B; 
+    font-style: normal;
+    font-weight: 500;
+    margin-bottom: 25px;
 }
 
-/* Estilo para resaltar Friends and Family (el más exclusivo) */
-.stage-highlight {
-    color: var(--color-secondary-accent, #4e7c3e); /* Color de acento verde */
-    border-bottom: 2px solid var(--color-secondary-accent, #4e7c3e);
+/* BOTÓN DE AGENDAR VISITA */
+.agenda-visit-btn {
     display: inline-block;
-    padding-bottom: 5px;
+    padding: 15px 30px; 
+    background: linear-gradient(135deg, #E27D60, #C9695B); 
+    color: white;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 700;
+    border-radius: 8px;
+    box-shadow: 0 8px 25px rgba(226, 125, 96, 0.6);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: 1px solid #C9695B;
+    margin-top: 15px;
 }
 
-/* --- Lot Cards (Las tarjetas individuales) --- */
+.agenda-visit-btn:hover {
+    transform: translateY(-3px) scale(1.01); 
+    box-shadow: 0 10px 25px rgba(226, 125, 96, 0.8);
+    background: linear-gradient(135deg, #C9695B, #E27D60);
+}
+.agenda-visit-btn:active {
+    transform: translateY(1px);
+}
+
+/* --- Lot Cards (Tarjetas de 3 columnas para comparación) --- */
 .lot-cards-wrapper {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
+    grid-template-columns: repeat(3, 1fr); /* <-- 3 COLUMNAS FORZADAS */
+    gap: 20px; 
 }
 
 .lot-card {
-    background-color: var(--color-light-bg, #fcfcfc); /* Fondo casi blanco */
-    border-radius: 10px;
-    padding: 25px;
-    text-align: center;
-    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
+    background-color: #fcfcfc;
+    border-radius: 10px; 
+    padding: 20px; /* <-- TAMAÑO REDUCIDO */
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
     border: 1px solid #eee;
     transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
     display: flex;
@@ -67,105 +98,128 @@
 }
 
 .lot-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.1);
-    border-color: var(--color-secondary-accent, #4e7c3e); /* Resaltar borde al pasar el mouse */
+    transform: translateY(-5px); 
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    border-color: #4e7c3e; 
 }
 
+/* --- Protagonismo del Lote (Título de Card) --- */
 .lot-type-tag {
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: var(--color-text-dark, #333);
-    background-color: transparent; /* Fondo transparente */
-    border: 2px solid #ddd;
-    padding: 8px 15px;
-    display: inline-block;
-    border-radius: 5px;
+    font-size: 1.4rem; 
+    font-weight: 900;
+    color: #1a4f32; 
+    background-color: transparent; 
+    border: none; 
+    padding: 0 0 10px 0; 
+    display: block; 
+    text-align: center;
+    border-bottom: 2px solid #e0e0e0; 
     margin-bottom: 15px;
     text-transform: uppercase;
 }
 
-/* Colores distintivos de fondo para las tarjetas según el tipo de lote */
-.lot-type-aa {
-    background-color: #fff9f0; /* Fondo ligeramente ámbar para destacar */
-}
+/* Resaltado para Lotes AAA */
 .lot-type-aaa {
-    background-color: #f0fff4; /* Fondo ligeramente verde */
-    border-color: var(--color-secondary-accent);
+    border: 2px solid #E27D60; 
+    background-color: #fffffb; 
+}
+.lot-type-aaa .lot-type-tag {
+    color: #C9695B; 
+}
+.lot-type-aaa:hover {
+    border-color: #E27D60;
 }
 
 .lot-size-range {
-    font-size: 0.95rem;
-    font-weight: 500;
-    color: #999;
-    margin-bottom: 20px;
-    letter-spacing: 0.5px;
+    font-size: 0.9rem;
+    margin-bottom: 15px;
 }
 
+/* --- Caja de Precio (Orden Invertido) --- */
 .lot-price-box {
-    background-color: #ffffff; /* Blanco limpio */
-    padding: 20px;
+    display: flex;
+    flex-direction: column; /* Para aplicar el orden con 'order' */
+    text-align: center;
+    padding: 18px; 
     border-radius: 8px;
-    margin-bottom: 20px;
-    border-left: 5px solid var(--color-secondary-accent); /* Barra de color como acento */
-    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.05);
-}
-
-.price-label {
-    display: block;
-    font-size: 0.85rem;
-    color: var(--color-text-dark, #333);
-    margin-bottom: 5px;
-    text-transform: uppercase;
-    font-weight: 600;
+    margin-bottom: 18px;
+    border-left: 5px solid #E27D60; 
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
 .price-value {
-    font-size: 2.8rem;
+    order: 1; /* <-- CORRECCIÓN: Precio grande va arriba */
+    font-size: 2.8rem; 
     font-weight: 900;
-    color: var(--color-primary-accent, #1a4f32);
+    color: #1a4f32; 
     display: block;
+    line-height: 1.1; 
+}
+
+.price-label {
+    order: 2; /* <-- CORRECCIÓN: Leyenda pequeña va abajo */
+    font-size: 0.8rem;
+    color: #C9695B; 
+    margin-top: 3px; 
+    margin-bottom: 0;
+    text-transform: uppercase;
+    font-weight: 700;
 }
 
 .lot-detail {
     font-size: 0.9rem;
     color: #555;
     min-height: 40px; 
-    margin-bottom: 25px;
+    margin-bottom: 20px;
 }
 
 .lot-cta-button {
     display: inline-block;
     width: 100%;
-    padding: 14px 0;
-    background-color: var(--color-secondary-accent, #4e7c3e);
+    padding: 12px 0; 
+    background-color: #4e7c3e; 
     color: white;
     text-decoration: none;
     font-weight: 700;
-    border-radius: 4px;
-    transition: background-color 0.3s, transform 0.1s;
+    border-radius: 6px;
+    transition: background-color 0.3s, transform 0.15s;
     margin-top: auto;
     text-transform: uppercase;
     letter-spacing: 1px;
+    text-align: center; /* <-- TEXTO CENTRADO */
 }
 
 .lot-cta-button:hover {
-    background-color: var(--color-primary-accent, #1a4f32);
-    transform: translateY(-2px);
+    background-color: #1a4f32; 
+    transform: translateY(-1px);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* --- Media Queries --- */
+/* --- Media Queries (Responsividad) --- */
+@media (max-width: 1200px) {
+    .lot-cards-wrapper {
+        gap: 15px;
+    }
+}
+
 @media (max-width: 900px) {
-    .stage-section {
-        padding: 20px;
+    .stage-section.current-stage {
+        padding: 30px 20px;
     }
     .stage-title {
         font-size: 2rem;
     }
+    .agenda-visit-btn {
+        font-size: 1rem;
+        padding: 12px 20px;
+    }
     .lot-cards-wrapper {
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        grid-template-columns: 1fr; /* Apilado en móvil */
     }
     .price-value {
-        font-size: 2.2rem;
+        font-size: 2.5rem;
+    }
+    .lot-card {
+        padding: 18px;
     }
 }

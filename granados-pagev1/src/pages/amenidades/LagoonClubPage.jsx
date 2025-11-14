@@ -51,11 +51,11 @@ const LagoonClubPage = () => {
             {/* 1. Hero / Título */}
             <section className="amenity-hero" style={{ backgroundImage: `url(${HERO_IMAGE})` }}>
                 <div className="hero-overlay">
-                    <Link to="/amenidades" className="back-link">
+                    <Link to="/proyecto" className="back-link">
                         <FontAwesomeIcon icon={faChevronLeft} /> Regresar a Amenidades
                     </Link>
                     <div className="hero-content-detail">
-                        <h1 className="amenity-title">Lagoon Club</h1>
+                        <h1 className="amenity-title-page">Lagoon Club</h1>
                         <p className="amenity-tagline">Diversión Acuática y Relax al Aire Libre frente al Lago.</p>
                     </div>
                 </div>

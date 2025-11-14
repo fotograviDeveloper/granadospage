@@ -1,36 +1,54 @@
 /* ---------------------------------------------------- */
-/* InteractiveMap.css - CÓDIGO FINAL CORREGIDO DE DISEÑO (Sticky, Contraste y Modal) */
+/* InteractiveMap.css - CÓDIGO FINAL COMPLETO Y CORREGIDO */
 /* ---------------------------------------------------- */
 
-/* Definir variables de colores para el tema neutral con acentos en rosa terracota */
-/* Mejora: Aumentamos contraste en textos y sombras para accesibilidad */
+/* Definir variables de colores */
 :root {
     --neutral-white: #FFFFFF;
-    --neutral-dark-gray: #2A2A2A; /* Más oscuro para mejor legibilidad */
+    --neutral-dark-gray: #202020;
     --neutral-light-gray: #F8F8F8;
-    --terracotta-pink: #E27D60;
+    --terracotta-pink: #E27D60; /* Color de acento principal */
     --terracotta-pink-dark: #C9695B;
+    --terracotta-pink-light: #F0A58D;
     --text-dark: #333333;
     --text-light: #777777;
-    --shadow-soft: rgba(0, 0, 0, 0.08);
-    --shadow-medium: rgba(0, 0, 0, 0.12);
-    --highlight-glow: rgba(226, 125, 96, 0.3); /* Para animaciones */
+    --shadow-soft: rgba(0, 0, 0, 0.15); /* Sombra más fuerte para elevación */
+    --shadow-medium: rgba(0, 0, 0, 0.3);
+    --highlight-glow: rgba(226, 125, 96, 0.8); /* Glow más intenso */
+
+    /* Colores de Estado de Lotes */
+    --status-sold: #C0392B;     /* Rojo Ladrillo (Vendido) */
+    --status-reserved: #F39C12; /* Amarillo/Naranja (Reservado) */
+    --status-available: #27AE60; /* Verde Esmeralda (Disponible) */
+    --status-blocked: #D0D0D0; /* Gris Claro (Bloqueado) */
 }
 
-/* Reset básico con mejoras en tipografía */
+/* ------------------ Animaciones Globales ------------------ */
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 var(--highlight-glow); }
+    70% { box-shadow: 0 0 0 12px rgba(226, 125, 96, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(226, 125, 96, 0); }
+}
+
+/* ------------------ Reset y Estructura ------------------ */
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    font-size: 16px; /* Base para rems */
+    font-size: 16px;
     line-height: 1.5;
 }
 
-/* 1. ESTRUCTURA PRINCIPAL */
 .mapa-wrapper {
     width: 100%;
-    /* Espacio para el Navbar fijo */
 }
 
 .mapa-main-container {
@@ -39,15 +57,18 @@
     background: var(--neutral-light-gray);
     display: flex;
     flex-direction: column;
+    padding: 0 20px 20px 20px;
+    animation: fadeIn 0.8s ease-out;
 }
 
-/* Leyenda - Más atractiva con acentos en terracota */
+/* ------------------ Leyenda (Header) ------------------ */
+
 .map-header {
     background: var(--neutral-white);
     padding: 1.5rem;
     padding-top: 0;
     margin-bottom: 20px;
-    border-radius: 12px; /* Bordes más suaves */
+    border-radius: 12px;
     box-shadow: 0 2px 8px var(--shadow-soft);
     display: flex;
     flex-direction: column;
@@ -55,21 +76,20 @@
     text-align: center;
     align-items: center;
     transition: box-shadow 0.3s ease;
+    border-bottom: 4px solid var(--terracotta-pink);
 }
-
 .map-header:hover {
-    box-shadow: 0 4px 12px var(--shadow-medium);
+    box-shadow: 0 4px 16px var(--shadow-medium);
 }
-
 .legend-title { 
-    font-size: 1.4rem; /* Ligeramente más grande */
+    font-size: 1.6rem;
     font-weight: 700; 
     margin-bottom: 0.5rem; 
-    color: var(--neutral-dark-gray); 
+    color: var(--terracotta-pink);
 }
 .legend-subtitle { 
-    font-size: 1rem; /* Mejora legibilidad */
-    margin-bottom: 1rem; 
+    font-size: 1rem;
+    margin-bottom: 1.5rem; 
     color: var(--text-light); 
 }
 .status-legend { 
@@ -77,193 +97,225 @@
     justify-content: center;
     align-items: center;
     flex-wrap: wrap; 
-    gap: 1.5rem; 
+    gap: 2rem;
 }
 .status-item { 
     display: flex; 
     align-items: center; 
     gap: 0.5rem; 
-    font-size: 1rem; /* Más grande */
+    font-size: 1rem;
     color: var(--text-dark); 
     font-weight: 500;
-    transition: transform 0.2s ease;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 .status-item:hover {
-    transform: scale(1.05); /* Animación sorprendente al hover */
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px var(--shadow-soft);
 }
 .status-color { 
     display: inline-block; 
-    width: 20px; /* Más grande para touch */
+    width: 20px;
     height: 20px; 
     border-radius: 50%; 
     border: 1px solid var(--shadow-soft);
-    animation: pulse 2s infinite; /* Animación sorprendente de pulso */
+}
+.available.status-color {
+    animation: pulse 2s infinite; 
 }
 
-/* Animación de pulso sorprendente para los colores de estado */
-@keyframes pulse {
-    0% { box-shadow: 0 0 0 0 var(--highlight-glow); }
-    70% { box-shadow: 0 0 0 12px rgba(226, 125, 96, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(226, 125, 96, 0); }
-}
+/* Colores de Estado */
+.sold { background: var(--status-sold); } 
+.reserved { background: var(--status-reserved); } 
+.available { background: var(--status-available); } 
+.blocked { background: var(--status-blocked); } 
 
-/* Colores de Estado actualizados al tema */
-.sold { background: var(--neutral-dark-gray); } 
-.reserved { background: var(--text-light); } 
-.available { background: var(--terracotta-pink); } 
-.blocked { background: var(--neutral-light-gray); } 
+/* ------------------ Layout y Sticky Panel ------------------ */
 
-/* 2. LAYOUT DE COLUMNAS Y STICKY (Ajustes para el Scroll) */
 .mapa-section {
     display: grid;
-    grid-template-columns: 30% 70%; 
-    padding: 0;
+    grid-template-columns: 350px 1fr;
+    gap: 20px;
     width: 100%;
-    align-items: start; /* Asegura que el contenido comience arriba */
-    min-height: 1000px; /* CRÍTICO: Asegura que el contenedor tenga suficiente altura para el scroll del sticky */
+    align-items: start;
+    min-height: 1000px; /* Asegura el scroll para que el sticky funcione */
 }
 
 .info-sticky-wrapper {
     position: relative;
+    animation: fadeIn 0.6s ease-out 0.2s backwards;
 }
 
-/* PANEL STICKY (Recuadro de Información del Lote) - Más interactivo con transiciones */
+/* PANEL STICKY - CRÍTICO: MANTIENE EL STICKY */
 .lot-info-sticky-panel {
     position: sticky;
-    top: 70px; /* CRÍTICO: Posiciona el panel 70px debajo del tope de la ventana, permitiendo seguimiento */
+    top: 70px; /* Se pega a 70px del borde superior de la ventana */
     width: 100%;
-    padding: 1.5rem;
-    border-radius: 12px; /* Bordes más suaves */
+    padding: 2rem 1.5rem;
+    border-radius: 16px;
     text-align: center;
-    box-shadow: 0 4px 12px var(--shadow-soft);
-    transition: background 0.4s ease, color 0.4s ease, border-color 0.4s ease, transform 0.3s ease;
+    box-shadow: 0 8px 20px var(--shadow-medium);
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-/* ESTADO 1: INITIAL / HOVER (Panel Blanco - Contraste Mejorado) */
+/* Tipografía y Espaciado */
+.panel-title { 
+    font-size: 1rem; 
+    font-weight: 600; 
+    margin-bottom: 0.5rem; 
+    letter-spacing: 1px;
+}
+.lot-number { 
+    font-size: 3rem; 
+    font-weight: 900; 
+    margin-bottom: 0.5rem; 
+    line-height: 1.1; 
+}
+.lot-status { 
+    font-size: 1.2rem;
+    font-weight: 700; 
+    margin-bottom: 1.5rem; 
+    text-transform: uppercase;
+}
+.lot-note { 
+    font-size: 0.9rem; 
+    margin-top: 1.5rem; 
+    margin-bottom: 2rem;
+}
+
+/* ESTADO 1: INITIAL */
 .lot-info-sticky-panel.initial-state {
     background: var(--neutral-white); 
-    color: var(--text-dark); /* Texto oscuro para legibilidad */
+    color: var(--text-dark);
     border: 1px solid var(--neutral-light-gray); 
 }
 .lot-info-sticky-panel.initial-state .panel-title,
 .lot-info-sticky-panel.initial-state .lot-note,
 .lot-info-sticky-panel.initial-state .lot-status {
-    color: var(--text-light); /* Texto secundario gris */
-}
-.lot-info-sticky-panel.initial-state .lot-number {
-    color: var(--neutral-dark-gray); /* Título principal oscuro */
+    color: var(--text-light);
 }
 
-/* ESTADO 2: ACTIVE / CLICK (Panel con acento terracota) */
+/* ESTADO 2: ACTIVE (Acento Terracota y Elevación) */
 .lot-info-sticky-panel.active {
-    background: var(--terracotta-pink); /* Fondo terracota para atractivo */
-    color: var(--neutral-white); /* Texto blanco */
+    background: var(--terracotta-pink);
+    color: var(--neutral-white);
     border: 1px solid var(--terracotta-pink-dark); 
-    transform: scale(1.02); /* Animación sorprendente de escala al activar */
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4), 0 0 15px var(--highlight-glow);
+    transform: scale(1.0); 
 }
 .lot-info-sticky-panel.active .panel-title,
 .lot-info-sticky-panel.active .lot-note,
 .lot-info-sticky-panel.active .lot-status {
-    color: rgba(255, 255, 255, 0.8); /* Texto secundario claro */
+    color: rgba(255, 255, 255, 0.9);
+}
+.lot-info-sticky-panel.active .lot-number {
+    color: var(--neutral-white);
 }
 
-/* Estilos de Tipografía y Espaciado */
-.panel-title { font-size: 0.9rem; font-weight: 400; margin-bottom: 0.5rem; text-transform: uppercase; }
-.lot-number { font-size: 2rem; /* Más grande para impacto */ font-weight: 700; margin-bottom: 0.75rem; line-height: 1.2; }
-.lot-status { font-size: 1.1rem; font-weight: 500; margin-bottom: 1.5rem; }
-
-/* Detalles del lote (Superficie, Tipo, Costo) */
+/* Detalles del lote */
 .lot-details {
     margin: 1rem 0;
     padding: 0 10px;
-    font-size: 1rem; /* Mejora legibilidad */
-    padding-top: 1rem;
+    font-size: 1rem;
+    padding-top: 2rem;
     text-align: left;
-    border-top: 1px solid; 
-    transition: opacity 0.3s ease; /* Suave aparición */
+    border-top: 2px dashed; 
+    transition: all 0.4s ease-out; 
+    animation: fadeIn 0.4s ease-out 0.2s backwards;
 }
-/* Color del borde en estado activo */
 .lot-info-sticky-panel.active .lot-details {
-    border-color: rgba(255, 255, 255, 0.3); 
+    border-color: rgba(255, 255, 255, 0.5);
+    color: var(--neutral-white);
 }
-/* Color del borde en estado inicial/hover */
 .lot-info-sticky-panel.initial-state .lot-details {
-    border-color: var(--shadow-soft); 
+    border-color: var(--shadow-soft);
+    color: var(--text-dark);
 }
-.lot-details p { margin-bottom: 0.5rem; } /* Espacio consistente */
-.lot-details strong { font-weight: 700; }
-.lot-note { 
-    font-size: 0.9rem; 
-    margin-top: 1rem; 
-    margin-bottom: 1.5rem; 
-    font-style: italic;
+.lot-details p { 
+    font-size: 1.05rem; 
+    margin-bottom: 0.8rem;
+    display: flex; 
+    justify-content: space-between;
+}
+.lot-details strong { 
+    font-weight: 800; 
+    color: var(--terracotta-pink); 
+    transition: color 0.4s ease;
+}
+.lot-info-sticky-panel.active .lot-details strong {
+     color: var(--neutral-white);
 }
 
-/* Estilo base para botones de acción - Más interactivos con animaciones */
+
+/* ------------------ Botones ------------------ */
+
 .btn {
     display: block; 
     width: 100%; 
-    padding: 0.85rem; /* Más padding para touch */
-    text-align: center; 
-    text-decoration: none; 
-    border-radius: 8px; /* Bordes más suaves */
+    padding: 1rem;
+    border-radius: 10px;
     font-weight: 700; 
-    transition: background 0.2s, opacity 0.2s, color 0.2s, border-color 0.2s, transform 0.2s; 
     text-transform: uppercase;
-    cursor: pointer; /* Feedback claro */
+    transition: all 0.2s ease-in-out; 
+    letter-spacing: 0.5px;
 }
 
-/* Botón Cotizar - Acento terracota */
+/* Botón Cotizar - VISUALMENTE PRIORITARIO */
 .cotizar-btn {
-    background: var(--terracotta-pink); 
+    background:#27AE60; 
     color: var(--neutral-white); 
     margin-bottom: 1rem; 
-    border: 1px solid var(--terracotta-pink-dark);
+    border: none;
+    font-size: 1.15rem;
+    box-shadow: 0 6px 15px rgba(226, 125, 96, 0.5);
 }
 .cotizar-btn:hover { 
-    background: var(--terracotta-pink-dark); 
-    border-color: var(--terracotta-pink-dark);
-    transform: translateY(-3px); /* Elevación más notoria */
+    background: linear-gradient(135deg, var(--terracotta-pink-dark), var(--terracotta-pink)); 
+    transform: translateY(-2px); 
+    box-shadow: 0 8px 20px rgba(226, 125, 96, 0.6);
 }
-
+.cotizar-btn:active {
+    transform: translateY(1px); 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+}
 .cotizar-btn.disabled-btn {
     background: var(--text-light); 
     border-color: var(--text-light);
     cursor: not-allowed;
     opacity: 0.7;
+    transform: none;
+    box-shadow: none;
 }
 
-/* Botón Cambiar de Lote (Contraste Perfecto en estado Active) */
+/* Botón Cambiar de Lote (Contraste) */
 .change-lot-btn {
-    background: transparent; 
-    color: var(--neutral-white); /* Texto blanco sobre terracota */
-    border: 1px solid rgba(255, 255, 255, 0.5); /* Borde claro */
-    font-size: 0.95rem;
-    cursor: pointer;
-    margin-bottom: 0;
+    font-size: 1rem;
+    background: #777777; 
+    color: var(--neutral-white); 
+    border: 2px solid rgba(106, 40, 40, 0.7); 
 }
 .change-lot-btn:hover {
-    background: rgba(255, 255, 255, 0.15); /* Hover más visible */
-    color: var(--neutral-white);
+    background: rgba(241, 1, 1, 0.963); 
+    transform: translateY(-2px);
     border-color: var(--neutral-white);
-    transform: translateY(-3px); /* Elevación */
 }
 
-/* Columna Mapa - Fondo neutro con interacción */
+/* ------------------ Mapa SVG - CENTRADO Y BUG FIX ------------------ */
+
 .map-column {
     position: relative;
     background: var(--neutral-white); 
     min-height: 700px; 
     padding: 15px; 
-    border-radius: 12px; /* Bordes suaves */
+    border-radius: 12px;
     overflow: hidden; 
+    text-align: center;
+    /* CRÍTICO: Flexbox para centrar el SVG */
     display: flex; 
+    justify-content: center; /* Centrado horizontal */
+    align-items: center; /* Centrado vertical */
+ 
     box-shadow: 0 4px 12px var(--shadow-soft);
-    transition: box-shadow 0.3s ease;
-}
-
-.map-column:hover {
-    box-shadow: 0 6px 16px var(--shadow-medium); /* Sombra más profunda al hover */
+    animation: fadeIn 0.6s ease-out 0.4s backwards;
 }
 
 .svgmap {
@@ -271,24 +323,25 @@
     height: 100% !important;
     object-fit: contain; 
     display: block;
+    /* text-align: center no tiene efecto aquí, se usa Flexbox en el padre */
 }
 
 .svgmap path, .svgmap polygon, .svgmap rect, .svgmap ellipse {
-    transition: fill 0.3s, fill-opacity 0.3s, filter 0.3s ease-out, transform 0.3s ease-out; /* Suavizamos más */
+    transition: fill 0.3s, fill-opacity 0.3s, filter 0.3s ease-out; 
 }
 
-/* Mejora animación: Aumentamos scale a 1.1 para hitbox más grande y agregamos glow */
+/* Animación de Hover Corregida (solo filtro) */
 .svgmap path:hover, .svgmap polygon:hover, .svgmap rect:hover, .svgmap ellipse:hover {
-    transform: scale(1.1); /* Más grande para evitar salida accidental del cursor */
-    filter: brightness(1.2) drop-shadow(0 0 8px var(--highlight-glow)); /* Glow para "flotar" más */
-    z-index: 10; /* Eleva sobre otros elementos para no solaparse */
+    filter: brightness(1.2) drop-shadow(0 0 8px var(--highlight-glow)); 
+    cursor: pointer;
 }
 
-/* Pie de Página - Neutro */
+/* ------------------ Pie de Página y Modal ------------------ */
+
 .mapa-footer {
     background: var(--neutral-white);
-    padding: 1.5rem; /* Más padding */
-    margin-top: 20px;
+    padding: 1.5rem; 
+    margin: 20px 20px 0 20px;
     text-align: center;
     border-radius: 12px;
     color: var(--text-dark);
@@ -296,88 +349,42 @@
     box-shadow: 0 2px 8px var(--shadow-soft);
 }
 
-/* VENTANA MODULAR DE BIENVENIDA (Ajuste Final de Botón) - Animación sorprendente */
-.welcome-modal {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(51, 51, 51, 0.85); /* Fondo gris oscuro */
-    display: flex; justify-content: center; align-items: center;
-    z-index: 1000;
-    opacity: 0; visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
-}
-
 .welcome-modal.active { 
     opacity: 1; 
     visibility: visible; 
-    animation: fadeScaleIn 0.5s ease; /* Animación sorprendente de entrada */
+    animation: fadeScaleIn 0.5s ease;
 }
 
 @keyframes fadeScaleIn {
-    from { opacity: 0; transform: scale(0.9); }
+    from { opacity: 0; transform: scale(0.95); }
     to { opacity: 1; transform: scale(1); }
 }
 
-.welcome-content {
-    background: var(--neutral-white); 
-    padding: 2.5rem; /* Más padding para comodidad */
-    border-radius: 16px; /* Bordes más suaves */
-    max-width: 450px; /* Más ancho para móviles */
-    text-align: center; 
-    box-shadow: 0 5px 15px var(--shadow-medium);
-    display: flex; 
-    flex-direction: column; 
-    align-items: center;
-}
-
 .welcome-content .title { 
-    color: var(--terracotta-pink); /* Acento terracota */
-    font-size: 2rem; /* Más impactante */
-    margin-bottom: 1rem; 
-    line-height: 1.2;
-}
-.welcome-content .minor { 
-    color: var(--text-dark); 
-    font-size: 1.1rem; 
-    margin-bottom: 1.5rem; 
-}
-
-/* Contenedor explícito para el botón del modal (Asegura centrado y ancho) */
-.modal-button-wrapper {
-    width: 100%; 
-    display: flex; 
-    justify-content: center;
-    margin-top: 0.5rem; /* Pequeño espacio extra sobre el botón */
-}
-
-.modal-close-btn {
-    padding: 0.85rem 2rem; /* Más ancho para touch */
-    background: var(--terracotta-pink);
-    color: var(--neutral-white); 
-    font-weight: bold; 
-    border: none; 
-    border-radius: 8px;
-    cursor: pointer; 
-    transition: background 0.2s, transform 0.2s;
-    width: 80%; 
-    max-width: 250px; 
-    display: inline-block; 
+    color: var(--terracotta-pink); 
 }
 
 .modal-close-btn:hover { 
     background: var(--terracotta-pink-dark); 
-    transform: scale(1.05); /* Animación sorprendente de escala */
+    transform: scale(1.05);
 }
 
-/* RESPONSIVE: MÓVIL - Mejoras para touch y pantallas pequeñas */
+/* ------------------ Responsive (MÓVIL) ------------------ */
 @media (max-width: 992px) {
     .mapa-main-container { padding: 10px; }
     .mapa-section { 
         grid-template-columns: 1fr; 
         min-height: auto; 
+        padding: 0 10px 10px 10px;
+        gap: 10px;
     }
     
     .map-header { order: 1; margin-bottom: 10px; padding: 1rem; }
-    .map-column { order: 2; min-height: 60vh; padding: 10px; }
+    .map-column { 
+        order: 2; 
+        min-height: 60vh; 
+        padding: 20px 10px;
+    }
     .info-sticky-wrapper { order: 3; }
     
     /* El panel deja de ser sticky en móvil */
@@ -386,19 +393,18 @@
         top: auto; 
         margin-top: 10px; 
         transform: none;
-        padding: 1.2rem; /* Ajuste para móviles */
+        padding: 1.5rem 1rem;
+        box-shadow: 0 4px 12px var(--shadow-medium);
     }
 
-    /* Aumentamos tamaños para touch */
-    .status-color { width: 24px; height: 24px; }
-    .btn { padding: 1rem; font-size: 1.1rem; }
+    /* DESHABILITAR ANIMACIÓN DE HOVER DEL MAPA EN MÓVIL */
     .svgmap path:hover, .svgmap polygon:hover, .svgmap rect:hover, .svgmap ellipse:hover {
-        transform: scale(1.15); /* Aún más grande en móvil para fingers */
+        transform: none !important; 
+        filter: none !important; 
     }
-}
-
-/* Accesibilidad extra: Focus para keyboard navigation */
-.svgmap path:focus, .svgmap polygon:focus, .svgmap rect:focus, .svgmap ellipse:focus {
-    outline: 2px solid var(--terracotta-pink);
-    outline-offset: 2px;
+    
+    .cotizar-btn {
+        font-size: 1.1rem;
+        box-shadow: 0 4px 10px rgba(226, 125, 96, 0.5);
+    }
 }

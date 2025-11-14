@@ -1,10 +1,18 @@
-/* src/pages/ProjectInfoPage.css - LIMPIO Y OPTIMIZADO */
+/* src/pages/ProjectInfoPage.css - ESTRUCTURA FINAL */
 
 /* Contenedor central para el contenido */
 .info-inner-container {
+    max-width: 95%; /* Mantener un ancho máximo para el contenido interno (texto, cards) */
+    margin: 0 auto;
+    /* --- CAMBIO CRUCIAL: Eliminar padding lateral para que las secciones abarquen el 100% --- */
+    padding: 0; 
+}
+
+/* Las secciones de componente necesitan su propio padding interno */
+.section-content-wrapper {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 5%;
+    padding: 0 5%; /* Añadimos el padding aquí para el contenido que SÍ debe centrarse */
 }
 
 /* --- Títulos de Sección Reutilizables --- */
@@ -12,7 +20,7 @@
     text-align: center;
     font-size: 2.2rem;
     font-weight: 800;
-    color: var(--color-primary-accent, #4e7c3e); /* Verde oscuro por defecto */
+    color: var(--color-primary-accent, #4e7c3e); 
     margin-bottom: 10px;
 }
 
@@ -23,7 +31,9 @@
     margin-bottom: 50px;
 }
 
+/* ---------------------------------------------------- */
 /* --- 1. Project Hero (Banner Principal) --- */
+/* Esta sección siempre debe ser 100% ancha */
 .project-hero {
     min-height: 70vh; 
     background-size: cover;
@@ -31,10 +41,10 @@
     display: flex;
     align-items: center;
     position: relative;
+    width: 100%; /* Asegurar que cubra todo el ancho */
 }
 /* Apuntando al elemento SVG dentro de .feature-icon */
 .feature-icon-wrapper svg {
-    /* 🛑 Propiedad para cambiar el color del dibujo del ícono */
     fill: white !important; 
     color: rgb(255, 255, 255);
     width: 60px;
@@ -59,16 +69,16 @@
     z-index: 2;
     color: white;
     max-width: 800px;
-    padding: 40px 5%;
+    padding: 40px 5%; /* Mantenemos padding interno para el texto */
     text-align: center;
     margin: 0 auto;
+    width: 100%; /* Asegurar que ocupe el ancho disponible dentro del Hero */
 }
 
 .hero-title {
     font-size: 3.5rem;
     font-weight: 900;
     margin: 0 0 15px;
-    /* Sombra de texto para mejorar legibilidad sobre imágenes claras */
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); 
 }
 
@@ -79,11 +89,10 @@
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5); 
 }
 
-/* 🛑 Estilos compartidos por Link y BrochureDownloadButton */
+/* Estilos compartidos por Link y BrochureDownloadButton */
 .hero-cta-button {
     display: inline-block;
     padding: 15px 35px;
-    /* Usamos la variable de acento (asumida como el verde oscuro) */
     background-color: var(--color-primary-accent, #4e7c3e); 
     color: white;
     text-decoration: none;
@@ -93,48 +102,53 @@
 }
 
 .hero-cta-button:hover {
-    /* 🛑 CORRECCIÓN: Usamos la variable de color oscuro para consistencia */
     background-color: var(--color-primary-dark, #3b5f2e); 
-    transform: translateY(-2px); /* Pequeño efecto de levantamiento */
+    transform: translateY(-2px); 
 }
 
+/* ---------------------------------------------------- */
 /* --- 2. Value Proposition (Grid de Feature Cards) --- */
 .value-proposition-section {
-    padding: 80px 0;
-    background-color: var(--color-light-bg, #f4f7f6); /* Fondo claro */
+    padding: 20px 0;
+    background-color: var(--color-light-bg, #f4f7f6); 
 }
-
 .feature-cards-grid {
+    /* Usar el wrapper de contenido para centrar la grilla */
+    /* La grilla debe ir dentro del .section-content-wrapper */
     display: grid;
-    /* 4 columnas en desktop, se ajusta a menos en tablet/móvil */
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
     gap: 30px;
 }
 
+/* ---------------------------------------------------- */
 /* --- 3. Investment Section --- */
 .investment-section {
     padding: 60px 0;
     background-color: white;
 }
 
+/* ---------------------------------------------------- */
 /* --- 4. Amenity Highlights (Sección con AmenityCard) --- */
 .amenity-highlights-section {
-    padding: 80px 0;
-    /* Este es el contenedor que rodea AmenityCard y el Mapa, mantenerlo limpio */
+    padding: 20px 5%;
+    ;
 }
 
+/* ---------------------------------------------------- */
 /* --- 5. Visión Arquitectónica (Sección agregada previamente) --- */
 .vision-section {
-    padding: 80px 0;
+    padding: 30px 0;
     background-color: var(--color-light-bg, #f4f7f6);
 }
 
+/* ---------------------------------------------------- */
 /* --- 6. Contact CTA --- */
 .contact-cta-section {
     padding: 80px 0;
-    background-color: var(--color-primary-accent, #4e7c3e);
+    background-color: #7b4536;
     color: white;
     text-align: center;
+    width: 100%; /* Asegurar que cubra todo el ancho */
 }
 
 .cta-content h2 {
@@ -149,8 +163,13 @@
 }
 
 
+/* ---------------------------------------------------- */
 /* --- Responsive (Móvil) --- */
 @media (max-width: 768px) {
+    /* Ajustar el padding interno del contenido en móvil */
+    .section-content-wrapper {
+        padding: 0 4%; 
+    }
     .project-hero {
         min-height: 50vh;
     }

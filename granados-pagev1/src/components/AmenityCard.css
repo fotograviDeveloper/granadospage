@@ -5,8 +5,8 @@
     align-items: center;
     gap: 40px;
     padding: 40px 0;
-    margin: 40px 0;
-    background-color: white;
+    margin: 0px 0;
+    background-color: rgb(255, 255, 255);
     border-radius: 10px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
     overflow: hidden;
@@ -23,9 +23,11 @@
     min-width: 50%;
     height: 350px;
     overflow: hidden;
+
 }
 
 .amenity-image {
+    border-radius: 8px;
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -48,7 +50,7 @@
 .amenity-title {
     font-size: 2rem;
     font-weight: 800;
-    color: var(--color-primary-accent);
+   color: #313131;
     margin-top: 0;
     margin-bottom: 15px;
 }

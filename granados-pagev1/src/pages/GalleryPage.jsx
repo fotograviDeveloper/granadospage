@@ -1,16 +1,21 @@
 // src/pages/GalleryPage.jsx
-import React, { useState } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { 
+    faTimes, 
+    faChevronRight, 
+    faChevronLeft, 
+    faExpandAlt, // Nuevo ícono para expandir/abrir
+} from '@fortawesome/free-solid-svg-icons';
 
 import AmenityTrioHero from '../components/AmenityTrioHero';
 import './GalleryPage.css';
 
-// 🛑 Rutas de Imagen de Referencia (REEMPLAZAR POR TUS ARCHIVOS)
+// 🛑 Rutas de Imagen de Referencia (Mantenidas)
 const IMG_REFERENCES = {
-    HERO: '/img/hero/herogalery.jpg', // Ruta de la imagen principal
-   LAGOON: [
+    HERO: '/img/hero/herogalery.jpg',
+    LAGOON: [
         '/img/Galeria/LagoonClub/aereacasalago.jpg',
         '/img/Galeria/LagoonClub/albercanatural.jpg',
         '/img/Galeria/LagoonClub/casainterior2.jpg',
@@ -62,14 +67,14 @@ const IMG_REFERENCES = {
 };
 
 const TAB_DATA = [
-   
+    
     { 
         id: 'casa', 
         name: 'Casa Club Principal', 
         images: IMG_REFERENCES.CASA_CLUB,
         description: "Lujo, comodidad y arquitectura mediterránea. La Casa Club es tu centro social y deportivo: alberca, gimnasio de última generación, salones privados y áreas de *coworking*. El diseño está pensado para elevar tu rutina diaria.",
     },
-     { 
+    { 
         id: 'lagoon', 
         name: 'Lagoon Club', 
         images: IMG_REFERENCES.LAGOON,
@@ -89,39 +94,147 @@ const TAB_DATA = [
     }
 ];
 
+// Componente del Modal Lightbox
+const LightboxModal = ({ images, currentIndex, onClose, onPrev, onNext, onThumbnailClick }) => {
+    if (images.length === 0) return null;
 
-// Componente de Colage Dinámico
-const DynamicImageCollage = ({ images }) => (
+    // Hook para cerrar con tecla ESC
+    useEffect(() => {
+        const handleEscape = (event) => {
+            if (event.key === 'Escape') {
+                onClose();
+            }
+        };
+        document.addEventListener('keydown', handleEscape);
+        return () => document.removeEventListener('keydown', handleEscape);
+    }, [onClose]);
+
+    return (
+        <div className="lightbox-modal-overlay">
+            <div className="lightbox-modal-content">
+                
+                {/* Botón de Cerrar */}
+                <button className="lightbox-close-btn" onClick={onClose}>
+                    <FontAwesomeIcon icon={faTimes} />
+                </button>
+
+                {/* Contenedor de Imagen Principal */}
+                <div className="lightbox-main-image-container">
+                    {/* Botón Anterior */}
+                    <button className="lightbox-nav-btn prev" onClick={onPrev}>
+                        <FontAwesomeIcon icon={faChevronLeft} />
+                    </button>
+                    
+                    {/* Imagen Actual */}
+                    <img 
+                        src={images[currentIndex]} 
+                        alt={`Galería - Imagen ${currentIndex + 1}`} 
+                        className="lightbox-main-image"
+                    />
+
+                    {/* Botón Siguiente */}
+                    <button className="lightbox-nav-btn next" onClick={onNext}>
+                        <FontAwesomeIcon icon={faChevronRight} />
+                    </button>
+                </div>
+                
+                {/* Carrusel de Miniaturas */}
+                <div className="lightbox-thumbnail-carousel">
+                    {images.map((imgUrl, index) => (
+                        <img
+                            key={index}
+                            src={imgUrl}
+                            alt={`Miniatura ${index + 1}`}
+                            className={`lightbox-thumbnail ${index === currentIndex ? 'active' : ''}`}
+                            onClick={() => onThumbnailClick(index)}
+                            loading="lazy"
+                        />
+                    ))}
+                </div>
+
+                {/* Contador */}
+                <div className="lightbox-counter">
+                    {currentIndex + 1} / {images.length}
+                </div>
+            </div>
+        </div>
+    );
+};
+
+// Componente de Colage Dinámico (Modificado para ser interactivo)
+const DynamicImageCollage = ({ images, onImageClick }) => (
     <div className="image-collage-grid">
         {images.slice(0, 10).map((imgUrl, index) => (
-            // Agregamos una clase para la imagen vertical y horizontal para manejar el grid
-            <div key={index} className={`collage-item item-${index + 1} ${index === 0 || index === 1 ? 'large' : ''}`}>
+            <div 
+                key={index} 
+                className={`collage-item item-${index + 1}`} 
+                onClick={() => onImageClick(index)} // 🛑 Nuevo manejador de click
+            >
                 <img 
                     src={imgUrl} 
                     alt={`Amenidad ${index + 1}`} 
                     loading="lazy"
-                    // Asignación de clases de span para simular el diseño mostrado en tu imagen
                     className={
                         index === 0 ? 'span-row-2' : 
                         index === 3 ? 'span-col-2' : 
                         ''
                     }
                 />
+                {/* Ícono de "Expandir" para indicar interactividad */}
+                <div className="image-expand-overlay">
+                    <FontAwesomeIcon icon={faExpandAlt} className="expand-icon" />
+                </div>
             </div>
         ))}
     </div>
 );
 
 
+// Componente Principal
 const GalleryPage = () => {
     const [activeTab, setActiveTab] = useState(TAB_DATA[0].id);
-    const [isPopupOpen, setIsPopupOpen] = useState(true); // Controla el popup descriptivo
+    const [isPopupOpen, setIsPopupOpen] = useState(true);
+    
+    // 🛑 Estados para el Lightbox
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [modalImageIndex, setModalImageIndex] = useState(0);
+
     const currentTab = TAB_DATA.find(tab => tab.id === activeTab);
+    const imagesInTab = currentTab ? currentTab.images : [];
+
+    // 🛑 Funciones para Lightbox
+    const openModal = useCallback((index) => {
+        setModalImageIndex(index);
+        setIsModalOpen(true);
+    }, []);
+
+    const closeModal = useCallback(() => {
+        setIsModalOpen(false);
+    }, []);
+
+    const showPrev = () => {
+        setModalImageIndex((prevIndex) => 
+            (prevIndex - 1 + imagesInTab.length) % imagesInTab.length
+        );
+    };
+
+    const showNext = () => {
+        setModalImageIndex((prevIndex) => 
+            (prevIndex + 1) % imagesInTab.length
+        );
+    };
+
+    // Función para manejar el cambio de pestaña y restablecer el popup
+    const handleTabChange = (tabId) => {
+        setActiveTab(tabId);
+        // Opcional: Reabrir el popup descriptivo al cambiar de pestaña
+        // setIsPopupOpen(true); 
+    };
 
     return (
         <div className="gallery-page">
             
-            {/* 1. Portada con Título y Argumento de Venta */}
+            {/* 1. Portada */}
             <section className="gallery-hero-cover" style={{ backgroundImage: `url(${IMG_REFERENCES.HERO})` }}>
                 <div className="hero-content-gallery">
                     <h1 className="hero-title">Tu Legado en Imágenes: Vive Granados</h1>
@@ -135,7 +248,7 @@ const GalleryPage = () => {
                 </div>
             </section>
 
-            {/* 2. Galería por Secciones (Collage con Pestañas y Elementos Dinámicos) */}
+            {/* 2. Galería por Secciones */}
             <section className="gallery-tabs-section">
                 
                 {/* 🛑 POPUP FLOTANTE (Modal Descriptivo) */}
@@ -146,12 +259,10 @@ const GalleryPage = () => {
                         </button>
                         <h3 className="popup-title">Navega por las secciones clave...</h3>
                         <p>
-                            Utiliza el menú de abajo para explorar cada amenidad en detalle. Cada imagen te acerca 
-                            al estilo de vida único que Granados tiene para ti.
+                            Utiliza el menú de abajo para explorar cada amenidad en detalle. Haz **clic en cualquier imagen** para verla a pantalla completa en la galería interactiva.
                         </p>
                     </div>
                 )}
-
 
                 <div className="section-header-gallery">
                     <h2 className="section-heading">Detalles que Enamoran</h2>
@@ -162,7 +273,7 @@ const GalleryPage = () => {
                         <button
                             key={tab.id}
                             className={`gallery-tab ${activeTab === tab.id ? 'active' : ''}`}
-                            onClick={() => setActiveTab(tab.id)}
+                            onClick={() => handleTabChange(tab.id)}
                         >
                             {tab.name}
                         </button>
@@ -177,7 +288,10 @@ const GalleryPage = () => {
                 </div>
 
                 <div className="gallery-content-display">
-                    <DynamicImageCollage images={currentTab.images} />
+                    <DynamicImageCollage 
+                        images={imagesInTab} 
+                        onImageClick={openModal} // Pasa la función para abrir el modal
+                    />
                 </div>
             </section>
             
@@ -191,9 +305,9 @@ const GalleryPage = () => {
             </section>
 
 
-            {/* 4. Contact CTA (Footer de la página) */}
+            {/* 4. Contact CTA */}
             <section className="contact-cta-section-gallery">
-                 <div className="cta-content-gallery">
+                <div className="cta-content-gallery">
                     <h2>¿Listo para Construir tu Legado?</h2>
                     <p>Contáctanos para recibir el brochure completo y plan de financiamiento.</p>
                     <Link to="/contacto" className="hero-cta-button-gallery">
@@ -201,6 +315,18 @@ const GalleryPage = () => {
                     </Link>
                 </div>
             </section>
+
+            {/* 🛑 Lightbox Modal */}
+            {isModalOpen && (
+                <LightboxModal
+                    images={imagesInTab}
+                    currentIndex={modalImageIndex}
+                    onClose={closeModal}
+                    onPrev={showPrev}
+                    onNext={showNext}
+                    onThumbnailClick={setModalImageIndex}
+                />
+            )}
         </div>
     );
 };

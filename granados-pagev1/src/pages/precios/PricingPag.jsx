@@ -12,10 +12,7 @@ const PricingPage = () => {
     return (
         <div className="pricing-page">
             
-            {/* Sección de Encabezado y Mapa */}
-            <section className="map-section">
-                <InteractiveMap/>
-            </section>
+           
 
             {/* Sección de Precios (usando el PriceGrid) */}
             <section className="prices-section">
@@ -33,6 +30,10 @@ const PricingPage = () => {
                         </p>
                     </div>
                 </div>
+            </section>
+             {/* Sección de Encabezado y Mapa */}
+            <section className="map-section">
+                <InteractiveMap/>
             </section>
 
         </div>

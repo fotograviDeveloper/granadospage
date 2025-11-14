@@ -51,11 +51,11 @@ const ParqueLinealPage = () => {
             {/* 1. Hero / Título */}
             <section className="amenity-hero" style={{ backgroundImage: `url(${HERO_IMAGE})` }}>
                 <div className="hero-overlay">
-                    <Link to="/amenidades" className="back-link">
+                    <Link to="/proyecto" className="back-link">
                         <FontAwesomeIcon icon={faChevronLeft} /> Regresar a Amenidades
                     </Link>
                     <div className="hero-content-detail">
-                        <h1 className="amenity-title">Parque Lineal</h1>
+                        <h1 className="amenity-title-page">Parque Lineal</h1>
                         <p className="amenity-tagline">Senderos, Deporte y Conexión con la Naturaleza.</p>
                     </div>
                 </div>

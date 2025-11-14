@@ -67,13 +67,13 @@ const CasaClubPage = () => {
             <section className="amenity-hero" style={{ backgroundImage: `url(${HERO_IMAGE})` }}>
                 <div className="hero-overlay">
                     {/* Botón de Regreso (Back-link) */}
-                    <Link to="/amenidades" className="back-link">
+                    <Link to="/proyecto" className="back-link">
                         <FontAwesomeIcon icon={faChevronLeft} /> Regresar a Amenidades
                     </Link>
 
                     {/* Contenido centrado */}
                     <div className="hero-content-detail">
-                        <h1 className="amenity-title">Casa Club Principal</h1>
+                        <h1 className="amenity-title-page">Casa Club Principal</h1>
                         <p className="amenity-tagline">El Corazón del Desarrollo: Bienestar, Eventos y Convivencia Social.</p>
                     </div>
                 </div>

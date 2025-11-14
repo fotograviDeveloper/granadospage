@@ -3,84 +3,88 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './PriceGrid.css';
 
-// 🛑 DATOS DE PRECIOS POR ETAPA Y TIPO DE LOTE (Basado en brochure y proyecciones)
-const LOT_PRICES = {
-    // Friends and Family (El precio MÁS bajo, exclusiva fundadores)
-    'Friends and Family': {
-        tagline: 'El precio más bajo para inversionistas fundadores. ¡Última oportunidad!',
-        lots: [
-            { type: 'A', sizeRange: 'Desde 900 m²', priceM2: 900, detail: 'Lotes de alta plusvalía interior.' },
-            { type: 'AA', sizeRange: 'Desde 1100 m²', priceM2: 1100, detail: 'Ubicación privilegiada cerca de amenidades.' },
-            { type: 'AAA', sizeRange: 'Desde 1300 m²', priceM2: 1300, detail: 'Frente a áreas verdes o con vistas exclusivas.' }
-        ]
-    },
-    // Early Bird (Precio de lanzamiento actual)
-    'Early Bird': {
-        tagline: 'Adquiere tu lote al precio especial de lanzamiento. Etapa actual de venta.',
-        lots: [
-            { type: 'A', sizeRange: 'Desde 600 m²', priceM2: 600, detail: 'Lotes de alta plusvalía interior.' },
-            { type: 'AA', sizeRange: 'Desde 700 m²', priceM2: 700, detail: 'Ubicación privilegiada cerca de amenidades.' },
-            { type: 'AAA', sizeRange: 'Desde 800 m²', priceM2: 800, detail: 'Frente a áreas verdes o con vistas exclusivas.' }
-        ]
-    },
-    // Preventa (Precio más alto, futura)
-    'Preventa': {
-        tagline: 'Etapa estándar de comercialización. Precios sujetos a cambios por avance de obra.',
-        lots: [
-            { type: 'A', sizeRange: 'Desde 1400 m²', priceM2: 1400, detail: 'Lotes de alta plusvalía interior.' },
-            { type: 'AA', sizeRange: 'Desde 1600 m²', priceM2: 1600, detail: 'Ubicación privilegiada cerca de amenidades.' },
-            { type: 'AAA',  priceM2: 1800, detail: 'Frente a áreas verdes o con vistas exclusivas.' }
-        ]
-    }
+// 🛑 DATOS DE PRECIOS POR TIPO DE LOTE (PRECIOS ACTUALES)
+const CURRENT_PRICES = {
+    title: 'Precios de Lanzamiento: Tu Oportunidad Exclusiva',
+    tagline: 'Asegura tu inversión con las tarifas vigentes por metro cuadrado. ¡Cupo limitado!',
+    lots: [
+        { 
+            type: 'A', 
+            sizeRange: 'Lotes dispinibles desde 1500 m²', 
+            priceM2: 600, 
+            detail: 'Lotes de alta plusvalía interior con acceso rápido a vialidades principales.' 
+        },
+        { 
+            type: 'AA', 
+            sizeRange: 'Lotes dispinibles desde 1500 m²', 
+            priceM2: 700, 
+            detail: 'Ubicación privilegiada cerca de las principales amenidades y áreas verdes.' 
+        },
+        { 
+            type: 'AAA', 
+            sizeRange: 'Lotes dispinibles desde 1500 m²', 
+            priceM2: 800, 
+            detail: 'Frente a áreas verdes, con vistas panorámicas o en esquinas exclusivas.' 
+        }
+    ]
 };
-
-// 🛑 ORDEN DE MUESTRA SOLICITADO: Early Bird -> Friends and Family -> Preventa
-const STAGE_ORDER = ['Early Bird', 'Friends and Family', 'Preventa']; 
 
 
 const PriceGrid = () => {
+    // Solo renderizamos la única sección de precios
+    const { title, tagline, lots } = CURRENT_PRICES;
+
     return (
         <div className="price-grid-container">
-            {STAGE_ORDER.map((stageName) => {
-                const stageData = LOT_PRICES[stageName];
+            {/* Contenedor principal para la única etapa (ahora 'Precios Actuales') */}
+            {/* IMPORTANTE: Usamos la clase 'current-stage' para el estilo */}
+            <div className="stage-section current-stage">
                 
-                if (!stageData) return null;
+                <div className="stage-header-wrapper">
+                    {/* Título y Tagline */}
+                    <h2 className="stage-title price-highlight">
+                        {title}
+                    </h2>
+                    <p className="stage-tagline">{tagline}</p>
 
-                return (
-                    <div key={stageName} className="stage-section">
-                        <div className="stage-header-wrapper">
-                            {/* Resaltado del título de la etapa actual/atractiva */}
-                            <h3 className={`stage-title ${stageName === 'Early Bird' ? 'stage-highlight' : ''}`}>
-                                {stageName}
-                            </h3>
-                            <p className="stage-tagline">{stageData.tagline}</p>
+                    {/* Botón de Agendar Visita - Cerca de los precios */}
+                    <Link 
+                        to="/Contacto" 
+                        className="agenda-visit-btn" /* Clase estilizada en CSS */
+                    >
+                        📅 Agendar una Visita al Desarrollo
+                    </Link>
+                </div>
+
+                <div className="lot-cards-wrapper">
+                    {lots.map((lot) => (
+                        <div key={lot.type} className={`lot-card lot-type-${lot.type.toLowerCase()}`}>
+                            
+                            <div className="lot-type-tag">LOTE TIPO {lot.type}</div>
+                            
+                            {/* Rango de tamaño */}
+                            <p className="lot-size-range">{lot.sizeRange}</p>
+                            
+                            {/* Caja de Precio por M² */}
+                            <div className="lot-price-box">
+                                <span className="price-label">Precio M²</span>
+                                <span className="price-value">${lot.priceM2.toLocaleString('es-MX')}</span>
+                            </div>
+
+                            {/* Descripción del lote */}
+                            <p className="lot-detail">{lot.detail}</p>
+                            
+                            {/* Botón de Contacto por Lote */}
+                            <Link 
+                                to="/contacto" 
+                                className="lot-cta-button"
+                            >
+                                Solicitar Asesoría
+                            </Link>
                         </div>
-
-                        <div className="lot-cards-wrapper">
-                            {stageData.lots.map((lot) => (
-                                <div key={lot.type} className={`lot-card lot-type-${lot.type.toLowerCase()}`}>
-                                    <div className="lot-type-tag">LOTE TIPO {lot.type}</div>
-                                    <p className="lot-size-range">{lot.sizeRange}</p>
-                                    
-                                    <div className="lot-price-box">
-                                        <span className="price-label">Precio por M² (Desde)</span>
-                                        <span className="price-value">${lot.priceM2}</span>
-                                    </div>
-
-                                    <p className="lot-detail">{lot.detail}</p>
-                                    
-                                    <Link 
-                                        to="/contacto" 
-                                        className="lot-cta-button"
-                                    >
-                                        Solicitar Asesoría
-                                    </Link>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                );
-            })}
+                    ))}
+                </div>
+            </div>
         </div>
     );
 };

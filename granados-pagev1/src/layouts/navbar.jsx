@@ -42,7 +42,7 @@ const Navbar = () => {
         <ul className="navbar-links">
           {/* ... Enlaces de Navegación ... */}
           <li><Link to="/" onClick={closeMenu}>Inicio</Link></li>
-          <li><Link to="/proyecto" onClick={closeMenu}>Conoce el Proyecto</Link></li>
+          <li><Link to="/proyecto" onClick={closeMenu}>Proyecto y Amenidades</Link></li>
           <li><Link to="/precios" onClick={closeMenu}>Disponibilidad y Precios</Link></li>
           <li><Link to="/galeria" onClick={closeMenu}>Galería</Link></li>
            <li><Link to="/Contacto" onClick={closeMenu}>Contacto</Link></li>
