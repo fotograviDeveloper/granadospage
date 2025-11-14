@@ -1,34 +1,52 @@
 /* src/components/HeroSlider.css */
 
+/* ========================================================= */
+/* 0. VARIABLES Y CONFIGURACIÓN INICIAL                      */
+/* ========================================================= */
+
+/* Las variables de color y espaciado de Navbar/App.css son heredadas. */
+:root {
+    /* Altura moderna y no dominante (UX) */
+    --hero-height-desktop: 65vh; 
+    --hero-height-mobile: 60vh;
+    
+    /* Variables de Color (Usamos los colores de la marca) */
+    --hero-text-color: #FFFFFF;
+    --hero-cta-bg: var(--navbar-secondary-color, #f1e8d9); /* Crema/Arena */
+    --hero-cta-text: var(--navbar-primary-color, #383636);  /* Terracota Oscuro */
+    --hero-accent-color: var(--navbar-accent-color, #e4c59f);
+}
+
+
 /* ---------------------------------- */
-/* Contenedor principal y área de visualización */
+/* 1. Contenedor principal y Área de Visualización (Altura Ajustada) */
 /* ---------------------------------- */
 .hero-slider-container {
     width: 100%;
-    /* Altura ajustada para respetar la navbar (asumiendo 10vh de navbar) */
-    height: calc(100vh - 10vh); 
+    /* Altura ajustada: 65% de la ventana (no full-screen) */
+    height: var(--hero-height-desktop); 
     position: relative;
     overflow: hidden; 
     box-sizing: border-box; 
+    /* El box-sizing ya se definió en App.css, pero se mantiene para aislamiento. */
 }
 
 /* ---------------------------------- */
-/* Contenedor que maneja el deslizamiento horizontal */
+/* 2. Contenedor de Deslizamiento (Wrapper) */
 /* ---------------------------------- */
 .slides-wrapper {
     display: flex;
     height: 100%;
-    /* Ancho total (3 slides * 100%) */
     width: 100%; 
-    /* Duración de la transición de imagen: 1 segundo */
-    transition: transform 3s ease-in-out; 
+    /* **CORRECCIÓN EXPERTO:** La transición debe ser rápida (0.4s), la pausa la maneja JS. */
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1); 
     margin: 0;
     padding: 0;
     will-change: transform; 
 }
 
 /* ---------------------------------- */
-/* Estilos de Cada Diapositiva */
+/* 3. Estilos de Cada Diapositiva (Slide) */
 /* ---------------------------------- */
 .slide {
     flex-shrink: 0; 
@@ -36,13 +54,14 @@
     width: 100%; 
     height: 100%;
     position: relative; 
-   background-size: cover;         /* <-- Hace que la imagen se ajuste y llene el contenedor */
-    background-position: center;    /* <-- Centra la imagen */
+    
+    background-size: cover; 
+    background-position: center; 
     background-repeat: no-repeat;
-    background-attachment: scroll;  /* <-- Solución al problema de 'zoom' / fijeza */
+    background-attachment: scroll; 
+    
     display: flex;
-    opacity: 1;
-    /* 🛑 Ajuste Final: Asegura alineación a la izquierda */
+    /* Centramos el contenido por defecto (será ajustado por el contenido) */
     justify-content: flex-start; 
     align-items: center;
     
@@ -50,39 +69,23 @@
     padding: 0;
 }
 
-/* Degradado y Overlay */
-.slide-gradient-top {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 5%; 
-    background: linear-gradient(
-        to bottom, 
-        #7c4d47, 
-        rgba(188, 124, 116, 0.0) 
-    );
-    z-index: 5;
-}
+/* ---------------------------------- */
+/* 4. Overlay (Degradados de Coherencia de Marca) */
+/* ---------------------------------- */
 
+/* Overlay Oscuro para asegurar Legibilidad del texto blanco (UX) */
 .slide-overlay {
+    /* Usamos el color Primario de la marca (#383636) con opacidad */
     background: linear-gradient(
-    /* Dirección: De izquierda a derecha */
-    to right, 
-    
-    /* 1. Color de inicio (Opaco) */
-    #7f4740ff 0%, 
-    
-    /* 2. Punto medio (Totalmente transparente) */
-    rgba(200, 78, 62, 0) 50%,
-    
-    /* 3. El resto (50% al 100%) permanece transparente */
-    rgba(188, 124, 116, 0) 100% 
-);
-background-attachment: fixed;
-background-size: cover;
-
-     z-index: 6;
+        to right, 
+        /* 1. Inicio Oscuro y Opaco (ej. 70% opacidad) */
+        color-mix(in srgb, var(--navbar-primary-color) 70%, transparent) 0%, 
+        /* 2. Degradado Rápido a Transparente */
+        transparent 40%,
+        /* 3. El resto es transparente */
+        transparent 100% 
+    );
+    z-index: 6;
     position: absolute;
     top: 0;
     left: 0;
@@ -90,33 +93,36 @@ background-size: cover;
     height: 100%;
 }
 
+/* El degradado superior (slide-gradient-top) ya no es necesario si el overlay principal 
+   cubre la parte donde está el texto. Lo eliminamos para simplificar la capa. */
+.slide-gradient-top {
+    display: none;
+}
+
+
 /* ---------------------------------- */
-/* Contenido Superpuesto (Texto y Animación) */
+/* 5. Contenido Superpuesto (Texto y CTA) */
 /* ---------------------------------- */
 .slide-content {
     position: relative; 
     z-index: 15; 
-    color: white;
-    /* 🛑 Ajuste Final: Texto siempre a la izquierda */
+    color: var(--hero-text-color);
     text-align: left; 
     
-    /* 🛑 CORRECCIÓN CLAVE: Eliminar padding y dejar solo un pequeño margen 
-       para que el texto no toque el borde del navegador */
-    padding: 0; /* Eliminamos todo el padding */
-    margin-left: 5%; /* Dejamos un margen fijo pequeño para el borde */
+    /* Usamos un padding consistente con las variables globales (ej. 3rem) */
+    padding-left: var(--spacing-xl,6rem); 
+    padding-right: var(--spacing-xl, 3rem);
     
     width: 100%;
-    max-width: 700px; 
+    max-width: 90%; /* Ajustamos el max-width para desktop */
     
-    /* Animación de entrada inicial (estado de inicio) */
+    /* Estado de inicio (Animación) */
     opacity: 0; 
     filter: blur(5px);
     transform: translateY(20px);
     
     /* Transición de Entrada */
-    transition: opacity 0.5s ease-out, 
-                filter 0.5s ease-out, 
-                transform 0.5s ease-out;
+    transition: opacity 0.5s ease-out, filter 0.5s ease-out, transform 0.5s ease-out;
 }
 
 /* Estado Activo: Animación de Entrada */
@@ -127,7 +133,7 @@ background-size: cover;
     transition-delay: 0.5s; 
 }
 
-/* Animación de Salida */
+/* Animación de Salida (Mantenemos tu lógica) */
 .slide-content.animating-out {
     opacity: 0 !important;
     filter: blur(5px) !important;
@@ -135,40 +141,49 @@ background-size: cover;
     transition: opacity 0.3s ease-in, filter 0.3s ease-in, transform 0.3s ease-in;
 }
 
-
+/* Titulares (H1) */
 .slide-content h1 {
-    font-size: 4rem; 
+    /* Usamos rems para un mejor control y responsive */
+    font-size: 3.8rem; /* Ligeramente más pequeño que tu 4rem anterior */
     line-height: 1.1;
-    margin-bottom: 0.5rem;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-  
+    margin-bottom: var(--spacing-sm, 1rem);
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.9); /* Sombra más fuerte para legibilidad */
 }
 
+/* Párrafos */
 .slide-content p {
-    font-size: 1.3rem; 
-    margin-bottom: 2rem;
-    font-weight: 300;
-    max-width: 600px; 
+    font-size: 1.25rem; 
+    margin-bottom: var(--spacing-lg, 2rem);
+    font-weight: 400;
+    max-width: 650px; 
+    text-shadow: 5px 5px 10px rgba(0, 0, 0, 0.7);
 }
 
+/* Botón CTA (Llamada a la Acción) */
 .hero-cta-button {
     display: inline-block;
-    background-color: #f0e6da; 
-    color: #bc7c74; 
-    padding: 1rem 2.5rem;
-    border-radius: 5px;
+    background-color: var(--hero-cta-bg); 
+    color: var(--hero-cta-text); 
+    
+    /* Padding basado en variables para consistencia */
+    padding: var(--spacing-sm, 1rem) var(--spacing-lg, 2.5rem); 
+    border-radius: 4px; /* Un poco más cuadrado, moderno */
     font-size: 1.1rem;
-    font-weight: bold;
+    font-weight: 700; /* Más peso para que destaque */
     text-decoration: none;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, transform 0.2s;
+    /* Sombra sutil para darle profundidad (UI) */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); 
 }
 
 .hero-cta-button:hover {
-    background-color: #e4c59f; 
+    background-color: var(--hero-accent-color); 
+    color: var(--hero-cta-text); /* Mantenemos el color de texto oscuro */
+    transform: translateY(-2px); /* Efecto sutil al hacer hover */
 }
 
 /* ---------------------------------- */
-/* Flechas de Navegación */
+/* 6. Flechas de Navegación */
 /* ---------------------------------- */
 .nav-arrow {
     position: absolute;
@@ -176,79 +191,101 @@ background-size: cover;
     transform: translateY(-50%);
     z-index: 20;
     
-    background: transparent; 
-    color: white;
+    background: rgba(0, 0, 0, 0.2); /* Fondo semitransparente para mejor visibilidad */
+    color: var(--hero-text-color);
     border: none;
-    padding: 0;
+    border-radius: 50%; /* Flechas redondas */
+    width: 3rem; /* Tamaño cómodo para tocar */
+    height: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     cursor: pointer;
-    font-size: 2rem;
-    transition: color 0.3s;
+    font-size: 1.5rem; /* Ajuste para que se vea bien en el círculo */
+    transition: background 0.3s, color 0.3s;
 }
 
-.nav-arrow.left { left: 20px; }
-.nav-arrow.right { right: 20px; }
+.nav-arrow:hover {
+    background: rgba(0, 0, 0, 0.5); /* Oscurecer al hacer hover */
+}
+
+.nav-arrow.left { left: var(--spacing-md, 1.5rem); }
+.nav-arrow.right { right: var(--spacing-md, 1.5rem); }
 
 
 /* ---------------------------------- */
-/* Indicadores de Diapositiva (Puntos) */
+/* 7. Indicadores de Diapositiva (Puntos UX) */
 /* ---------------------------------- */
 .slide-indicators {
     position: absolute;
-    bottom: 10%; 
-  
+    bottom: var(--spacing-lg, 2rem); /* Posición cómoda y basada en rems */
     left: 50%;
     transform: translateX(-50%);
     z-index: 20;
     display: flex;
-    gap: 10px;
+    gap: 8px; /* Espaciado ajustado */
 }
 
 .slide-indicators button {
-    background:rgba(123, 123, 123, 0.506);
+    /* **CORRECCIÓN EXPERTO:** Estilos más limpios y con acento de marca */
+    background: rgba(255, 255, 255, 0.4); /* Fondo blanco semitransparente (UX) */
     border: none;
-    width: 15px ;
-    height: 15px ;
+    width: 10px; /* Tamaño más sutil */
+    height: 10px; 
     border-radius: 50%;
     padding: 0;
     cursor: pointer;
-}
-.indicator {
-    /* Solución para que el width/height de 15px se aplique */
-    display: block;
-    width: 1px; 
-    height: 1px;
-    border-radius: 5%;
-    
-    background-color: rgba(255, 255, 255, 0.5);
-    border: 2px solid white;
-    cursor: pointer;
-    transition: background-color 0.3s, border-color 0.3s;
+    transition: background-color 0.3s, transform 0.2s;
 }
 
+.slide-indicators button.active {
+    background-color: var(--hero-accent-color); /* Color de acento de la marca */
+    transform: scale(1.2); /* Se agranda un poco para destacar (UI) */
+}
 
 /* ---------------------------------- */
-/* Responsive */
+/* 8. Responsive Design (Móvil) */
 /* ---------------------------------- */
 @media (max-width: 768px) {
     .hero-slider-container {
-        height: 70vh;
+        /* Altura ligeramente más pequeña para móvil */
+        height: var(--hero-height-mobile); /* 60vh */
     }
     
+    /* Contenido */
     .slide-content {
-        /* 🛑 Ajuste Responsive: Reducir el margen en móviles */
-        margin-left: 2%;
+        /* Reducimos el padding lateral para usar mejor el espacio */
+        padding-left: var(--spacing-md, 1.5rem); 
+        padding-right: var(--spacing-md, 1.5rem);
     }
     
     .slide-content h1 {
-        font-size: 2.5rem;
+        font-size: 2.5rem; /* El tamaño de titular en móvil */
     }
     
     .slide-content p {
         font-size: 1rem;
+        margin-bottom: var(--spacing-md, 1.5rem);
     }
     
+    /* Botón CTA en Móvil */
+    .hero-cta-button {
+        font-size: 1rem;
+        padding: var(--spacing-sm, 1rem) var(--spacing-md, 1.5rem);
+    }
+    
+    /* Flechas de Navegación */
     .nav-arrow {
-        top: 50%; 
-        font-size: 1.5rem;
+        width: 2.5rem;
+        height: 2.5rem;
+        font-size: 1.2rem;
+    }
+    
+    .nav-arrow.left { left: var(--spacing-sm, 1rem); }
+    .nav-arrow.right { right: var(--spacing-sm, 1rem); }
+    
+    /* Indicadores */
+    .slide-indicators {
+        bottom: var(--spacing-md, 1.5rem);
     }
 }

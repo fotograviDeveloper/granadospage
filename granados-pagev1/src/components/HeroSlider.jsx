@@ -9,16 +9,16 @@ import './HeroSlider.css';
 const slides = [
   {
     id: 1,
-    image: '/img/casa-club.png', 
+    image: '/img/hero/FACHADA.jpg', 
     title: 'El Lujo Mediterráneo, Centro de tu Legado', // Usar minúsculas para coincidir con el estilo CSS
-    subtitle: 'Nuestra Casa Club es el centro de reunión perfecto. Fusiona el diseño arquitectónico mediterráneo con amenidades de clase mundial. Disfruta de la alberca con carril de nado, jacuzzi, sauna/vapor y áreas sociales diseñadas para conectar y celebrar. Un espacio donde tu familia y vecinos crean memorias invaluables.',
+    subtitle: 'Nuestra Casa Club es el centro de reunión perfecto. Disfruta de la alberca con carril de nado, jacuzzi, sauna/vapor y áreas sociales diseñadas para conectar y celebrar. Un espacio donde tu familia y vecinos crean memorias invaluables.',
     ctaText: 'Conoce más',
     ctaLink: '/proyecto',
     indicatorColor: '#FFFFFF' 
   },
   {
     id: 2,
-    image: '/img/lagoon-club.jpg',
+    image: '/img/hero/Noche.jpg',
     title: 'Tu Escape Campestre, Todos los Días',
     subtitle: 'Tu Escape Campestre, Todos los DíasUn gran lago para la aventura y el descanso. Disfruta de Glamping, Palapas con asadores, canchas de arena y la exclusiva Cancha de Croquet. Es el paraíso natural de Montemorelos, diseñado para crear recuerdos únicos en familia.',
     ctaText: 'Ver Detalles',
@@ -27,7 +27,7 @@ const slides = [
   },
   {
     id: 3,
-    image: '/img/parque-lineal.png',
+    image: '/img/hero/Accesoparque.jpg',
     title: 'Inversión Inteligente en un Entorno Natural',
     subtitle: 'Granados del Mediterráneo es más que un fraccionamiento; es un proyecto que garantiza la plusvalía de tu patrimonio. Vive rodeado de la Sierra Madre y a solo 2.5 km de Carretera Nacional, con espacios verdes y seguros para toda la familia.',
     ctaText: 'Ver Detalles',
