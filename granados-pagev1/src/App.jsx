@@ -7,7 +7,7 @@ import HomePage from './pages/HomePage';
 import ContactPage from './pages/contacto/ContactPage';
 import ProjectInfoPage from './pages/proyecto/ProjectInfoPage';
 // NUEVA IMPORTACIÓN
-import PricingPage from './pages/precios/PricingPag';
+import PricingPage from './pages/precios/PricingPage';
 import PhotoGallery from './components/PhotoGallery';
 import CasaClubPage from './pages/amenidades/CasaClubPage';
 import NotFoundPage from './pages/NotFoundPage';
