@@ -14,9 +14,9 @@ import { ParqueLinealImages } from '../../data/amenityImages';
 import './CasaClubPage.css'; // Reutilizamos el mismo CSS para la estructura general
 
 // RUTAS DE IMAGENES FIJAS
-const HERO_IMAGE = '/img/amenidades/AJEDREZ.jpg';
-const PARQUE_LINEAL_INTRO_IMAGE = '/img/amenidades/AJEDREZ.jpg'; 
-const MASCOTAS_IMAGE = '/img/amenidades/AJEDREZ.jpg'; 
+const HERO_IMAGE = '/img/Galeria/ParqueLineal/compress/cine.webp';
+const PARQUE_LINEAL_INTRO_IMAGE = '/img/Galeria/ParqueLineal/compress/asadores.webp'; 
+const MASCOTAS_IMAGE = '/img/Galeria/ParqueLineal/compress/dogpark.webp'; 
 
 // Facilidades del Parque Lineal
 const CLUB_FEATURES = [

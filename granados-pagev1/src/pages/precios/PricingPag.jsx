@@ -17,7 +17,7 @@ const PricingPage = () => {
             {/* Sección de Precios (usando el PriceGrid) */}
             <section className="prices-section">
                 <div className="prices-inner-container">
-                    <h2 className="prices-section-title">Inversión por Etapa y Tipología de Lote</h2>
+                   
                     
                     {/* 🛑 COMPONENTE PRINCIPAL */}
                     <PriceGrid />

@@ -74,13 +74,7 @@ const PriceGrid = () => {
                             {/* Descripción del lote */}
                             <p className="lot-detail">{lot.detail}</p>
                             
-                            {/* Botón de Contacto por Lote */}
-                            <Link 
-                                to="/contacto" 
-                                className="lot-cta-button"
-                            >
-                                Solicitar Asesoría
-                            </Link>
+                       
                         </div>
                     ))}
                 </div>

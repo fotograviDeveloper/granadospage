@@ -1,41 +1,59 @@
-// src/components/InteractiveMasterPlanMap.jsx (Versión Estática, Completa y Ajustada)
+// src/components/InteractiveMasterPlanMap.jsx (Versión con Bloque de Venta y CTA)
 
 import React from 'react'; 
+import { Link } from 'react-router-dom'; // 🛑 Importamos Link para el CTA
 import './InteractiveMasterPlanMap.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; // Necesario para el ícono del botón
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons'; // Ícono para el botón
 
-// 🛑 Rutas de imágenes específicas (Mantenemos las definidas por el usuario)
+// Rutas de imágenes específicas 
 const MAP_IMAGE_VERTICAL = '/img/mapa-granados.png'; 
 const MAP_IMAGE_HORIZONTAL = '/img/mapa-granados-horizontal.png'; 
 
 /**
  * Componente de Mapa Maestro Estático. 
- * Muestra una foto atractiva del masterplan sin interacción.
+ * Muestra el masterplan junto a un bloque de texto de venta y CTA.
  */
-const InteractiveMasterPlanMap = ({ title = "Plano Maestro del Desarrollo" }) => {
-    // 🛑 Se eliminan todos los estados, refs y funciones de interactividad.
+const InteractiveMasterPlanMap = ({ 
+    title = "Plano Maestro del Desarrollo",
+    text = "Un proyecto de más de 200 lotes para construir el legado de tu familia. Descubre la visión completa de Granados, que integra amenidades exclusivas, extensas áreas verdes y la mejor ubicación en Montemorelos, garantizando tu plusvalía." // 🛑 Texto de complemento
+}) => {
     
     return (
         <div className="interactive-map-widget">
             <div className="map-header">
                 <h3>{title}</h3>
-                {/* 🛑 El botón de Pantalla Completa sigue eliminado */}
             </div>
             
-            <div className="map-image-wrapper-static">
-                {/* 🛑 CORRECCIÓN 3: Uso de <picture> para cargar la imagen correcta */}
-                <picture>
-                    {/* Fuente para pantallas grandes (Horizontal) */}
-                    <source media="(min-width: 769px)" srcSet={MAP_IMAGE_HORIZONTAL} /> 
-                    {/* Fuente por defecto (Vertical para móvil) */}
-                    <img
-                        src={MAP_IMAGE_VERTICAL}
-                        alt="Plano Maestro de Granados del Mediterráneo"
-                        className="map-image-static"
-                        loading="lazy"
-                    />
-                </picture>
+            {/* 🛑 Nuevo contenedor para la disposición en PC */}
+            <div className="map-content-layout">
+                
+                {/* 1. Bloque de Texto y CTA */}
+                <div className="map-info-block">
+                    <h4>Nuestra Visión, Tu Legado</h4>
+                    <p>{text}</p>
+                    
+                    {/* Botón CTA */}
+                    <Link to="/disponibilidad-y-precios" className="map-cta-button">
+                        Ver Disponibilidad y Precios <FontAwesomeIcon icon={faArrowRight} />
+                    </Link>
+                </div>
+                
+                {/* 2. Bloque del Mapa */}
+                <div className="map-image-wrapper-static">
+                    <picture>
+                        <source media="(min-width: 769px)" srcSet={MAP_IMAGE_HORIZONTAL} /> 
+                        <img
+                            src={MAP_IMAGE_VERTICAL}
+                            alt="Plano Maestro de Granados del Mediterráneo"
+                            className="map-image-static"
+                            loading="lazy"
+                        />
+                    </picture>
+                </div>
+
             </div>
-            {/* 🛑 El Modal Fullscreen sigue eliminado */}
+            
         </div>
     );
 };

@@ -30,7 +30,7 @@
 }
 
 .masterplan-wrapper {
-    max-width: 1200px;
+    max-width: 100%;
     margin: 0 auto;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
@@ -45,13 +45,13 @@
 
 /* --- Prices Section --- */
 .prices-section {
-    padding: 40px 0;
+    padding: 0px 0;
 }
 
 .prices-inner-container {
 
     margin: 0 auto;
-    padding: 0 5%;
+    padding: 0 1%;
 }
 
 .prices-section-title {

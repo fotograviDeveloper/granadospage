@@ -57,12 +57,12 @@ const ProjectSummary = () => {
                         
                         {/* Subtítulo */}
                         <p className="summary-intro-text">
-                            En Montemorelos, donde la **Sierra Madre** se encuentra con nuevas oportunidades, nace Granados del Mediterráneo desde un concepto integral. Más que un fraccionamiento, es un lienzo para construir un legado.
+                            En Montemorelos, donde la Sierra Madre  se encuentra con nuevas oportunidades, nace Granados del Mediterráneo desde un concepto integral. Más que un fraccionamiento, es un lienzo para construir un legado.
                         </p>
                         
                         {/* Párrafo Principal */}
                         <p className="summary-main-text">
-                            Un refugio que fusiona las imponentes vistas y la calidez de la **arquitectura mediterránea** con más de **40 amenidades** exclusivas para crear una experiencia de club residencial campestre única.
+                            Un refugio que fusiona las imponentes vistas y la calidez de la arquitectura mediterránea con más de 40 amenidades exclusivas para crear una experiencia de club residencial campestre única.
                         </p>
                     </div>
 
@@ -84,9 +84,9 @@ const ProjectSummary = () => {
 
                     {/* 3. Botón CTA (Grande, debajo de las Cards) */}
                     <div className="summary-cta-box">
-                        <Link to="#contacto" className="summary-cta-button">
+                        <a href="https://wa.me/528123852034?text=" target="_blank" className="summary-cta-button">
                             Agenda una Visita
-                        </Link>
+                        </a>
                     </div>
 
                 </div> {/* Fin de .summary-content-wrapper */}

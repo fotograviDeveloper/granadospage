@@ -6,7 +6,7 @@ import './BrochureDownloadButton.css'; // Opcional si solo usas el className
 
 // 🛑 RUTA DEL ARCHIVO PDF (debe ser la misma que usamos antes)
 // Esta ruta debe ser la misma para toda la aplicación.
-const BROCHURE_PATH = '../assets/brochure.pdf'; 
+const BROCHURE_PATH = '../../public/brochure.pdf'; 
 
 /**
  * Componente reutilizable para descargar el Brochure.

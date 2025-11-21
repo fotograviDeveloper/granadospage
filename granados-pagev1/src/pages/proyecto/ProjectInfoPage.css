@@ -2,7 +2,7 @@
 
 /* Contenedor central para el contenido */
 .info-inner-container {
-    max-width: 95%; /* Mantener un ancho máximo para el contenido interno (texto, cards) */
+    max-width: 90%; /* Mantener un ancho máximo para el contenido interno (texto, cards) */
     margin: 0 auto;
     /* --- CAMBIO CRUCIAL: Eliminar padding lateral para que las secciones abarquen el 100% --- */
     padding: 0; 
@@ -10,7 +10,7 @@
 
 /* Las secciones de componente necesitan su propio padding interno */
 .section-content-wrapper {
-    max-width: 1200px;
+    max-width: 85%;
     margin: 0 auto;
     padding: 0 5%; /* Añadimos el padding aquí para el contenido que SÍ debe centrarse */
 }
@@ -116,7 +116,7 @@
     /* Usar el wrapper de contenido para centrar la grilla */
     /* La grilla debe ir dentro del .section-content-wrapper */
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+   grid-template-columns: repeat(4, 1fr); 
     gap: 30px;
 }
 
@@ -169,6 +169,7 @@
     /* Ajustar el padding interno del contenido en móvil */
     .section-content-wrapper {
         padding: 0 4%; 
+        max-width: 100%; 
     }
     .project-hero {
         min-height: 50vh;

@@ -1,28 +1,41 @@
-/* src/pages/ContactPage.css */
+/* src/pages/ContactPage.css - CÓDIGO FINAL E IDEAL */
 
-/* Variables de Color (Terracota) */
+/* --- 1. Variables Globales y Reset Básico --- */
 :root {
-    --color-terracota: #5f3333; 
-    --color-terracota-dark: #81463b; 
-    --color-light-bg: #f4f7f6;
+    --color-terracota-dark: #81463b; /* Principal oscuro: Terracota */
+    --color-terracota-light: #C4A490; /* Acento suave */
+    --color-dark-bg: #383636; /* Fondo de navegación/pie (Gris oscuro) */
+    --color-light-bg: #f7f7f7; /* Fondo de paneles claros (Gris muy claro) */
     --color-dark-text: #222;
+    --color-white-text: #ffffff; 
+    
+    /* Variables para el Formulario Oscuro */
+    --form-dark-bg: #383636; 
+    --form-input-bg: #4a4a4a; 
+    --form-input-border: #666; 
+    --form-input-text: #e0e0e0; 
+    --form-placeholder-text: #b0b0b0; 
 }
 
-/* --- Hero y Reutilizables --- */
+* {
+    box-sizing: border-box;
+}
+
+/* --- 2. Estilos del Hero y Encabezados Comunes --- */
 .contact-hero {
-    background-color:#6b2e2e;
+    background-color: var(--color-dark-bg);
     color: white;
-    padding: 60px 5%;
+    padding: 80px 5%; 
     text-align: center;
 }
 .contact-hero h1 {
-    font-size: 3rem;
+    font-size: clamp(2rem, 5vw, 3.5rem); /* Responsive font size */
     font-weight: 900;
     margin: 0;
 }
 .section-heading {
     text-align: center;
-    font-size: 2.2rem;
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
     font-weight: 800;
     color: var(--color-dark-text);
     margin-bottom: 10px;
@@ -34,47 +47,79 @@
     margin-bottom: 40px;
 }
 
+/* --- 3. Estructura de Secciones Apiladas (Bloque Principal) --- */
 
-/* 🛑 SECCIÓN PRINCIPAL: GRID ASIMÉTRICO */
-.contact-main-grid {
-    display: grid;
-    /* 50% para información | 50% para el formulario */
-    grid-template-columns: 1fr 1fr; 
-    max-width: 1200px;
-    margin: 60px auto;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
+.contact-section-wrapper {
+    /* 🛑 Propiedades para centrar y dar estilo a cada bloque (Desktop) */
+    max-width: 80%; 
+    margin: 40px auto; 
+    padding: 40px; 
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15); 
+    border-radius: 12px;
     overflow: hidden;
-    min-height: 700px;
 }
 
-/* --- LADO IZQUIERDO: INFO Y VALOR --- */
+/* Colores de Fondo para los 3 Paneles */
 .contact-info-panel {
-    background-color: var(--color-light-bg);
-    padding: 40px;
-    display: flex;
-    align-items: center; /* Centrado vertical */
+    background-color: var(--color-light-bg); /* Expertos (Claro) */
 }
 
+.value-list-panel {
+    background-color: white; /* Valor (Blanco) */
+}
+
+.contact-form-panel {
+    background-color: var(--form-dark-bg); /* Formulario (Oscuro) */
+    color: var(--color-white-text); 
+}
+
+/* --- 4. Estilos Internos de Bloque 1: Expertos / Contacto --- */
 .contact-panel-content h2 {
-    font-size: 2rem;
-    color: var(--color-dark-text);
+    font-size: clamp(1.8rem, 3vw, 2.2rem);
+    color: var(--color-dark-text); 
     margin-top: 0;
+    font-weight: 800;
 }
 .contact-info-panel .subtitle {
     font-size: 1.1rem;
     color: #555;
     margin-bottom: 30px;
 }
-
-/* Lista de Valor (Qué obtienes) */
-.value-list h3 {
-    font-size: 1.2rem;
+.direct-contact-details {
+    margin-top: 40px;
+    border-top: 1px solid #ddd;
+    padding-top: 25px;
+}
+.contact-detail-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 18px;
+}
+.contact-detail-item .detail-icon {
     color: var(--color-terracota-dark);
-    margin-top: 20px;
-    margin-bottom: 15px;
-    border-bottom: 1px dashed var(--color-terracota-light);
-    padding-bottom: 5px;
+    font-size: 1.3rem;
+    margin-right: 18px;
+    width: 25px;
+}
+.contact-detail-item a {
+    color: var(--color-dark-text); 
+    text-decoration: none;
+    font-weight: 700;
+    transition: color 0.3s;
+}
+.contact-detail-item a:hover {
+    color: var(--color-terracota-dark);
+}
+
+/* --- 5. Estilos Internos de Bloque 2: Propuesta de Valor --- */
+.value-list h3 {
+    font-size: clamp(1.3rem, 2.5vw, 1.5rem); 
+    color: var(--color-terracota-dark); 
+    font-weight: 800;
+    margin-top: 0;
+    margin-bottom: 25px;
+    border-bottom: 2px solid var(--color-terracota-light);
+    padding-bottom: 8px;
 }
 .value-list ul {
     list-style: none;
@@ -82,102 +127,119 @@
 }
 .value-list li {
     font-size: 1rem;
-    margin-bottom: 10px;
-    color: #444;
+    margin-bottom: 15px; 
+    color: var(--color-dark-text); 
 }
 .value-list .check-icon {
-    color: var(--color-terracota);
+    color: var(--color-terracota-dark); 
     margin-right: 10px;
+    font-size: 1.1rem;
 }
 
-/* Contacto Directo */
-.direct-contact-details {
-    margin-top: 40px;
-    border-top: 1px solid #ddd;
-    padding-top: 20px;
-}
-.contact-detail-item {
-    display: flex;
-    align-items: center;
-    margin-bottom: 15px;
-}
-.contact-detail-item .detail-icon {
-    color: var(--color-terracota);
-    font-size: 1.2rem;
-    margin-right: 15px;
-    width: 20px;
-}
-.contact-detail-item a {
-    color: var(--color-dark-text);
-    text-decoration: none;
-    font-weight: 600;
-    transition: color 0.3s;
-}
-.contact-detail-item a:hover {
-    color: var(--color-terracota);
-}
-
-/* --- LADO DERECHO: FORMULARIO --- */
-.contact-form-panel {
-    background-color: white;
-    padding: 40px;
-}
-.form-title {
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--color-terracota);
+/* --- 6. Estilos Internos de Bloque 3: Formulario (Estilo Oscuro) --- */
+.contact-form-panel .form-title { 
+    color: var(--color-white-text); 
+    font-size: clamp(1.8rem, 3vw, 2.2rem);
+    font-weight: 800;
     margin-top: 0;
 }
-.form-subtitle {
-    font-size: 1rem;
-    color: #777;
+.contact-form-panel .form-subtitle { 
+    font-size: 1.1rem;
+    color: var(--form-input-text); 
     margin-bottom: 30px;
 }
 
-
-/* --- SECCIÓN DE MAPA/UBICACIÓN --- */
-.location-section {
-    padding: 60px 0;
+.contact-form-panel .form-group label {
+    color: var(--form-input-text); 
 }
-.map-placeholder {
-    max-width: 1200px;
-    height: 400px;
-    margin: 0 auto;
-    background-color: #e0e0e0;
-    border: 1px solid #ccc;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #999;
-    font-size: 1.5rem;
+
+/* Estilos de Campos (Inputs y Textarea) */
+.contact-form-panel .form-group input[type="text"],
+.contact-form-panel .form-group input[type="email"],
+.contact-form-panel .form-group textarea {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid var(--form-input-border);
+    border-radius: 8px; 
+    font-size: 1rem;
+    min-height: 50px;
+    resize: vertical;
+    
+    background-color: var(--form-input-bg); 
+    color: var(--form-input-text); 
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+.contact-form-panel .form-group input::placeholder, 
+.contact-form-panel .form-group textarea::placeholder {
+    color: var(--form-placeholder-text);
+}
+.contact-form-panel .form-group input:focus,
+.contact-form-panel .form-group textarea:focus {
+    border-color: var(--color-terracota-light);
+    box-shadow: 0 0 0 3px rgba(196, 164, 144, 0.4);
+    outline: none;
+}
+
+/* Estilos del Botón de Enviar */
+.contact-form-panel .submit-button {
+    display: inline-block;
+    width: 100%;
+    padding: 15px 30px;
+    background-color: var(--color-terracota-dark); 
+    color: var(--color-white-text);
+    border: none;
     border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
 }
 
-/* --- Responsive Móvil/Tablet --- */
-@media (max-width: 900px) {
-    .contact-main-grid {
-        /* Se colapsa a una columna */
-        grid-template-columns: 1fr;
-        max-width: 100%;
-        margin: 40px 0;
-        box-shadow: none;
-        border-radius: 0;
+.contact-form-panel .submit-button:hover {
+    background-color: #9c5c50;
+}
+
+/* --- 7. Estilos de Mapa/Ubicación --- */
+.location-section {
+    padding: 80px 5%;
+    background-color: var(--color-light-bg);
+}
+
+
+/* 🛑 --- 8. Responsive Móvil/Tablet (max-width: 1000px) --- */
+
+@media (max-width: 1000px) {
+    /* Ajustes para todas las secciones apiladas */
+    .contact-section-wrapper {
+        max-width: 100%; 
+        margin: 30px 0;
+        box-shadow: none; /* Eliminar sombras en móvil */
+        border-radius: 0; /* Eliminar bordes redondeados */
+        padding: 30px 5%; /* Padding lateral responsive */
     }
-    .contact-info-panel,
-    .contact-form-panel {
-        padding: 30px 5%;
+    
+    /* Centrado de texto en móvil */
+    .contact-panel-content h2,
+    .contact-panel-content .subtitle { 
+        text-align: center; 
     }
-    .contact-info-panel {
-        order: 2; /* Mueve la info después del formulario en móvil */
+    .direct-contact-details { 
+        text-align: center;
+        /* Centrar la lista de detalles de contacto */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
-    .contact-form-panel {
-        order: 1; /* Mantiene el formulario arriba */
+    .contact-detail-item { 
+        justify-content: center; 
     }
-    .contact-header-hero h1 {
-        font-size: 2.5rem;
+    
+    .value-list h3 { 
+        text-align: center; 
     }
-    .map-placeholder {
-        height: 300px;
-        margin: 0 5%;
+    
+    .contact-form-panel .form-title, 
+    .contact-form-panel .form-subtitle { 
+        text-align: center; 
     }
 }

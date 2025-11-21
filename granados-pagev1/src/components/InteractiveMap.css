@@ -369,7 +369,7 @@
     transform: scale(1.05);
 }
 
-/* ------------------ Responsive (MÓVIL) ------------------ */
+/* ------------------ Responsive (MÓVIL) - ORDEN Y TAMAÑO FINAL ------------------ */
 @media (max-width: 992px) {
     .mapa-main-container { padding: 10px; }
     .mapa-section { 
@@ -379,32 +379,69 @@
         gap: 10px;
     }
     
-    .map-header { order: 1; margin-bottom: 10px; padding: 1rem; }
-    .map-column { 
+    .map-header { 
+    
+        margin-bottom: 10px; 
+        padding: 1rem; 
+    }
+
+    /* 2. CUADRO DE INFORMACIÓN (INFO PANEL) */
+    .info-sticky-wrapper { 
         order: 2; 
-        min-height: 60vh; 
+        margin-bottom: 5px; 
+    }
+
+    /* 3. MAPA INTERACTIVO */
+    .map-column { 
+        order: 3; 
+        min-height: 60vh; /* Se mantiene la altura del mapa para que no se recorte */
         padding: 20px 10px;
     }
-    .info-sticky-wrapper { order: 3; }
     
-    /* El panel deja de ser sticky en móvil */
+    /* AJUSTES DE ALTURA DEL PANEL (Se mantienen los ajustes para compactar) */
     .lot-info-sticky-panel { 
         position: relative; 
         top: auto; 
-        margin-top: 10px; 
+        margin-top: 5px; 
         transform: none;
-        padding: 1.5rem 1rem;
+        padding: 0.8rem 0.5rem; /* Reducido para compactar */
         box-shadow: 0 4px 12px var(--shadow-medium);
+    }
+    
+    .lot-number { 
+        font-size: 2.5rem; 
+        margin-bottom: 0.3rem; 
+    }
+    
+    .lot-details {
+        margin: 0.5rem 0; 
+        padding-top: 1rem; 
+    }
+    .lot-details p { 
+        margin-bottom: 0.5rem; 
+    }
+    
+    .cotizar-btn {
+        font-size: 1rem; 
+        padding: 10px 15px; 
+        margin-bottom: 0.8rem; 
+    }
+
+    .change-lot-btn {
+        padding: 8px 15px;
+    }
+    
+    .lot-note { 
+        margin-top: 1rem; 
+        margin-bottom: 1rem; 
+    }
+    .panel-title { 
+        margin-bottom: 0.3rem;
     }
 
     /* DESHABILITAR ANIMACIÓN DE HOVER DEL MAPA EN MÓVIL */
     .svgmap path:hover, .svgmap polygon:hover, .svgmap rect:hover, .svgmap ellipse:hover {
         transform: none !important; 
         filter: none !important; 
-    }
-    
-    .cotizar-btn {
-        font-size: 1.1rem;
-        box-shadow: 0 4px 10px rgba(226, 125, 96, 0.5);
     }
 }

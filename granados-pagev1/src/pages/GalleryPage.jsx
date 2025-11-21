@@ -14,56 +14,97 @@ import './GalleryPage.css';
 
 // 🛑 Rutas de Imagen de Referencia (Mantenidas)
 const IMG_REFERENCES = {
-    HERO: '/img/hero/herogalery.jpg',
-    LAGOON: [
-        '/img/Galeria/LagoonClub/aereacasalago.jpg',
-        '/img/Galeria/LagoonClub/albercanatural.jpg',
-        '/img/Galeria/LagoonClub/casainterior2.jpg',
-        '/img/Galeria/LagoonClub/croquet.jpg',
-        '/img/Galeria/LagoonClub/fachada.jpg',
-        '/img/Galeria/LagoonClub/dosfachada.jpg',
-        '/img/Galeria/LagoonClub/fogateros.jpg',
-        '/img/Galeria/LagoonClub/glamping2.jpg',
-        '/img/Galeria/LagoonClub/hamacas.jpg',
-        '/img/Galeria/LagoonClub/interior3.jpg',
-        '/img/Galeria/LagoonClub/puente.jpg',
-    ],
+    HERO: '/img/hero/casagalary.jpg',
+// Actualización del array de rutas de imágenes para LAGOON
+LAGOON: [
+    // La nueva ruta usa /img/Galeria/LagoonClub/Compress/ y el formato .webp
+    '/img/Galeria/LagoonClub/Compress/Lago.webp', // Asumo 'Lago.webp' es aereacasalago/albercanatural
+    '/img/Galeria/LagoonClub/Compress/interior.webp', // Sustituye a casainterior2
+    '/img/Galeria/LagoonClub/Compress/Croquet.webp', // Sustituye a croquet
+    '/img/Galeria/LagoonClub/Compress/fachada.webp', // Sustituye a fachada / dosfachada
+    '/img/Galeria/LagoonClub/Compress/Fogateros.webp', // Sustituye a fogateros
+    '/img/Galeria/LagoonClub/Compress/camping.webp', // Sustituye a glamping2
+    '/img/Galeria/LagoonClub/Compress/interiorv.webp', // Sustituye a interior3
+    '/img/Galeria/LagoonClub/Compress/noche.webp', // Imagen de la noche (Nueva o sustituto)
+    '/img/Galeria/LagoonClub/Compress/Vistaaerea.webp', // Sustituye a aereacasalago (si no es 'Lago.webp')
+],
     
     CASA_CLUB: [
-        '/img/Galeria/CasaClub/Alberca.jpg',
-        '/img/Galeria/CasaClub/Asadores.jpg', 
-        '/img/Galeria/CasaClub/asadores2.jpg',
-        '/img/Galeria/CasaClub/Bar.jpg',
-        '/img/Galeria/CasaClub/Escaleras.jpg',
-        '/img/Galeria/CasaClub/Fachada.jpg',
-        '/img/Galeria/CasaClub/Fachadaderecha.jpg',
-        '/img/Galeria/CasaClub/Fachadafrontal.jpg',
-        '/img/Galeria/CasaClub/Fachadaizquierda.jpg',
-        '/img/Galeria/CasaClub/Fachadalateral.jpg',
-        '/img/Galeria/CasaClub/Kids club.jpg',
-        '/img/Galeria/CasaClub/Lounge.jpg',
-        '/img/Galeria/CasaClub/Terraza.jpg',
-        '/img/Galeria/CasaClub/vistaotro.jpg',
-    ],
+    // La nueva ruta usa /img/Galeria/CasaClub/compress/ y el formato .webp
+    '/img/Galeria/CasaClub/compress/alberca.webp',
+    '/img/Galeria/CasaClub/compress/asadores.webp', 
+    '/img/Galeria/CasaClub/compress/bar.webp',
     
-    LINEAL: [
-        '/img/Galeria/ParqueLineal/AJEDREZ3.jpg',
-        '/img/Galeria/ParqueLineal/ASADORES.jpg',
-        '/img/Galeria/ParqueLineal/cine.jpg',
-        '/img/Galeria/ParqueLineal/jardinComestible.jpg',
-        '/img/Galeria/ParqueLineal/petpark.jpg',
-        '/img/Galeria/ParqueLineal/pistas2.jpg',
-        '/img/Galeria/ParqueLineal/XTREAM FUERTE2.jpg',
-        '/img/Galeria/ParqueLineal/xtreamclub.jpg',
-    ],
+    // Fachadas (Usamos las fachadas comprimidas)
+    '/img/Galeria/CasaClub/compress/FACHADA.webp', // Sustituye Fachada.jpg, Fachadaderecha.jpg, Fachadaizquierda.jpg, Fachadalateral.jpg
+    '/img/Galeria/CasaClub/compress/FACHADAFRONTAL.webp', // Sustituye Fachadafrontal.jpg
     
-    HOGAR: [
-        '/img/Galeria/CasaMuestra/casam1.jpeg',
-        '/img/Galeria/CasaMuestra/casam2.jpeg',
-        '/img/Galeria/CasaMuestra/casam3.jpeg',
-        '/img/Galeria/CasaMuestra/casam4.jpeg',
-        '/img/Galeria/CasaMuestra/casam5.jpeg',
-    ],
+    // Interiores / Áreas Específicas
+    '/img/Galeria/CasaClub/compress/lounge.webp', // Sustituye Lounge.jpg y/o Terraza.jpg
+    '/img/Galeria/CasaClub/compress/playclub.webp', // Sustituye Kids club.jpg
+    '/img/Galeria/CasaClub/compress/garden.webp',
+    
+    // Baños
+    '/img/Galeria/CasaClub/compress/bañomujeres.webp',
+    '/img/Galeria/CasaClub/compress/bañoshombres.webp',
+    '/img/Galeria/CasaClub/compress/bañodiscapacitados.webp',
+    '/img/Galeria/CasaClub/compress/bañomujeresalberca.webp',
+    '/img/Galeria/CasaClub/compress/bañosmujeres-casaclub.webp',
+],
+ // Actualización del array de rutas de imágenes para LINEAL (Parque Lineal)
+LINEAL: [
+    // La nueva ruta usa /img/Galeria/ParqueLineal/compress/ y el formato .webp
+    '/img/Galeria/ParqueLineal/compress/Ajedrez.webp', // Sustituye AJEDREZ3.jpg
+    '/img/Galeria/ParqueLineal/compress/asadores.webp', // Sustituye ASADORES.jpg
+    '/img/Galeria/ParqueLineal/compress/cinerender.webp', // Sustituye cine.jpg
+    '/img/Galeria/ParqueLineal/compress/jardinbotanico.webp', // Sustituye jardinComestible.jpg
+    '/img/Galeria/ParqueLineal/compress/dogpark.webp', // Sustituye petpark.jpg
+    '/img/Galeria/ParqueLineal/compress/Rampas.webp', // Sustituye pistas2.jpg
+    '/img/Galeria/ParqueLineal/compress/xtreamclubdos.webp', // Sustituye XTREAM FUERTE2.jpg o xtreamclub.jpg
+    '/img/Galeria/ParqueLineal/compress/xtreamclub.webp', // Sustituye la imagen restante de xtream
+    '/img/Galeria/ParqueLineal/compress/Acceso-n.webp', // Añadimos imagen de Acceso (Acceso 2-n.webp o Acceso-n.webp)
+    '/img/Galeria/ParqueLineal/compress/juegos.webp', // Añadimos juegos.webp
+],
+    
+// Actualización del array de rutas de imágenes para HOGAR (Casa Muestra)
+HOGAR: [
+    // La nueva ruta usa /img/Galeria/CasaMuestra/Compress/ y el formato .webp
+    
+    // CASAS / EXTERIORES
+    '/img/Galeria/CasaMuestra/Compress/casam1.webp', // Sustituye a la original casam1.jpeg
+    '/img/Galeria/CasaMuestra/Compress/casam2.webp', // Sustituye a la original casam2.jpeg
+    '/img/Galeria/CasaMuestra/Compress/casam3.webp', // Sustituye a la original casam3.jpeg
+    '/img/Galeria/CasaMuestra/Compress/casam4.webp', // Sustituye a la original casam4.jpeg
+    '/img/Galeria/CasaMuestra/Compress/casam5.webp', // Sustituye a la original casam5.jpeg
+    '/img/Galeria/CasaMuestra/Compress/exterior.webp',
+    '/img/Galeria/CasaMuestra/Compress/ENTRADA.webp',
+
+    // FACHADAS (Diferentes ángulos)
+    '/img/Galeria/CasaMuestra/Compress/fachada.webp', 
+    '/img/Galeria/CasaMuestra/Compress/FACHADA 2.webp',
+    '/img/Galeria/CasaMuestra/Compress/FACHADA FONTAL 2.webp',
+    '/img/Galeria/CasaMuestra/Compress/FACHADA frontal 2.webp',
+    '/img/Galeria/CasaMuestra/Compress/FACHADA LATERAL 2.webp',
+    '/img/Galeria/CasaMuestra/Compress/FACHADA lateral.webp',
+
+    // INTERIORES - Áreas Comunes
+    '/img/Galeria/CasaMuestra/Compress/INTERIOR SALA.webp',
+    '/img/Galeria/CasaMuestra/Compress/SALA.webp',
+    '/img/Galeria/CasaMuestra/Compress/SALA -COMEDOR 2.webp',
+    '/img/Galeria/CasaMuestra/Compress/SALA -COMEDOR 3.webp',
+    '/img/Galeria/CasaMuestra/Compress/SALA -COMEDOR.webp',
+    '/img/Galeria/CasaMuestra/Compress/cocina.webp',
+
+    // INTERIORES - Privadas
+    '/img/Galeria/CasaMuestra/Compress/habitacion.webp',
+    '/img/Galeria/CasaMuestra/Compress/habitacion ppal 2.webp',
+    '/img/Galeria/CasaMuestra/Compress/habitacion ppal 3.webp',
+    '/img/Galeria/CasaMuestra/Compress/baño.webp',
+
+    // PLANO
+    '/img/Galeria/CasaMuestra/Compress/PLANTA CONJUNTO.webp',
+    '/img/Galeria/CasaMuestra/Compress/conjunto 2.webp',
+],
 };
 
 const TAB_DATA = [
@@ -82,7 +123,7 @@ const TAB_DATA = [
     },
     { 
         id: 'lineal', 
-        name: 'Parque Lineal & Fitness', 
+        name: 'Parque Lineal', 
         images: IMG_REFERENCES.LINEAL,
         description: "Más de 5,000 m² dedicados al bienestar. Pista de jogging, áreas de yoga al aire libre, zona de calistenia y jardines de contemplación. Es el espacio ideal para reconectar con la naturaleza y tu salud.",
     },
@@ -242,9 +283,9 @@ const GalleryPage = () => {
                         Más que renders, la visión completa de tu próximo hogar. 
                         Enamórate de cada rincón, desde la laguna cristalina hasta los senderos de la Sierra Madre.
                     </p>
-                    <Link to="/contacto" className="hero-cta-button-gallery">
+                    <a href="https://wa.me/528123852034?text=" target="_blank" className="hero-cta-button-gallery">
                         Agendar Visita al Desarrollo <FontAwesomeIcon icon={faChevronRight} className="cta-icon-right"/>
-                    </Link>
+                    </a>
                 </div>
             </section>
 
@@ -283,7 +324,10 @@ const GalleryPage = () => {
                 {/* 🛑 TEXTO DESCRIPTIVO DINÁMICO */}
                 <div className="dynamic-description-container">
                     <p className="dynamic-description-text">
-                        **{currentTab.name}:** {currentTab.description}
+                        <strong style={{ 
+          fontSize: '3rem',  // Aumenta el tamaño de la fuente
+          color: '#bc7c74'      // Opcional: añade un color de acento
+        }}>{currentTab.name}:</strong> <br/>{currentTab.description}
                     </p>
                 </div>
 
@@ -310,9 +354,9 @@ const GalleryPage = () => {
                 <div className="cta-content-gallery">
                     <h2>¿Listo para Construir tu Legado?</h2>
                     <p>Contáctanos para recibir el brochure completo y plan de financiamiento.</p>
-                    <Link to="/contacto" className="hero-cta-button-gallery">
+                    <a href="https://wa.me/528123852034?text=" target="_blank" className="hero-cta-button-gallery">
                         Solicitar Información <FontAwesomeIcon icon={faChevronRight} className="cta-icon-right"/>
-                    </Link>
+                    </a>
                 </div>
             </section>
 

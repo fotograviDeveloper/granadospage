@@ -1,5 +1,6 @@
-// src/components/HeroSlider.jsx
-import React, { useState, useEffect, useCallback } from 'react'; 
+// src/components/HeroSlider.jsx - CORREGIDO: SUAVIZADO DEL SALTO EN CARRUSEL INFINITO
+
+import React, { useState, useEffect, useCallback, useRef } from 'react'; 
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons'; 
@@ -10,7 +11,7 @@ const slides = [
   {
     id: 1,
     image: '/img/hero/FACHADA.jpg', 
-    title: 'El Lujo Mediterráneo, Centro de tu Legado', // Usar minúsculas para coincidir con el estilo CSS
+    title: 'El Lujo Mediterráneo, Centro de tu Legado', 
     subtitle: 'Nuestra Casa Club es el centro de reunión perfecto. Disfruta de la alberca con carril de nado, jacuzzi, sauna/vapor y áreas sociales diseñadas para conectar y celebrar. Un espacio donde tu familia y vecinos crean memorias invaluables.',
     ctaText: 'Conoce más',
     ctaLink: '/proyecto',
@@ -20,7 +21,7 @@ const slides = [
     id: 2,
     image: '/img/hero/Noche.jpg',
     title: 'Tu Escape Campestre, Todos los Días',
-    subtitle: 'Tu Escape Campestre, Todos los DíasUn gran lago para la aventura y el descanso. Disfruta de Glamping, Palapas con asadores, canchas de arena y la exclusiva Cancha de Croquet. Es el paraíso natural de Montemorelos, diseñado para crear recuerdos únicos en familia.',
+    subtitle: 'Un gran lago para la aventura y el descanso. Disfruta de Glamping, Palapas con asadores, canchas de arena y la exclusiva Cancha de Croquet. Es el paraíso natural de Montemorelos, diseñado para crear recuerdos únicos en familia.',
     ctaText: 'Ver Detalles',
     ctaLink: '/proyecto',
     indicatorColor: '#E4C59F'
@@ -36,63 +37,142 @@ const slides = [
   },
 ];
 
+const INTERVAL_DURATION = 5000;
+const MANUAL_TRANSITION_TIME = 500;
+const SLIDE_TRANSITION_DURATION = 1000; 
+
+// 🛑 1. Crear las diapositivas extendidas (Añadir clones)
+const extendedSlides = [
+    slides[slides.length - 1], // Último clonado al inicio (índice 0)
+    ...slides,                  // Diapositivas reales (índices 1, 2, 3)
+    slides[0]                   // Primero clonado al final (índice 4)
+];
+
 const HeroSlider = () => {
-  const [currentSlide, setCurrentSlide] = useState(0);
+  // Inicializar en 1 (el primer slide real)
+  const [currentSlideIndex, setCurrentSlideIndex] = useState(1);
   const [isAnimatingOut, setIsAnimatingOut] = useState(false);
-  // Eliminamos isTransitioning ya que no usaremos la lógica de slides extendidos
+  // 🛑 Estado para controlar la transición CSS. Inicialmente TRUE.
+  const [isTransitioning, setIsTransitioning] = useState(true); 
 
-  const totalSlides = slides.length;
+  const totalRealSlides = slides.length;
+  const totalExtendedSlides = extendedSlides.length;
 
-  // Función para avanzar al siguiente slide
-  const goToNextSlide = useCallback(() => {
-    // 1. Activa la animación de salida del texto (desaparecerá en 0.5s)
-    setIsAnimatingOut(true); 
+  const intervalRef = useRef(null); 
 
-    // 2. Después de 1 segundo (tiempo para que el texto desaparezca), cambiamos la imagen
-    // La animación de la imagen dura 1s, por lo que el texto estará oculto antes, durante y
-    // justo después del movimiento.
-    setTimeout(() => {
-      setCurrentSlide((prevSlide) => (prevSlide + 1) % totalSlides);
-      // 3. Desactiva la animación de salida para que la animación de entrada del nuevo texto inicie
-      setIsAnimatingOut(false);
-    }, 1000); 
-  }, [totalSlides]);
+  // 🛑 Función para manejar el salto instantáneo (sin transición CSS)
+  const handleTransitionEnd = useCallback(() => {
+    // Solo actuamos si el carrusel está en modo de transición (no si ya saltó)
+    if (!isTransitioning) return;
+
+    // Si estamos en la diapositiva clonada final (índice 4)
+    if (currentSlideIndex === totalExtendedSlides - 1) {
+      // 1. Desactivar la transición
+      setIsTransitioning(false);
+      // 2. Saltar instantáneamente a la primera diapositiva real (índice 1)
+      setCurrentSlideIndex(1);
+    } 
+    // Si estamos en la diapositiva clonada inicial (índice 0)
+    else if (currentSlideIndex === 0) {
+      // 1. Desactivar la transición
+      setIsTransitioning(false);
+      // 2. Saltar instantáneamente a la última diapositiva real (índice 3)
+      setCurrentSlideIndex(totalRealSlides);
+    }
+    
+    // 🛑 Este es el cambio clave: Reactivar la transición inmediatamente después del salto
+    // (o después de que se detectó que no hubo salto, para el resto de los movimientos).
+    // Esto asegura que el siguiente movimiento (ya sea manual o automático) será suave.
+    if (!isTransitioning) {
+        // Usamos setTimeout para asegurar que React complete el render del 'none' antes de volver a 'ease-in-out'
+        setTimeout(() => {
+            setIsTransitioning(true);
+        }, 50); 
+    }
+
+  }, [currentSlideIndex, totalExtendedSlides, totalRealSlides, isTransitioning]);
+  // Dependencia 'isTransitioning' es crucial aquí.
+
+
+  // Función clave para iniciar el temporizador automático
+  const startAutoSlide = useCallback(() => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+    }
+
+    intervalRef.current = setInterval(() => {
+      setIsAnimatingOut(true); 
+      
+      setTimeout(() => {
+        // Aseguramos que la transición esté activa antes de mover
+        setIsTransitioning(true); 
+        setCurrentSlideIndex(prevIndex => prevIndex + 1);
+        setIsAnimatingOut(false);
+      }, MANUAL_TRANSITION_TIME);
+      
+    }, INTERVAL_DURATION);
+  }, [totalRealSlides]);
+
+
+  // Lógica para el cambio automático de diapositivas
+  useEffect(() => {
+    startAutoSlide();
+    
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
+  }, [startAutoSlide]); 
+
+  // Función auxiliar para reiniciar el temporizador después de una acción manual
+  const restartAutoSlide = useCallback(() => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+    }
+    // Reiniciamos después de que la transición CSS y de texto haya terminado
+    setTimeout(startAutoSlide, SLIDE_TRANSITION_DURATION + MANUAL_TRANSITION_TIME); 
+  }, [startAutoSlide]);
 
 
   // Funciones de control manual
-  const nextSlide = useCallback(() => {
-    goToNextSlide();
-  }, [goToNextSlide]);
-
-  const prevSlide = useCallback(() => {
-    // Para las flechas manuales, la transición es más rápida.
+  const nextSlide = () => {
+    // Aseguramos que la transición esté activa
+    setIsTransitioning(true); 
     setIsAnimatingOut(true);
     setTimeout(() => {
-      setCurrentSlide((prevSlide) => (prevSlide - 1 + totalSlides) % totalSlides);
+      setCurrentSlideIndex(prevIndex => prevIndex + 1);
       setIsAnimatingOut(false);
-    }, 500); // 0.5s para un cambio manual ágil
-  }, [totalSlides]);
-
-
-  // 🛑 Corrección 5: Lógica para el cambio automático de diapositivas (cada 5 segundos)
-  useEffect(() => {
-    // Ciclo total: 5000ms. El texto desaparece en 1000ms y la imagen se desliza en 1000ms.
-    const intervalDuration = 5000; 
-    
-    const interval = setInterval(goToNextSlide, intervalDuration); 
-    
-    // Limpieza
-    return () => clearInterval(interval); 
-    
-  }, [goToNextSlide]); 
-
-  const goToSlide = (index) => {
-    setIsAnimatingOut(true);
-    setTimeout(() => {
-      setCurrentSlide(index);
-      setIsAnimatingOut(false);
-    }, 500);
+    }, MANUAL_TRANSITION_TIME);
+    restartAutoSlide();
   };
+
+  const prevSlide = () => {
+    // Aseguramos que la transición esté activa
+    setIsTransitioning(true); 
+    setIsAnimatingOut(true);
+    setTimeout(() => {
+      setCurrentSlideIndex(prevIndex => prevIndex - 1);
+      setIsAnimatingOut(false);
+    }, MANUAL_TRANSITION_TIME);
+    restartAutoSlide();
+  };
+
+
+  const goToSlide = (realIndex) => {
+    const extendedIndex = realIndex + 1;
+    // Aseguramos que la transición esté activa
+    setIsTransitioning(true); 
+    setIsAnimatingOut(true);
+    setTimeout(() => {
+      setCurrentSlideIndex(extendedIndex);
+      setIsAnimatingOut(false);
+    }, MANUAL_TRANSITION_TIME);
+    restartAutoSlide();
+  };
+
+  // Cálculo del índice real para los indicadores y el contenido
+  const realSlideIndex = (currentSlideIndex - 1 + totalRealSlides) % totalRealSlides;
 
   return (
     <section className="hero-slider-container">
@@ -100,17 +180,16 @@ const HeroSlider = () => {
       <div 
         className="slides-wrapper"
         style={{ 
-          // Aplica el deslizamiento lateral
-          transform: `translateX(-${currentSlide * 100}%)`,
-          // 🛑 Corrección: Usamos la transición definida en el CSS, eliminando el control JS
-          transition: 'transform 1s ease-in-out' 
+          transform: `translateX(-${currentSlideIndex * 100}%)`,
+          // 🛑 Control de la transición
+          transition: isTransitioning ? `transform ${SLIDE_TRANSITION_DURATION / 1000}s ease-in-out` : 'none'
         }}
-        // Eliminamos onTransitionEnd ya que no usamos la lógica de slides extendidos
+        onTransitionEnd={handleTransitionEnd}
       >
-        {slides.map((slide, index) => ( // Usamos slides (originales)
+        {extendedSlides.map((slide, index) => (
           <div
-            key={slide.id} 
-            className={`slide ${index === currentSlide ? 'active' : ''}`}
+            key={slide.id + "-" + index} 
+            className={`slide ${index === currentSlideIndex ? 'active' : ''}`}
             style={{ 
               backgroundImage: `url(${slide.image})` 
             }}
@@ -121,8 +200,7 @@ const HeroSlider = () => {
             {/* Overlay para legibilidad */}
             <div className="slide-overlay"></div>
             
-            {/* 🛑 Corrección 6: Clase de animación de salida aplicada si está activo y animando */}
-            <div className={`slide-content ${index === currentSlide ? 'active' : ''} ${isAnimatingOut ? 'animating-out' : ''}`}>
+            <div className={`slide-content ${index === currentSlideIndex ? 'active' : ''} ${isAnimatingOut ? 'animating-out' : ''}`}>
               <h1>{slide.title}</h1>
               <p>{slide.subtitle}</p>
               <Link to={slide.ctaLink} className="hero-cta-button">
@@ -133,7 +211,7 @@ const HeroSlider = () => {
         ))}
       </div>
       
-      {/* 🛑 Corrección 3: Flechas centradas (El CSS se encarga del centrado) */}
+      {/* Flechas de control */}
       <button className="nav-arrow left" onClick={prevSlide} aria-label="Anterior">
         <FontAwesomeIcon icon={faChevronLeft} /> 
       </button>
@@ -146,11 +224,10 @@ const HeroSlider = () => {
         {slides.map((slide, index) => (
           <button
             key={index}
-            className={`indicator ${index === currentSlide ? 'active' : ''}`}
+            className={`indicator ${index === realSlideIndex ? 'active' : ''}`}
             onClick={() => goToSlide(index)}
             aria-label={`Ir a la diapositiva ${index + 1}`}
-            // 🛑 Corrección 4: Color dinámico del círculo activo
-            style={index === currentSlide ? { backgroundColor: slide.indicatorColor, borderColor: slide.indicatorColor } : {}}
+            style={index === realSlideIndex ? { backgroundColor: slide.indicatorColor, borderColor: slide.indicatorColor } : {}}
           />
         ))}
       </div>

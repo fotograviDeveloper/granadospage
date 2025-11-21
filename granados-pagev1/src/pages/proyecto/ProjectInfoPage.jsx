@@ -16,6 +16,7 @@ import InteractiveMasterPlanMap from '../../components/InteractiveMasterPlanMap'
 import BrochureDownloadButton from '../../components/BrochureDownloadButton';
 
 import "./ProjectInfoPage.css"; 
+import PromoVirtual from '../../components/PromoVirtual';
 
 const HERO_IMAGE = '/img/hero-granados.jpg'; 
 const LAGOON_IMAGE = '/img/amenidades/lagoon_club/lagoclubaerea.jpg';
@@ -24,7 +25,7 @@ const PARKING_IMAGE = '/img/amenidades/parque_lineal/jardin.jpg';
 const ProjectInfoPage = () => {
     return (
         <div className="project-info-page">
-            
+        
             {/* 1. Project Hero (Banner Principal) */}
             <section className="project-hero" style={{ backgroundImage: `url(${HERO_IMAGE})` }}>
                 <div className="hero-content">
@@ -37,14 +38,11 @@ const ProjectInfoPage = () => {
                     />
                 </div>
             </section>
-  <section className="vision-section">
-                <div className="info-inner-container">
-                    <ArchitecturalVision />
-                </div>
-            </section>
+
              <section>
                     <InteractiveMasterPlanMap/> 
                 </section>
+                 <PromoVirtual />
             {/* 2. Value Proposition (Propuesta de Valor) */}
             <section className="value-proposition-section">
                 <div className="info-inner-container">

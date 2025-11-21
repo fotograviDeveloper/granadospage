@@ -12,6 +12,7 @@ import LocationAndMap from '../components/LocationAndMap';
 import InteractiveMasterPlanMap from '../components/InteractiveMasterPlanMap';
 // Importamos el archivo CSS de la página (lo crearemos después)
 import './HomePage.css'; 
+import OfficeInvitationSection from '../components/OfficeInvitationSection';
 
 const HomePage = () => {
   return (
@@ -43,6 +44,7 @@ const HomePage = () => {
     {/* Componente placeholder: Mapa geográfico (Google Maps) */}
         <LocationMap />
       {/* 5. SECCIÓN DE CONTACTO RÁPIDO Y UBICACIÓN */}
+      <OfficeInvitationSection/>
       <section id="contacto" className="contacto-section">
         <div className="contact-grid">
           {/* Componente placeholder: El formulario para enviar datos */}

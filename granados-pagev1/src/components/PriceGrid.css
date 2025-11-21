@@ -1,4 +1,4 @@
-/* src/components/PriceGrid.css */
+/* src/components/PriceGrid.css - Compatibilidad y Errores Corregidos */
 
 /* --- Colores Fijos --- */
 /* Verde Oscuro: #1a4f32 */
@@ -10,27 +10,28 @@
 .price-grid-container {
     display: flex;
     flex-direction: column;
-    gap: 40px; 
-    width: 95%; /* <-- ANCHO TOTAL */
-    margin: 40px auto;
-    padding: 0 20px;
+    gap: 20px; 
+    width: 90%;
+    margin: 20px auto;
+    padding: 0; /* CORREGIDO: Eliminado el espacio entre 0 y px */
+    background-color: #4e7c3e;
 }
 
 /* --- Sección Principal de Precios --- */
 .stage-section.current-stage { 
     background-color: #fcfcfc;
-    padding: 40px 30px; 
+    padding: 20px 30px; 
     border-radius: 16px;
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
     border-top: 8px solid #E27D60; 
     border-bottom: 2px solid #C9695B;
 }
 
-/* --- Encabezado y Botón de Agenda --- */
+/* --- Encabezado y Botón de Agenda (Ahora SIN BOTÓN aquí) --- */
 .stage-header-wrapper {
     text-align: center;
-    margin-bottom: 30px; 
-    padding-bottom: 20px;
+    margin-bottom: 10px; 
+    padding-bottom: 10px;
     border-bottom: none;
 }
 
@@ -48,13 +49,22 @@
     color: #C9695B; 
     font-style: normal;
     font-weight: 500;
-    margin-bottom: 25px;
+    margin-bottom: 15px;
+}
+
+/* NUEVA SECCIÓN: Contenedor para el botón debajo de las tarjetas */
+.cta-bottom-wrapper {
+    text-align: center;
+    padding-top: 30px; 
 }
 
 /* BOTÓN DE AGENDAR VISITA */
 .agenda-visit-btn {
     display: inline-block;
     padding: 15px 30px; 
+    /* AGREGADO: Prefijos para compatibilidad con gradientes */
+    background: -webkit-linear-gradient(135deg, #E27D60, #C9695B);
+    background: -moz-linear-gradient(135deg, #E27D60, #C9695B);
     background: linear-gradient(135deg, #E27D60, #C9695B); 
     color: white;
     text-decoration: none;
@@ -62,6 +72,9 @@
     font-weight: 700;
     border-radius: 8px;
     box-shadow: 0 8px 25px rgba(226, 125, 96, 0.6);
+    /* AGREGADO: Prefijos para compatibilidad con transiciones y transformaciones */
+    -webkit-transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    -moz-transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -70,27 +83,36 @@
 }
 
 .agenda-visit-btn:hover {
+    /* AGREGADO: Prefijos para compatibilidad con transformaciones */
+    -webkit-transform: translateY(-3px) scale(1.01);
+    -moz-transform: translateY(-3px) scale(1.01);
     transform: translateY(-3px) scale(1.01); 
     box-shadow: 0 10px 25px rgba(226, 125, 96, 0.8);
     background: linear-gradient(135deg, #C9695B, #E27D60);
 }
 .agenda-visit-btn:active {
+    /* AGREGADO: Prefijos para compatibilidad con transformaciones */
+    -webkit-transform: translateY(1px);
+    -moz-transform: translateY(1px);
     transform: translateY(1px);
 }
 
 /* --- Lot Cards (Tarjetas de 3 columnas para comparación) --- */
 .lot-cards-wrapper {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* <-- 3 COLUMNAS FORZADAS */
+    grid-template-columns: repeat(3, 1fr); 
     gap: 20px; 
 }
 
 .lot-card {
     background-color: #fcfcfc;
     border-radius: 10px; 
-    padding: 20px; /* <-- TAMAÑO REDUCIDO */
+    padding: 20px;
     box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
     border: 1px solid #eee;
+    /* AGREGADO: Prefijos para compatibilidad con transiciones y transformaciones */
+    -webkit-transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+    -moz-transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
     transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
     display: flex;
     flex-direction: column;
@@ -98,6 +120,9 @@
 }
 
 .lot-card:hover {
+    /* AGREGADO: Prefijos para compatibilidad con transformaciones */
+    -webkit-transform: translateY(-5px);
+    -moz-transform: translateY(-5px);
     transform: translateY(-5px); 
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
     border-color: #4e7c3e; 
@@ -138,7 +163,7 @@
 /* --- Caja de Precio (Orden Invertido) --- */
 .lot-price-box {
     display: flex;
-    flex-direction: column; /* Para aplicar el orden con 'order' */
+    flex-direction: column; 
     text-align: center;
     padding: 18px; 
     border-radius: 8px;
@@ -148,7 +173,7 @@
 }
 
 .price-value {
-    order: 1; /* <-- CORRECCIÓN: Precio grande va arriba */
+    order: 1; 
     font-size: 2.8rem; 
     font-weight: 900;
     color: #1a4f32; 
@@ -157,7 +182,7 @@
 }
 
 .price-label {
-    order: 2; /* <-- CORRECCIÓN: Leyenda pequeña va abajo */
+    order: 2; 
     font-size: 0.8rem;
     color: #C9695B; 
     margin-top: 3px; 
@@ -182,15 +207,21 @@
     text-decoration: none;
     font-weight: 700;
     border-radius: 6px;
+    /* AGREGADO: Prefijos para compatibilidad con transiciones y transformaciones */
+    -webkit-transition: background-color 0.3s, -webkit-transform 0.15s;
+    -moz-transition: background-color 0.3s, -moz-transform 0.15s;
     transition: background-color 0.3s, transform 0.15s;
     margin-top: auto;
     text-transform: uppercase;
     letter-spacing: 1px;
-    text-align: center; /* <-- TEXTO CENTRADO */
+    text-align: center;
 }
 
 .lot-cta-button:hover {
     background-color: #1a4f32; 
+    /* AGREGADO: Prefijos para compatibilidad con transformaciones */
+    -webkit-transform: translateY(-1px);
+    -moz-transform: translateY(-1px);
     transform: translateY(-1px);
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
 }
