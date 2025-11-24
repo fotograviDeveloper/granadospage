@@ -1,0 +1,83 @@
+/* src/components/PanoViewerStable.css */
+
+/* * Estilos base para el contenedor principal
+ * La altura se define por la prop 'height', pero establecemos estilos de posición.
+ */
+.stable-viewer-wrapper {
+    width: 100%;
+    position: relative; /* Necesario para posicionar el overlay */
+    overflow: hidden; /* Asegura que no haya scrollbars si algo se desborda */
+}
+
+/* * Estilos para el overlay de permisos (Mejora estética y se ajusta mejor) */
+.permission-overlay {
+    /* Ocupa toda la posición dentro del wrapper */
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.9); /* Fondo más oscuro */
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    z-index: 10;
+    padding: 20px;
+    font-family: sans-serif; /* Mejora la legibilidad */
+}
+
+.permission-overlay h2 {
+    margin-bottom: 5px;
+    font-size: 1.5em; /* Tamaño de fuente adaptable */
+}
+
+.permission-overlay p {
+    margin: 5px 0;
+    font-size: 0.9em;
+}
+
+.permission-overlay button {
+    padding: 12px 25px;
+    font-size: 1em;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    margin-top: 20px;
+    transition: background-color 0.3s;
+}
+
+.permission-overlay button:hover {
+    background-color: #0056b3;
+}
+
+/* * Media Query para Dispositivos Móviles:
+ * Aplicamos una altura máxima del 60% de la ventana visible (viewport height)
+ */
+@media (max-width: 768px) {
+    .stable-viewer-wrapper {
+        /* Altura reducida y responsive: 60vh (60% del alto de la ventana) */
+        height: 60vh !important; /* ¡Uso de !important para sobreescribir el estilo inline de React! */
+    }
+}
+
+/* Estilos para el texto de instrucción */
+.pano-controls-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    padding: 5px;
+    background-color: rgba(0, 0, 0, 0.4);
+    color: white;
+    font-size: 0.8em;
+    z-index: 5;
+}
+.pano-controls-overlay p {
+    margin: 0;
+}

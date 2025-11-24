@@ -17,6 +17,7 @@ import LagoonClubPage from './pages/amenidades/LagoonClubPage';
 import GallerySection from './components/GallerySection';
 import GalleryPage from './pages/GalleryPage';
 import ScrollToTop from './components/ScrollToTop';
+import ComponentLab from './pages/deb/ComponentLab';
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
         <Route path="precios" element={<PricingPage />} />
         {/* NUEVA RUTA: /galeria */}
         <Route path="galeria" element={<GalleryPage/>} />
+        <Route path="componentlab" element={<ComponentLab/>} />
 {/* 🛑 NUEVA RUTA DE AMENIDAD */}
         <Route 
             path="/amenidades/casa-club" 

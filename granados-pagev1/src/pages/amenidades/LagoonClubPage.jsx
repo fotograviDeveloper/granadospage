@@ -10,6 +10,9 @@ import { Link } from 'react-router-dom';
 import AmenitySlider from '../../components/AmenitySlider'; 
 import { LagoonClubImages } from '../../data/amenityImages'; 
 import './CasaClubPage.css'; // Reutilizamos el mismo CSS para la estructura general
+import CasaLago360 from '/img/360img/lagoon360/CasaLago360.jpg';
+
+
 
 // RUTAS DE IMAGENES FIJAS
 const HERO_IMAGE = '/img/amenidades/lagoonclubvista.jpeg';
@@ -83,9 +86,11 @@ const LagoonClubPage = () => {
                             />
                         </div>
                     </div>
+                  
                     <FeaturesList features={CLUB_FEATURES} title="Amenidades Destacadas del Lago" />
                 </div>
             </section>
+
 
             {/* 3. Sub-sección: Deportes y Playa */}
             <section className="play-club-section">

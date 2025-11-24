@@ -9,7 +9,7 @@
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
-/* El componente PhotoSphereViewer creará su propio contenedor con la altura dada */
+/* Nota: En esta implementación, la altura la define el componente ReactPannellum directamente */
 
 .pano-controls-overlay {
     position: absolute;
@@ -24,7 +24,6 @@
     z-index: 100; 
 }
 
-/* Ajustes para móviles */
 @media (max-width: 768px) {
     .psv-viewer-wrapper {
         min-height: 350px;
